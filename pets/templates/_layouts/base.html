@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head lang="pt-br">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>Pets</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/pets.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/lightbox.css' %}"/>
+  {% block metatags %}{% endblock %}
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'meupet:index' %}">Pets</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        {% if user.is_authenticated %}
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              Cadastrar Pet<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="{% url 'meupet:register_lost' %}">Perdido</a></li>
+              <li><a href="{% url 'meupet:register_adoption' %}">Para Adoção</a></li>
+            </ul>
+          </li>
+
+          <li><a href="{% url 'users:profile' %}">Seu Perfil</a></li>
+          <li><a href="{% url 'users:logout' %}">Logout</a></li>
+        {% else %}
+          <li><a href="{% url 'users:create' %}">Criar Conta</a></li>
+          <li><a href="{% url 'users:login' %}">Login</a></li>
+        {% endif %}
+        <li><a href="{% url 'meupet:associacoes' %}">Associações</a></li>
+        <li><a href="{% url 'meupet:about' %}">About</a></li>
+      </ul>
+      <form class="navbar-form navbar-left pull-right" role="search" method="GET"
+            action="{% url 'meupet:search' %}">
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" name="q" placeholder="Pesquisar..."/>
+          <i class="glyphicon glyphicon-search form-control-feedback"></i>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <div class="alert {% if message.tags %}
+            {% if 'error' in message.tags %}
+                alert-danger
+            {% else %}
+                alert-{{ message.tags }}
+            {% endif %}
+          {% endif %}" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <div class="col-md-2">
+      <h3>Desaparecidos</h3>
+      <ul class="nav">
+        {% for kind in kind_lost %}
+          <li><a href="{% url 'meupet:lost' kind.id %}">{{ kind }}</a></li>
+        {% endfor %}
+      </ul>
+      <h3>Para Adoção</h3>
+      <ul class="nav">
+        {% for kind in kind_adoption %}
+          <li><a href="{% url 'meupet:adoption' kind.id %}">{{ kind }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="col-md-10">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </div>
+</div>
+<script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/lightbox.js' %}"></script>
+<script>
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    var currentPath = window.location.pathname;
+    var link = links[i];
+    if (link.pathname == currentPath && link.href.indexOf('#') == -1) {
+      $(link.parentNode).addClass('active');
+    }
+  }
+</script>
+{% block morescripts %}{% endblock %}
+</body>
+</html>

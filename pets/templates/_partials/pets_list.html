@@ -1,0 +1,27 @@
+{% load thumbnail %}
+<div class="row">
+  {% for pet in pets %}
+    <div class="col-xs-12 col-sm-6 col-md-4 card-pet">
+      <div class="thumbnail">
+        <img src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}" alt="{{ pet }}">
+
+        <div class="caption">
+          <h4>{{ pet }}</h4>
+
+          <p>
+            <a href="{% url 'meupet:detail' pet.id %}" class="btn btn-info btn-xs" role="button">Detalhes</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {% if forloop.counter|divisibleby:3 %}
+      </div>
+      <div class="row">
+    {% endif %}
+  {% empty %}
+    <div class="col-md-12">
+      <h4>Nenhum amiguinho cadastrado nessa categoria ainda. :)</h4>
+    </div>
+  {% endfor %}
+  </div>

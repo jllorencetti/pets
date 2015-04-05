@@ -1,0 +1,8 @@
+.idea
+*.sqlite3
+__pycache__
+pet_images
+media
+*.pyc
+*.log
+screendumps

@@ -1,0 +1,10 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  {% crispy form %}
+  <h4>Entre com o Twitter ou o Facebook:</h4>
+  <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static 'img/facebook.png' %}" alt="Facebook"/></a>
+  <a href="{% url 'social:begin' 'twitter' %}"><img src="{% static 'img/twitter.png' %}" alt="Twitter"/></a>
+{% endblock content %}

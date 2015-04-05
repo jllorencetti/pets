@@ -1,0 +1,19 @@
+{% extends '_layouts/base.html' %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <h3>{{ object.first_name }} {{ object.last_name }}</h3>
+
+      {% if user.is_authenticated and user.id == object.id %}
+        <a href="{% url 'users:edit' %}" class="btn btn-primary">Editar</a>
+      {% endif %}
+
+      <h4>Contatos</h4>
+      <a href="{{ object.facebook }}">Facebook</a> | <a href="mailto:{{ object.email }}">Email</a>
+
+      <h4>Pets Cadastrados</h4>
+      {% include '_partials/pets_list.html' %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+.box-shadow {
+  -webkit-box-shadow: 10px 10px 21px 0 rgba(50, 50, 50, 0.76);
+  -moz-box-shadow: 1px 1px 21px 0 rgba(50, 50, 50, 0.76);
+  box-shadow: 1px 1px 21px 0 rgba(50, 50, 50, 0.76);
+}
+
+.box-shadow {
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .10);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .10);
+}
+
+.card-pet {
+  height: 390px;
+}
+
+li.active {
+  font-weight: 800;
+}
+
+.form-mark-success {
+    display: inline;
+}

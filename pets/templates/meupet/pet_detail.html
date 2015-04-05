@@ -1,0 +1,113 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% block metatags %}
+  <meta property="og:title" content="{{ pet.name }} | Cadê meu Pet?">
+  <meta property="og:description" content="{{ pet.description }}">
+  <meta property="og:url" content="{{ current_url }}">
+  <meta property="og:image"
+        content="http://dirtycoder.pythonanywhere.com{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}">
+  <meta property="og:site_name" content="Cadê meu Pet?">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ pet.name }} | Cadê meu Pet?">
+  <meta name="twitter:description" content="{{ pet.description }}">
+  <meta name="twitter:image:src"
+        content="http://dirtycoder.pythonanywhere.com{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}">
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <h2>{{ pet.name }}</h2>
+      {% if user == pet.owner %}
+        <a href="{% url 'meupet:edit' pet.id %}" class="btn btn-primary">Editar</a>
+        {% if not pet.found_or_adopted %}
+          <form action="{% url 'meupet:change_status' pet.id %}" method="post" class="form-mark-success">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-success" value="
+              Marcar como
+              {% if pet.status == pet.MISSING %}
+              encontrado!
+              {% else %}
+              adotado!
+              {% endif %}
+            "/>
+          </form>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <a href="{{ pet.profile_picture.url }}" data-lightbox="{{ pet.id }}" data-title="{{ pet }}">
+        <img class="img-thumbnail" src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}"
+             alt="{{ pet }}"/>
+      </a>
+      {% if user == pet.owner %}
+        <form class="form-horizontal" method="POST" enctype="multipart/form-data"
+              action="{% url 'meupet:upload_image' pet.id %}">
+          {% csrf_token %}
+          <input name="pet_id" value="{{ pet.id }}" hidden="hidden">
+
+          <div class="form-group">
+            <label for="another_picture" class="control-label">Adicionar Foto</label>
+            <input type="file" id="another_picture" name="another_picture">
+          </div>
+          <div class="form-group">
+            <input type="submit" name="submit" class="btn btn-primary pull-right" value="Gravar Imagem">
+          </div>
+        </form>
+      {% endif %}
+    </div>
+
+    <div class="col-md-7">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>
+            <strong>Descrição:</strong><br/>
+            {{ pet.description }}
+          </p>
+
+          <p>
+            <strong>Contato:</strong><br/>
+            <a href="{% url 'users:user_profile' pet.owner.id %}">{{ pet.owner.get_full_name }}</a>
+          </p>
+
+          <p>
+            <strong>Compartilhar:</strong><br/>
+            <a href="http://www.facebook.com/sharer.php?u={{ current_url }}" target="_blank">
+              <img src="{% static 'img/facebook.png' %}" alt="Facebook"/>
+            </a>
+            <a href="http://twitter.com/share?url={{ current_url }}" target="_blank">
+              <img src="{% static 'img/twitter.png' %}" alt="Twitter"/>
+            </a>
+          </p>
+          {% if pet.owner.facebook %}<a href="{{ pet.owner.facebook }}">Facebook</a>{% endif %}
+        </div>
+      </div>
+    </div>
+    {% if pet.photo_set.all %}
+      <div class="col-md-12">
+        <h3>Outras fotos</h3>
+
+        <div class="row">
+          {% for photo in pet.photo_set.all %}
+            <div class="col-md-3">
+              <a href="{{ photo.image.url }}" data-lightbox="{{ pet.id }}" data-title="{{ pet }}">
+                <img class="img-thumbnail" src="{{ photo.image|thumbnail_url:'pet_thumb' }}"
+                     alt="{{ pet }}"/>
+              </a>
+            </div>
+            {% if forloop.counter|divisibleby:4 %}
+              </div>
+              <div class="row">
+            {% endif %}
+          {% endfor %}
+          </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
