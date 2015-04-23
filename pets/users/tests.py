@@ -105,3 +105,21 @@ class UserRegistrationTest(TestCase):
         )
         self.assertTemplateUsed(response, 'users/login.html')
         self.assertContains(response, 'alert-danger')
+
+    def test_user_account_without_social_login_should_be_confirmed_by_default(self):
+        self.client.post(
+            '/user/', {
+                'first_name': 'Test',
+                'last_name': 'Testing',
+                'email': 'email@email.com',
+                'username': 'pythonicuser',
+                'password1': '123',
+                'password2': '123'},
+            follow=True
+        )
+
+        user = OwnerProfile.objects.first()
+
+        self.assertEquals(user.first_name, 'Test')
+        self.assertEquals(user.last_name, 'Testing')
+        self.assertTrue(user.is_information_confirmed)
