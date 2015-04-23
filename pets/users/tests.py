@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core.urlresolvers import reverse
 
 from .models import OwnerProfile
 
@@ -13,6 +14,7 @@ class UserRegistrationTest(TestCase):
                             username='tester')
         user.set_password('test123')
         user.save()
+        return user
 
     def test_create_user(self):
         self.create_user()
@@ -71,9 +73,9 @@ class UserRegistrationTest(TestCase):
         self.assertTemplateUsed(response, 'users/edit_profile.html')
 
     def test_render_profile_with_correct_template(self):
-        self.create_user()
+        user = self.create_user()
 
-        response = self.client.get('/user/profile/1/')
+        response = self.client.get(reverse('users:user_profile', args=[user.id]))
 
         self.assertTemplateUsed('users/profile.html')
         self.assertContains(response, 'Test First Name')
