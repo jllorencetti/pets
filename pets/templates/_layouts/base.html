@@ -5,14 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <title>Pets</title>
+  <title>Cadê meu Bicho</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/pets.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/lightbox.css' %}"/>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,300,400' rel='stylesheet' type='text/css'>
   {% block metatags %}{% endblock %}
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+<div class="navbar navbar-pets navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -22,7 +23,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'meupet:index' %}">Pets</a>
+      <a class="navbar-brand" href="{% url 'meupet:index' %}">Cadê meu Bicho</a>
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
