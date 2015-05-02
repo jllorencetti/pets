@@ -17,6 +17,10 @@ body {
   height: 390px;
 }
 
+.card-pet a {
+    margin-top: 4px;
+}
+
 li.active {
   font-weight: 800;
 }
