@@ -17,6 +17,10 @@ class CreateUserView(MeuPetEspecieMixin, CreateView):
     form_class = RegisterForm
     template_name = 'users/create.html'
 
+    def form_valid(self, form):
+        form.instance.is_information_confirmed = True
+        return super(CreateUserView, self).form_valid(form)
+
     def get_success_url(self):
         messages.success(self.request, 'Conta criada com sucesso. Obrigado!')
         user = authenticate(

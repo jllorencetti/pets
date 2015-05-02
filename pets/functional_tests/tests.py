@@ -78,7 +78,8 @@ class SiteTestCases(StaticLiveServerTestCase):
 
     def create_pet(self):
         admin = OwnerProfile.objects.first()
-        pet = Pet(owner=admin, name='Costela', description='Costelinha', kind_id=1,
+        kind = Kind.objects.first()
+        pet = Pet(owner=admin, name='Costela', description='Costelinha', kind_id=kind.id,
                   profile_picture=get_test_image_file())
         pet.save()
         return pet

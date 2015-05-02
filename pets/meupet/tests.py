@@ -3,6 +3,7 @@ import tempfile
 
 from django.conf import settings
 from django.test import TestCase
+from django.core.urlresolvers import reverse
 
 from meupet.models import Pet, Kind, Photo
 from users.models import OwnerProfile
@@ -24,7 +25,7 @@ class MeuPetTest(TestCase):
         self._original_media_root = settings.MEDIA_ROOT
         self._temp_media = tempfile.mkdtemp()
         settings.MEDIA_ROOT = self._temp_media
-        OwnerProfile.objects.create_user(username='admin', password='admin')
+        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
 
     def tearDown(self):
         shutil.rmtree(self._temp_media, ignore_errors=True)
@@ -62,7 +63,7 @@ class MeuPetTest(TestCase):
         self.create_pet('Cat', 'Costela')
         kind = Kind.objects.get(kind='Cat')
 
-        content = self.client.get('/lost/{}/'.format(kind.id))
+        content = self.client.get(reverse('meupet:lost', args=[kind.id]))
         pets_count = Pet.objects.filter(kind=kind).count()
 
         self.assertContains(content, 'Testing Cat')
@@ -71,19 +72,19 @@ class MeuPetTest(TestCase):
         self.assertEqual(2, pets_count)
 
     def test_show_edit_button_for_own_if_logged_pet(self):
-        self.create_pet('Own Pet')
+        pet = self.create_pet('Own Pet')
         self.client.login(username='admin', password='admin')
 
-        response = self.client.get('/pet/1/')
+        response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Editar')
-        self.assertContains(response, '/pet/1/edit/')
+        self.assertContains(response, reverse('meupet:edit', args=[pet.id]))
 
     def test_load_data_for_editing_pet(self):
-        self.create_pet('Own Pet', 'Own Pet')
+        pet = self.create_pet('Own Pet', 'Own Pet')
         self.client.login(username='admin', password='admin')
 
-        response = self.client.get('/pet/1/edit/')
+        response = self.client.get(reverse('meupet:edit', args=[pet.id]))
 
         self.assertTemplateUsed(response, 'meupet/edit.html')
         self.assertContains(response, 'Testing Own Pet')
@@ -91,21 +92,23 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'Gravar Alterações')
 
     def test_can_edit_pet(self):
-        self.create_pet('Own Pet')
+        pet = self.create_pet('Own Pet')
+        kind = Kind.objects.first()
         self.client.login(username='admin', password='admin')
         url = Pet.objects.first().profile_picture.url
 
-        response_post = self.client.post('/pet/1/edit/', data={'name': 'Testing Fuzzy Boots',
-                                                               'description': 'My lovely cat',
-                                                               'kind': '1',
-                                                               'profile_picture': url})
-        response_get = self.client.get('/pet/1/')
+        response_post = self.client.post(reverse('meupet:edit', args=[pet.id]),
+                                         data={'name': 'Testing Fuzzy Boots',
+                                               'description': 'My lovely cat',
+                                               'kind': kind.id,
+                                               'profile_picture': url})
+        response_get = self.client.get(pet.get_absolute_url())
 
-        self.assertRedirects(response_post, '/pet/1/')
+        self.assertRedirects(response_post, pet.get_absolute_url())
         self.assertContains(response_get, 'Testing Fuzzy Boots')
 
     def test_show_facebook_only_if_registered(self):
-        self.create_pet('Own Pet', 'Own Pet')
+        pet = self.create_pet('Own Pet', 'Own Pet')
         self.create_pet('Second Pet', 'Second Pet')
         user = OwnerProfile.objects.create_user(username='second_user', password='admin')
         user.facebook = 'http://www.facebook.com/owner_profile'
@@ -114,16 +117,16 @@ class MeuPetTest(TestCase):
         pet.owner = user
         pet.save()
 
-        resp_with_facebook = self.client.get('/pet/1/')
+        resp_with_facebook = self.client.get(pet.get_absolute_url())
 
         self.assertContains(resp_with_facebook, 'http://www.facebook.com/owner_profile')
 
     def test_show_link_for_owner_profile(self):
-        self.create_pet('Pet')
+        pet = self.create_pet('Pet')
 
-        response = self.client.get('/pet/1/')
+        response = self.client.get(pet.get_absolute_url())
 
-        self.assertContains(response, '/user/profile/1/')
+        self.assertContains(response, reverse('users:user_profile', args=[self.admin.id]))
 
     def test_should_redirect_if_not_confirmed(self):
         self.client.login(username='admin', password='admin')
@@ -148,12 +151,12 @@ class MeuPetTest(TestCase):
 
     def test_only_owner_can_see_edit_page(self):
         OwnerProfile.objects.create_user(username='Other User', password='otherpass')
-        self.create_pet('Own Pet')
+        pet = self.create_pet('Own Pet')
         self.client.login(username='Other User', password='otherpass')
 
-        response = self.client.get('/pet/1/edit/')
+        response = self.client.get(reverse('meupet:edit', args=[pet.id]))
 
-        self.assertRedirects(response, '/pet/1/')
+        self.assertRedirects(response, pet.get_absolute_url())
 
     def test_manager_lost_found(self):
         missing_pet = self.create_pet('Test')
@@ -183,10 +186,10 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'Test Description')
 
     def test_show_add_photo_button_in_pet_page_owner_logged_in(self):
-        self.create_pet('Cat')
+        pet = self.create_pet('Cat')
         self.client.login(username='admin', password='admin')
 
-        response = self.client.get('/pet/1/')
+        response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Adicionar Foto')
         self.assertContains(response, 'another_picture')
@@ -197,6 +200,6 @@ class MeuPetTest(TestCase):
         pet.photo_set.add(photo)
         pet.save()
 
-        response = self.client.get('/pet/1/')
+        response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Outras fotos')

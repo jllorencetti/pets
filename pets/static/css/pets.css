@@ -1,3 +1,7 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .box-shadow {
   -webkit-box-shadow: 10px 10px 21px 0 rgba(50, 50, 50, 0.76);
   -moz-box-shadow: 1px 1px 21px 0 rgba(50, 50, 50, 0.76);
@@ -13,10 +17,37 @@
   height: 390px;
 }
 
+.card-pet a {
+    margin-top: 4px;
+}
+
 li.active {
   font-weight: 800;
 }
 
 .form-mark-success {
     display: inline;
+}
+/** Navbar **/
+.navbar-pets {
+    background-color: #1b443c;
+}
+
+.navbar-pets a {
+    color: #e9f6f4;
+}
+
+.nav>li>a:focus,
+.nav>li>a:hover,
+.nav .open>a, 
+.nav .open>a:focus, 
+.nav .open>a:hover,
+.dropdown-menu>li>a:focus,
+.dropdown-menu>li>a:hover {
+  background-color: #1b443c;
+  color: #fff;
+}
+
+.navbar-toggle .icon-bar {
+  background-color: #e9f6f4;
 }

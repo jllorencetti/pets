@@ -5,12 +5,9 @@
       <div class="thumbnail">
         <img src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}" alt="{{ pet }}">
 
-        <div class="caption">
-          <h4>{{ pet }}</h4>
-
-          <p>
-            <a href="{% url 'meupet:detail' pet.id %}" class="btn btn-info btn-xs" role="button">Detalhes</a>
-          </p>
+        <div class="caption clearfix">
+          <h4 class='pull-left'>{{ pet }}</h4>
+          <a href="{% url 'meupet:detail' pet.id %}" class="btn btn-info pull-right" role="button">Detalhes</a>
         </div>
       </div>
     </div>
