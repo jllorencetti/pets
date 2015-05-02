@@ -3,15 +3,15 @@
 {% load thumbnail %}
 
 {% block metatags %}
-  <meta property="og:title" content="{{ pet.name }} | Cadê meu Pet?">
+  <meta property="og:title" content="{{ pet.name }} | Cadê meu Bicho?">
   <meta property="og:description" content="{{ pet.description }}">
   <meta property="og:url" content="{{ current_url }}">
   <meta property="og:image"
         content="http://www.cademeubicho.com{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}">
-  <meta property="og:site_name" content="Cadê meu Pet?">
+  <meta property="og:site_name" content="Cadê meu Bicho?">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ pet.name }} | Cadê meu Pet?">
+  <meta name="twitter:title" content="{{ pet.name }} | Cadê meu Bicho?">
   <meta name="twitter:description" content="{{ pet.description }}">
   <meta name="twitter:image:src"
         content="http://www.cademeubicho.com{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}">
