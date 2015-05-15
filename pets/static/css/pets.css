@@ -51,3 +51,7 @@ li.active {
 .navbar-toggle .icon-bar {
   background-color: #e9f6f4;
 }
+
+.italic {
+    font-style: italic;
+}
