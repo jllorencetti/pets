@@ -158,6 +158,16 @@ class MeuPetTest(TestCase):
 
         self.assertRedirects(response, pet.get_absolute_url())
 
+    def test_display_status_on_pet_page(self):
+        missing_pet = self.create_pet('Test', 'Test 1')
+        adoption_pet = self.create_pet('Test', 'Test 2', status=Pet.FOR_ADOPTION)
+
+        response_missing = self.client.get(missing_pet.get_absolute_url())
+        response_adoption = self.client.get(adoption_pet.get_absolute_url())
+
+        self.assertContains(response_missing, 'Test 1 - Desaparecido')
+        self.assertContains(response_adoption, 'Test 2 - Para Adoção')
+
     def test_manager_lost_found(self):
         missing_pet = self.create_pet('Test')
         self.create_pet('Test')
