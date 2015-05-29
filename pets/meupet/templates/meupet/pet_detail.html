@@ -74,6 +74,7 @@
           <p>
             <strong>Contato:</strong><br/>
             <a href="{% url 'users:user_profile' pet.owner.id %}">{{ pet.owner.get_full_name }}</a>
+            {% if pet.owner.facebook %} | <a href="{{ pet.owner.facebook }}">Facebook</a>{% endif %}
           </p>
 
           <p>
@@ -85,7 +86,6 @@
               <img src="{% static 'img/twitter.png' %}" alt="Twitter"/>
             </a>
           </p>
-          {% if pet.owner.facebook %}<a href="{{ pet.owner.facebook }}">Facebook</a>{% endif %}
         </div>
       </div>
     </div>
