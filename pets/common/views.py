@@ -4,7 +4,7 @@ from meupet import models
 
 
 def get_kind_list():
-    return models.Kind.objects.all()
+    return models.Kind.objects.all().order_by('kind')
 
 
 class MeuPetEspecieMixin(ContextMixin):
