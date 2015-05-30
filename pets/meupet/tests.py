@@ -213,3 +213,12 @@ class MeuPetTest(TestCase):
         response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Outras fotos')
+
+    def test_search_pet(self):
+        self.create_pet('Cat')
+
+        response_name = self.client.get('/search/', {'q': 'Testing'})
+        response_desc = self.client.get('/search/', {'q': 'bla'})
+
+        self.assertContains(response_name, 'Testing Pet')
+        self.assertContains(response_desc, 'Testing Pet')

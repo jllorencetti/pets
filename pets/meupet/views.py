@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.db.models import Q
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView
 
 from common.views import MeuPetEspecieMixin
@@ -92,7 +93,9 @@ class SearchView(MeuPetEspecieMixin, ListView):
     context_object_name = 'pets'
 
     def get_queryset(self):
-        pets = models.Pet.objects.filter(name__icontains=self.request.GET.get("q"))
+        query = self.request.GET.get("q")
+        pets = models.Pet.objects.filter(Q(name__icontains=query) |
+                                         Q(description__icontains=query))
         return pets
 
 
