@@ -100,6 +100,7 @@ class MeuPetTest(TestCase):
         response_post = self.client.post(reverse('meupet:edit', args=[pet.id]),
                                          data={'name': 'Testing Fuzzy Boots',
                                                'description': 'My lovely cat',
+                                               'city': 'Catland',
                                                'kind': kind.id,
                                                'profile_picture': url})
         response_get = self.client.get(pet.get_absolute_url())
@@ -108,7 +109,7 @@ class MeuPetTest(TestCase):
         self.assertContains(response_get, 'Testing Fuzzy Boots')
 
     def test_show_facebook_only_if_registered(self):
-        pet = self.create_pet('Own Pet', 'Own Pet')
+        self.create_pet('Own Pet', 'Own Pet')
         self.create_pet('Second Pet', 'Second Pet')
         user = OwnerProfile.objects.create_user(username='second_user', password='admin')
         user.facebook = 'http://www.facebook.com/owner_profile'
@@ -222,3 +223,12 @@ class MeuPetTest(TestCase):
 
         self.assertContains(response_name, 'Testing Pet')
         self.assertContains(response_desc, 'Testing Pet')
+
+    def test_show_city(self):
+        pet = self.create_pet('Cat')
+        pet.city = 'araras'
+        pet.save()
+
+        response = self.client.get(pet.get_absolute_url())
+
+        self.assertContains(response, 'Araras')

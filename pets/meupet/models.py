@@ -37,6 +37,7 @@ class Pet(models.Model):
     owner = models.ForeignKey(OwnerProfile)
     name = models.CharField(max_length=250)
     description = models.CharField(max_length=500)
+    city = models.CharField(max_length=50)
     kind = models.ForeignKey(Kind, null=True)
     status = models.CharField(max_length=2,
                               choices=PET_STATUS,

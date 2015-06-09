@@ -151,6 +151,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + '/pet/lost/')
         self.browser.find_element_by_name('name').send_keys('Wrong Boots')
         self.browser.find_element_by_name('description').send_keys('My dear lovely cat')
+        self.browser.find_element_by_name('city').send_keys('Catland')
 
         # selects the kind as a Cat
         kind = Select(self.browser.find_element_by_name('kind'))
