@@ -6,7 +6,10 @@
         <img src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}" alt="{{ pet }}">
 
         <div class="caption clearfix">
-          <h4 class='pull-left'>{{ pet }}</h4>
+          <span class='pull-left'>
+            <h4>{{ pet }}</h4>
+            <span><span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{ pet.city|title }} </span>
+          </span>
           <a href="{% url 'meupet:detail' pet.id %}" class="btn btn-info pull-right" role="button">Detalhes</a>
         </div>
       </div>
