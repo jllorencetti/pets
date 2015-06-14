@@ -1,7 +1,9 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from .models import OwnerProfile
+from users.validators import validate_facebook_url
 
 
 class UserRegistrationTest(TestCase):
@@ -123,3 +125,14 @@ class UserRegistrationTest(TestCase):
         self.assertEquals(user.first_name, 'Test')
         self.assertEquals(user.last_name, 'Testing')
         self.assertTrue(user.is_information_confirmed)
+
+    def test_validator_facebook_profile_url(self):
+        validate_facebook_url('https://www.facebook.com/4')
+        self.assertRaises(ValidationError, validate_facebook_url, 'test@gmail.com')
+
+    def test_cant_save_user_invalid_facebook_url(self):
+        user = self.create_user()
+        user.facebook = 'a'
+        with self.assertRaises(ValidationError):
+            user.save()
+            user.full_clean()
