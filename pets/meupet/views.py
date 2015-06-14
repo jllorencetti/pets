@@ -13,8 +13,10 @@ from . import models
 
 class HomePageView(MeuPetEspecieMixin, ListView):
     template_name = 'meupet/index.html'
-    model = models.Pet
     context_object_name = 'pets'
+
+    def get_queryset(self):
+        return models.Pet.objects.order_by('-id')[:12]
 
 
 class AboutPageView(MeuPetEspecieMixin, TemplateView):
