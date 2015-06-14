@@ -31,13 +31,13 @@ class MeuPetTest(TestCase):
         shutil.rmtree(self._temp_media, ignore_errors=True)
         settings.MEDIA_ROOT = self._original_media_root
 
-    def create_pet(self, kind, name='Pet', status=Pet.MISSING):
+    def create_pet(self, kind, name='Pet', status=Pet.MISSING, **kwargs):
         image = get_test_image_file()
         user = OwnerProfile.objects.first()
         kind = Kind.objects.get_or_create(kind=kind)[0]
         return Pet.objects.create(name='Testing ' + name, description='Bla',
                                   profile_picture=image, owner=user, kind=kind,
-                                  status=status)
+                                  status=status, **kwargs)
 
     def test_display_all_pets(self):
         self.create_pet('Goat', 'Goat')
@@ -216,13 +216,15 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'Outras fotos')
 
     def test_search_pet(self):
-        self.create_pet('Cat')
+        pet = self.create_pet('Cat', city='Araras')
 
         response_name = self.client.get('/search/', {'q': 'Testing'})
         response_desc = self.client.get('/search/', {'q': 'bla'})
+        response_city = self.client.get('/search/', {'q': 'Araras'})
 
         self.assertContains(response_name, 'Testing Pet')
         self.assertContains(response_desc, 'Testing Pet')
+        self.assertContains(response_city, 'Araras')
 
     def test_show_city(self):
         pet = self.create_pet('Cat')
