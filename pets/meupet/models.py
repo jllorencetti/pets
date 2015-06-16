@@ -24,6 +24,14 @@ class Kind(models.Model):
 
 
 class Pet(models.Model):
+    SMALL = 'SM'
+    MEDIUM = 'MD'
+    LARGE = 'LG'
+    PET_SIZE = (
+        (SMALL, 'Pequeno'),
+        (MEDIUM, 'Médio'),
+        (LARGE, 'Grande')
+    )
     MISSING = 'MI'
     FOR_ADOPTION = 'FA'
     ADOPTED = 'AD'
@@ -42,6 +50,9 @@ class Pet(models.Model):
     status = models.CharField(max_length=2,
                               choices=PET_STATUS,
                               default=MISSING)
+    size = models.CharField(max_length=2,
+                            choices=PET_SIZE,
+                            blank=True)
     profile_picture = models.ImageField(upload_to='pet_profiles')
 
     objects = PetManager()

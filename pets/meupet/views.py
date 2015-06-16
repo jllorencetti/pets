@@ -96,9 +96,12 @@ class SearchView(MeuPetEspecieMixin, ListView):
 
     def get_queryset(self):
         query = self.request.GET.get("q")
+        size_reverse = dict((v, k) for k, v in models.Pet.PET_SIZE)
+
         pets = models.Pet.objects.filter(Q(name__icontains=query) |
                                          Q(description__icontains=query) |
-                                         Q(city__icontains=query))
+                                         Q(city__icontains=query) |
+                                         Q(size=size_reverse.get(query, '')))
         return pets
 
 

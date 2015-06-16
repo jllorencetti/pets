@@ -157,6 +157,10 @@ class SiteTestCases(StaticLiveServerTestCase):
         kind = Select(self.browser.find_element_by_name('kind'))
         kind.select_by_index(1)
 
+        # selects the size of the pet
+        size = Select(self.browser.find_element_by_name('size'))
+        size.select_by_index(3)
+
         # user select a picture of his cat
         profile_picture = self.browser.find_element_by_name('profile_picture')
         profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
@@ -178,6 +182,7 @@ class SiteTestCases(StaticLiveServerTestCase):
 
         # user see the correct name of the cat
         self.assertIn('Fuzzy Boots', self.browser.page_source)
+        self.assertIn('Grande', self.browser.page_source)
 
     def test_edit_profile_information(self):
         # user login

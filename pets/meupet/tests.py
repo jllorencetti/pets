@@ -216,15 +216,17 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'Outras fotos')
 
     def test_search_pet(self):
-        pet = self.create_pet('Cat', city='Araras')
+        self.create_pet('Cat', city='Araras', size=Pet.SMALL)
 
         response_name = self.client.get('/search/', {'q': 'Testing'})
         response_desc = self.client.get('/search/', {'q': 'bla'})
         response_city = self.client.get('/search/', {'q': 'Araras'})
+        response_size = self.client.get('/search/', {'q': 'Pequeno'})
 
         self.assertContains(response_name, 'Testing Pet')
         self.assertContains(response_desc, 'Testing Pet')
         self.assertContains(response_city, 'Araras')
+        self.assertContains(response_size, 'Testing Pet')
 
     def test_show_city(self):
         pet = self.create_pet('Cat')
@@ -234,3 +236,10 @@ class MeuPetTest(TestCase):
         response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Araras')
+
+    def test_show_size(self):
+        pet = self.create_pet('Cat', size=Pet.SMALL)
+
+        response = self.client.get(pet.get_absolute_url())
+
+        self.assertContains(response, 'Pequeno')
