@@ -57,3 +57,20 @@ li.active {
 .italic {
   font-style: italic;
 }
+
+/** Footer **/
+.footer {
+  background-color: #1b443c;
+  color: #e9f6f4;
+  height: 250px;
+}
+
+.footer a {
+  color: #5bc0dE;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    height: 150px;
+  }
+}
