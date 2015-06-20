@@ -6,22 +6,17 @@
         <img src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}" alt="{{ pet }}">
 
         <div class="caption clearfix">
-          <span class='pull-left'>
+          <div class='pull-left'>
             <h4>{{ pet }}</h4>
             <span><span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{ pet.city|title }} </span>
-          </span>
+          </div>
           <a href="{% url 'meupet:detail' pet.id %}" class="btn btn-info pull-right" role="button">Detalhes</a>
         </div>
       </div>
     </div>
-
-    {% if forloop.counter|divisibleby:3 %}
-      </div>
-      <div class="row">
-    {% endif %}
   {% empty %}
     <div class="col-md-12">
       <h4>Nenhum amiguinho cadastrado nessa categoria ainda. :)</h4>
     </div>
   {% endfor %}
-  </div>
+</div>
