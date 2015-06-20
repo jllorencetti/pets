@@ -1,5 +1,11 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
+  margin-bottom: 250px;
 }
 
 .box-shadow {
@@ -59,9 +65,12 @@ li.active {
 
 /** Footer **/
 .footer {
+  position: absolute;
+  bottom: 0;
   background-color: #1b443c;
   color: #e9f6f4;
   height: 250px;
+  width: 100%;
 }
 
 .footer a {
@@ -69,6 +78,10 @@ li.active {
 }
 
 @media (min-width: 768px) {
+  body {
+    margin-bottom: 150px;
+  }
+
   .footer {
     height: 150px;
   }
