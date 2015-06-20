@@ -1,5 +1,5 @@
 body {
-    font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .box-shadow {
@@ -15,10 +15,11 @@ body {
 
 .card-pet {
   height: 390px;
+  margin-bottom: 15px;
 }
 
 .card-pet a {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 li.active {
@@ -26,24 +27,25 @@ li.active {
 }
 
 .form-mark-success {
-    display: inline;
+  display: inline;
 }
+
 /** Navbar **/
 .navbar-pets {
-    background-color: #1b443c;
+  background-color: #1b443c;
 }
 
 .navbar-pets a {
-    color: #e9f6f4;
+  color: #e9f6f4;
 }
 
-.nav>li>a:focus,
-.nav>li>a:hover,
-.nav .open>a, 
-.nav .open>a:focus, 
-.nav .open>a:hover,
-.dropdown-menu>li>a:focus,
-.dropdown-menu>li>a:hover {
+.nav > li > a:focus,
+.nav > li > a:hover,
+.nav .open > a,
+.nav .open > a:focus,
+.nav .open > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
   background-color: #1b443c;
   color: #fff;
 }
@@ -53,5 +55,5 @@ li.active {
 }
 
 .italic {
-    font-style: italic;
+  font-style: italic;
 }
