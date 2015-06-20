@@ -243,3 +243,15 @@ class MeuPetTest(TestCase):
         response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Pequeno')
+
+    def test_empty_search_redirect_to_home(self):
+        response = self.client.get('/search/', {'q': ''})
+
+        self.assertRedirects(response, reverse('meupet:index'))
+
+    def test_invalid_size_key_shouldnt_return_pets_with_empty_size(self):
+        self.create_pet('Dog')
+
+        response = self.client.get('/search/', {'q': 'zzz'})
+
+        self.assertContains(response, 'Nenhum amiguinho')

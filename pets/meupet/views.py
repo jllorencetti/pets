@@ -94,16 +94,24 @@ class SearchView(MeuPetEspecieMixin, ListView):
     template_name = 'meupet/index.html'
     context_object_name = 'pets'
 
+    def get(self, request, *args, **kwargs):
+        if not request.GET.get('q'):
+            return HttpResponseRedirect(reverse('meupet:index'))
+        else:
+            return super(SearchView, self).get(request, *args, **kwargs)
+
     def get_queryset(self):
         query = self.request.GET.get("q")
 
         size_reverse = dict((v.upper(), k) for k, v in models.Pet.PET_SIZE)
         size_key = size_reverse.get(query.upper(), '')
 
-        pets = models.Pet.objects.filter(Q(name__icontains=query) |
-                                         Q(description__icontains=query) |
-                                         Q(city__icontains=query) |
-                                         Q(size=size_key))
+        filters = Q(name__icontains=query) | Q(description__icontains=query) | Q(city__icontains=query)
+
+        if size_key:
+            filters = filters | Q(size=size_key)
+
+        pets = models.Pet.objects.filter(filters)
         return pets
 
 
