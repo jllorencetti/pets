@@ -1,10 +1,11 @@
-from braces.views import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.db.models import Q
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView
+
+from braces.views import LoginRequiredMixin
 
 from common.views import MeuPetEspecieMixin
 from . import forms

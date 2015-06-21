@@ -89,7 +89,7 @@ class MeuPetTest(TestCase):
         self.assertTemplateUsed(response, 'meupet/edit.html')
         self.assertContains(response, 'Testing Own Pet')
         self.assertContains(response, 'Bla')
-        self.assertContains(response, 'Gravar Alterações')
+        self.assertContains(response, 'Salvar Alterações')
 
     def test_can_edit_pet(self):
         pet = self.create_pet('Own Pet')
