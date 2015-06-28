@@ -37,10 +37,10 @@ class Pet(models.Model):
     ADOPTED = 'AD'
     FOUND = 'FO'
     PET_STATUS = (
-        (MISSING, 'Missing'),
-        (FOR_ADOPTION, 'For Adoption'),
-        (ADOPTED, 'Adopted'),
-        (FOUND, 'Found'),
+        (MISSING, 'Desaparecido'),
+        (FOR_ADOPTION, 'Para Adoção'),
+        (ADOPTED, 'Adotado'),
+        (FOUND, 'Encontrado'),
     )
     owner = models.ForeignKey(OwnerProfile)
     name = models.CharField(max_length=250)

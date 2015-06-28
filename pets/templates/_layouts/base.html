@@ -47,11 +47,12 @@
         {% endif %}
         <li><a href="{% url 'meupet:associacoes' %}">Associações</a></li>
         <li><a href="{% url 'meupet:about' %}">Sobre</a></li>
+        <li><a href="{% url 'meupet:search' %}">Busca Avançada</a></li>
       </ul>
       <form class="navbar-form navbar-left pull-right" role="search" method="GET"
-            action="{% url 'meupet:search' %}">
+            action="{% url 'meupet:quick_search' %}">
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" name="q" placeholder="Pesquisar..."/>
+          <input type="text" class="form-control" name="q" placeholder="Busca rápida..."/>
           <i class="glyphicon glyphicon-search form-control-feedback"></i>
         </div>
       </form>
@@ -77,25 +78,27 @@
       </ul>
     {% endif %}
 
-    <div class="col-md-2">
-      <h3>Desaparecidos</h3>
-      <ul class="nav">
-        {% for kind in kind_lost %}
-          <li><a href="{% url 'meupet:lost' kind.id %}">{{ kind }}</a></li>
-        {% endfor %}
-      </ul>
-      <h3>Para Adoção</h3>
-      <ul class="nav">
-        {% for kind in kind_adoption %}
-          <li><a href="{% url 'meupet:adoption' kind.id %}">{{ kind }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
+    {% block body %}
+      <div class="col-md-2">
+        <h3>Desaparecidos</h3>
+        <ul class="nav">
+          {% for kind in kind_lost %}
+            <li><a href="{% url 'meupet:lost' kind.id %}">{{ kind }}</a></li>
+          {% endfor %}
+        </ul>
+        <h3>Para Adoção</h3>
+        <ul class="nav">
+          {% for kind in kind_adoption %}
+            <li><a href="{% url 'meupet:adoption' kind.id %}">{{ kind }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
 
-    <div class="col-md-10">
-      {% block content %}
-      {% endblock content %}
-    </div>
+      <div class="col-md-10">
+        {% block content %}
+        {% endblock content %}
+      </div>
+    {% endblock body %}
   </div>
 </div>
 

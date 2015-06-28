@@ -218,10 +218,10 @@ class MeuPetTest(TestCase):
     def test_search_pet(self):
         self.create_pet('Cat', city='Araras', size=Pet.SMALL)
 
-        response_name = self.client.get('/search/', {'q': 'Testing'})
-        response_desc = self.client.get('/search/', {'q': 'bla'})
-        response_city = self.client.get('/search/', {'q': 'Araras'})
-        response_size = self.client.get('/search/', {'q': 'Pequeno'})
+        response_name = self.client.get('/quick-search/', {'q': 'Testing'})
+        response_desc = self.client.get('/quick-search/', {'q': 'bla'})
+        response_city = self.client.get('/quick-search/', {'q': 'Araras'})
+        response_size = self.client.get('/quick-search/', {'q': 'Pequeno'})
 
         self.assertContains(response_name, 'Testing Pet')
         self.assertContains(response_desc, 'Testing Pet')
@@ -245,13 +245,26 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'Pequeno')
 
     def test_empty_search_redirect_to_home(self):
-        response = self.client.get('/search/', {'q': ''})
+        response = self.client.get('/quick-search/', {'q': ''})
 
         self.assertRedirects(response, reverse('meupet:index'))
 
     def test_invalid_size_key_shouldnt_return_pets_with_empty_size(self):
         self.create_pet('Dog')
 
-        response = self.client.get('/search/', {'q': 'zzz'})
+        response = self.client.get('/quick-search/', {'q': 'zzz'})
 
         self.assertContains(response, 'Nenhum amiguinho')
+
+    def test_custom_search_without_filters(self):
+        response = self.client.post('/search/', {})
+
+        self.assertRedirects(response, reverse('meupet:search'))
+
+    def test_custom_search_with_filter(self):
+        pet = self.create_pet('Dog', city='Araras')
+
+        response = self.client.post('/search/', {'city': 'Araras'}, follow=True)
+
+        self.assertContains(response, pet.name)
+        self.assertContains(response, pet.city)

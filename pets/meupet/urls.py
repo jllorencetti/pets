@@ -16,5 +16,6 @@ urlpatterns = patterns(
     url(r'^lost/(?P<id>[0-9]+)/$', views.LostPetView.as_view(), name='lost'),
     url(r'^adoption/(?P<id>[0-9]+)/$', views.AdoptionPetView.as_view(), name='adoption'),
     url(r'^pet/(?P<pet_id>[0-9]+)/photo/$', views.upload_image, name='upload_image'),
+    url(r'^quick-search/$', views.QuickSearchView.as_view(), name='quick_search'),
     url(r'^search/$', views.SearchView.as_view(), name='search'),
 )

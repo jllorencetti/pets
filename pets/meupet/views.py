@@ -1,15 +1,17 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.db.models import Q
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView
+from django.views.generic import TemplateView, ListView, CreateView, \
+    UpdateView, View
 
 from braces.views import LoginRequiredMixin
 
 from common.views import MeuPetEspecieMixin
 from . import forms
 from . import models
+from meupet.forms import SearchForm
 
 
 class HomePageView(MeuPetEspecieMixin, ListView):
@@ -91,7 +93,7 @@ class RegisterAdoptionPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView
         return super(RegisterAdoptionPetView, self).form_valid(form)
 
 
-class SearchView(MeuPetEspecieMixin, ListView):
+class QuickSearchView(MeuPetEspecieMixin, ListView):
     template_name = 'meupet/index.html'
     context_object_name = 'pets'
 
@@ -99,7 +101,7 @@ class SearchView(MeuPetEspecieMixin, ListView):
         if not request.GET.get('q'):
             return HttpResponseRedirect(reverse('meupet:index'))
         else:
-            return super(SearchView, self).get(request, *args, **kwargs)
+            return super(QuickSearchView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
         query = self.request.GET.get("q")
@@ -144,3 +146,38 @@ def upload_image(request, pet_id):
         photo = models.Photo(pet_id=pet_id, image=picture)
         photo.save()
     return HttpResponseRedirect(reverse('meupet:detail', kwargs={'id': pet_id}))
+
+
+class SearchView(MeuPetEspecieMixin, View):
+    def get(self, request):
+        form = SearchForm()
+        return render(request, 'meupet/search.html', {'form': form})
+
+    def post(self, request):
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            pet_city = form.cleaned_data['city']
+            pet_size = form.cleaned_data['size']
+            pet_status = form.cleaned_data['status']
+            pet_kind = form.cleaned_data['kind']
+
+            if not pet_size and not pet_city and not pet_kind and not pet_status:
+                messages.error(self.request, 'É necessário selecionar ao menos um filtro')
+                return HttpResponseRedirect(reverse('meupet:search'))
+
+            query = Q()
+
+            if pet_city:
+                query = query & Q(city=pet_city)
+            if pet_size:
+                query = query & Q(size=pet_size)
+            if pet_status:
+                query = query & Q(status=pet_status)
+            if pet_kind:
+                query = query & Q(kind=pet_kind)
+
+            pets = models.Pet.objects.filter(query)
+        else:
+            return HttpResponseRedirect(reverse('meupet:search'))
+
+        return render(request, 'meupet/search.html', {'request': request, 'form': form, 'pets': pets})

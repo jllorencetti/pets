@@ -1,0 +1,67 @@
+{% extends '_layouts/base.html' %}
+{% load thumbnail %}
+
+{% block body %}
+  <div class="col-md-12">
+    <div class="row">
+
+      <form class="form-inline" action="" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="city" class="control-label">Cidade</label>
+
+          {{ form.city }}
+          {{ form.city.errors }}
+        </div>
+
+        <div class="form-group">
+          <label for="kind" class="control-label">Espécie</label>
+
+          {{ form.kind }}
+          {{ form.kind.errors }}
+        </div>
+        <div class="form-group">
+          <label for="status" class="control-label">Situação</label>
+
+          {{ form.status }}
+          {{ form.status.errors }}
+        </div>
+
+        <div class="form-group">
+          <label for="size" class="control-label">Tamanho</label>
+
+          {{ form.size }}
+          {{ form.size.errors }}
+        </div>
+
+        <div class="form-group">
+          <input class="btn btn-success" type="submit" value="Pesquisar"/>
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <h3>Resultado</h3>
+      {% if pets %}
+        {% for pet in pets %}
+          <div class="col-md-3 card-pet">
+            <div class="thumbnail">
+              <img src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}" alt="{{ pet }}">
+
+              <div class="caption clearfix">
+                <div class='pull-left'>
+                  <h4>{{ pet }}</h4>
+                  <span><span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{ pet.city|title }} </span>
+                </div>
+                <a href="{% url 'meupet:detail' pet.id %}" class="btn btn-info pull-right" role="button">Detalhes</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>Nenhum resultado encontrado.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock body %}
