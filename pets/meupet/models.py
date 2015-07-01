@@ -24,13 +24,19 @@ class Kind(models.Model):
 
 
 class Pet(models.Model):
+    MALE = 'MA'
+    FEMALE = 'FE'
+    PET_SEX = (
+        (FEMALE, 'Fêmea'),
+        (MALE, 'Macho',),
+    )
     SMALL = 'SM'
     MEDIUM = 'MD'
     LARGE = 'LG'
     PET_SIZE = (
         (SMALL, 'Pequeno'),
         (MEDIUM, 'Médio'),
-        (LARGE, 'Grande')
+        (LARGE, 'Grande'),
     )
     MISSING = 'MI'
     FOR_ADOPTION = 'FA'
@@ -53,6 +59,9 @@ class Pet(models.Model):
     size = models.CharField(max_length=2,
                             choices=PET_SIZE,
                             blank=True)
+    sex = models.CharField(max_length=2,
+                           choices=PET_SEX,
+                           blank=True)
     profile_picture = models.ImageField(upload_to='pet_profiles')
 
     objects = PetManager()

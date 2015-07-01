@@ -7,13 +7,14 @@ class PetForm(forms.ModelForm):
     class Meta:
         model = models.Pet
         fields = ('name', 'description', 'city', 'kind', 'profile_picture',
-                  'size',)
+                  'size', 'sex',)
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descrição'}),
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cidade'}),
             'kind': forms.Select(attrs={'class': 'form-control'}),
             'size': forms.Select(attrs={'class': 'form-control'}),
+            'sex': forms.Select(attrs={'class': 'form-control'}),
         }
 
 
@@ -37,3 +38,7 @@ class SearchForm(forms.Form):
                                label='Status',
                                choices=empty_choice + models.Pet.PET_STATUS,
                                required=False)
+    sex = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                            label='Sexo',
+                            choices=empty_choice + models.Pet.PET_SEX,
+                            required=False)

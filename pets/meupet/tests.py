@@ -268,3 +268,10 @@ class MeuPetTest(TestCase):
 
         self.assertContains(response, pet.name)
         self.assertContains(response, pet.city)
+
+    def test_show_pet_sex(self):
+        pet = self.create_pet('Dog', sex=Pet.FEMALE)
+
+        response = self.client.get(pet.get_absolute_url())
+
+        self.assertContains(response, 'Fêmea')
