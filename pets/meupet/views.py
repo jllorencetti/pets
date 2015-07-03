@@ -162,8 +162,7 @@ class SearchView(MeuPetEspecieMixin, View):
             pet_kind = form.cleaned_data['kind']
             pet_sex = form.cleaned_data['sex']
 
-            if not pet_size and not pet_city and not pet_kind and \
-                    not pet_status and not pet_sex:
+            if not any([pet_size, pet_city, pet_kind, pet_status, pet_sex]):
                 messages.error(self.request, 'É necessário selecionar ao menos um filtro')
                 return HttpResponseRedirect(reverse('meupet:search'))
 
