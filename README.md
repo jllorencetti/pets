@@ -1,4 +1,6 @@
-Pets
+[![Code Climate](https://codeclimate.com/github/dirtycoder/pets/badges/gpa.svg)](https://codeclimate.com/github/dirtycoder/pets)
+
+## Pets
 
 It's still a work in progress
 
