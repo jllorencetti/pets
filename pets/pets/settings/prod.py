@@ -36,6 +36,7 @@ THIRD_PARTS_APPS = (
     'braces',
     'crispy_forms',
     'social.apps.django_app.default',
+    'opbeat.contrib.django',
 )
 
 PROJECT_APPS = (
@@ -47,6 +48,7 @@ PROJECT_APPS = (
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTS_APPS
 
 MIDDLEWARE_CLASSES = (
+    'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -168,3 +170,9 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
+
+OPBEAT = {
+    'ORGANIZATION_ID': os.environ.get('OPBEAT_ORGANIZATION_ID'),
+    'APP_ID': os.environ.get('OPBEAT_APP_ID'),
+    'SECRET_TOKEN': os.environ.get('OPBEAT_SECRET_TOKEN'),
+}
