@@ -84,5 +84,6 @@ li.active {
 
   .footer {
     height: 150px;
+    padding-top: 20px;
   }
 }
