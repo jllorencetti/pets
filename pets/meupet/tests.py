@@ -5,7 +5,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-from meupet.models import Pet, Kind, Photo
+from meupet.models import Pet, Kind, Photo, City
 from users.models import OwnerProfile
 
 
@@ -26,6 +26,7 @@ class MeuPetTest(TestCase):
         self._temp_media = tempfile.mkdtemp()
         settings.MEDIA_ROOT = self._temp_media
         self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
+        self.test_city, _ = City.objects.get_or_create(city='Testing City')
 
     def tearDown(self):
         shutil.rmtree(self._temp_media, ignore_errors=True)
@@ -100,7 +101,7 @@ class MeuPetTest(TestCase):
         response_post = self.client.post(reverse('meupet:edit', args=[pet.id]),
                                          data={'name': 'Testing Fuzzy Boots',
                                                'description': 'My lovely cat',
-                                               'city': 'Catland',
+                                               'city': self.test_city.id,
                                                'kind': kind.id,
                                                'profile_picture': url})
         response_get = self.client.get(pet.get_absolute_url())
@@ -216,26 +217,26 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'Outras fotos')
 
     def test_search_pet(self):
-        self.create_pet('Cat', city='Araras', size=Pet.SMALL)
+        self.create_pet('Cat', city=self.test_city, size=Pet.SMALL)
 
         response_name = self.client.get('/quick-search/', {'q': 'Testing'})
         response_desc = self.client.get('/quick-search/', {'q': 'bla'})
-        response_city = self.client.get('/quick-search/', {'q': 'Araras'})
+        response_city = self.client.get('/quick-search/', {'q': self.test_city})
         response_size = self.client.get('/quick-search/', {'q': 'Pequeno'})
 
         self.assertContains(response_name, 'Testing Pet')
         self.assertContains(response_desc, 'Testing Pet')
-        self.assertContains(response_city, 'Araras')
+        self.assertContains(response_city, self.test_city)
         self.assertContains(response_size, 'Testing Pet')
 
     def test_show_city(self):
         pet = self.create_pet('Cat')
-        pet.city = 'araras'
+        pet.city = self.test_city
         pet.save()
 
         response = self.client.get(pet.get_absolute_url())
 
-        self.assertContains(response, 'Araras')
+        self.assertContains(response, self.test_city)
 
     def test_show_size(self):
         pet = self.create_pet('Cat', size=Pet.SMALL)
@@ -262,9 +263,9 @@ class MeuPetTest(TestCase):
         self.assertRedirects(response, reverse('meupet:search'))
 
     def test_custom_search_with_filter(self):
-        pet = self.create_pet('Dog', city='Araras')
+        pet = self.create_pet('Dog', city=self.test_city)
 
-        response = self.client.post('/search/', {'city': 'Araras'}, follow=True)
+        response = self.client.post('/search/', {'city': self.test_city.id}, follow=True)
 
         self.assertContains(response, pet.name)
         self.assertContains(response, pet.city)

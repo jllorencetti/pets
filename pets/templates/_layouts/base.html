@@ -129,16 +129,7 @@
 <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/lightbox.js' %}"></script>
-<script>
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    var currentPath = window.location.pathname;
-    var link = links[i];
-    if (link.pathname == currentPath && link.href.indexOf('#') == -1) {
-      $(link.parentNode).addClass('active');
-    }
-  }
-</script>
+<script src="{% static 'js/pets.js' %}"></script>
 {% if not debug %}
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -148,7 +139,6 @@
 
   ga('create', 'UA-49489257-3', 'auto');
   ga('send', 'pageview');
-
 </script>
 {% endif %}
 {% block morescripts %}{% endblock %}

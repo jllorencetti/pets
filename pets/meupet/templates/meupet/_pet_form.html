@@ -26,6 +26,11 @@
     <div class="col-sm-10">
       {{ form.city }}
       {{ form.errors.city }}
+      <p>Não encontrou sua cidade? <a id="new-city" href="#">Clique aqui</a></p>
+      <div class="new-city">
+        {{ form.new_city }}
+        {{ form.errors.new_city }}
+      </div>
     </div>
   </div>
 

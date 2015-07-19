@@ -5,17 +5,3 @@
     {% include 'meupet/_pet_form.html' %}
   </div>
 {% endblock %}
-
-{% block morescripts %}
-  <script>
-    $(document).ready(function () {
-      $('#profile_picture').on('change', function () {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          $('#picture').attr('src', e.target.result);
-        };
-        reader.readAsDataURL(this.files[0]);
-      });
-    });
-  </script>
-{% endblock %}

@@ -7,7 +7,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
 
-from meupet.models import Kind, Pet
+from meupet.models import Kind, Pet, City
 from users.models import OwnerProfile
 
 
@@ -30,6 +30,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         user = OwnerProfile.objects.create_user('admin', 'ad@min.com', 'admin')
         user.is_information_confirmed = True
         user.save()
+        self.test_city, _ = City.objects.get_or_create(city='Araras')
         Kind.objects.create(kind='Cats')
         self.browser = webdriver.PhantomJS()
         self.browser.implicitly_wait(1)
@@ -65,6 +66,10 @@ class SiteTestCases(StaticLiveServerTestCase):
             windowid=self._windowid,
             timestamp=timestamp
         )
+
+    def select_dropdown(self, element_name, index):
+        element = Select(self.browser.find_element_by_name(element_name))
+        element.select_by_index(index)
 
     def login(self):
         self.browser.get('%s%s' % (self.live_server_url, '/user/login/'))
@@ -104,6 +109,8 @@ class SiteTestCases(StaticLiveServerTestCase):
         kind = Select(kind)
         kind.select_by_index(1)
 
+        self.select_dropdown('city', 1)
+
         profile_picture = self.browser.find_element_by_name('profile_picture')
         profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
 
@@ -111,6 +118,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         submit.click()
 
         self.assertIn('Testing', self.browser.page_source)
+        self.assertInHTML('<h2>Test - Desaparecido</h2>', self.browser.page_source)
 
     def test_add_pet_for_adoption(self):
         self.login()
@@ -124,9 +132,9 @@ class SiteTestCases(StaticLiveServerTestCase):
         description = self.browser.find_element_by_name('description')
         description.send_keys('Testing Adoption')
 
-        kind = self.browser.find_element_by_name('kind')
-        kind = Select(kind)
-        kind.select_by_index(1)
+        self.select_dropdown('kind', 1)
+
+        self.select_dropdown('city', 1)
 
         profile_picture = self.browser.find_element_by_name('profile_picture')
         profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
@@ -135,6 +143,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         submit.click()
 
         self.assertIn('Testing Adoption', self.browser.page_source)
+        self.assertInHTML('<h2>Test - Para Adoção</h2>', self.browser.page_source)
 
     def test_logout(self):
         self.login()
@@ -151,19 +160,18 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + '/pet/lost/')
         self.browser.find_element_by_name('name').send_keys('Wrong Boots')
         self.browser.find_element_by_name('description').send_keys('My dear lovely cat')
-        self.browser.find_element_by_name('city').send_keys('Catland')
+
+        # select the city
+        self.select_dropdown('city', 1)
 
         # selects the kind as a Cat
-        kind = Select(self.browser.find_element_by_name('kind'))
-        kind.select_by_index(1)
+        self.select_dropdown('kind', 1)
 
         # selects the size of the pet
-        size = Select(self.browser.find_element_by_name('size'))
-        size.select_by_index(3)
+        self.select_dropdown('size', 3)
 
         # selects the sex of the pet
-        sex = Select(self.browser.find_element_by_name('sex'))
-        sex.select_by_index(1)
+        self.select_dropdown('sex', 1)
 
         # user select a picture of his cat
         profile_picture = self.browser.find_element_by_name('profile_picture')
@@ -188,6 +196,8 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.assertIn('Fuzzy Boots', self.browser.page_source)
         self.assertIn('Grande', self.browser.page_source)
         self.assertIn('Fêmea', self.browser.page_source)
+        self.assertIn('Araras', self.browser.page_source)
+        self.assertInHTML('<h2>Fuzzy Boots - Desaparecido</h2>', self.browser.page_source)
 
     def test_edit_profile_information(self):
         # user login
@@ -199,13 +209,18 @@ class SiteTestCases(StaticLiveServerTestCase):
         # see a wrong information and click in the edit button
         self.browser.find_element_by_link_text('Editar').click()
 
-        # user change the first name and save it
+        # user change the first name
         self.browser.find_element_by_name('first_name').clear()
-        self.browser.find_element_by_name('first_name').send_keys('Super Admin')
+        self.browser.find_element_by_name('first_name').send_keys('Super')
+
+        # user change the last name
+        self.browser.find_element_by_name('last_name').send_keys('Admin')
+
+        # and submit
         self.browser.find_element_by_name('submit').click()
 
         # user is back to the profile page and see the correct information
-        self.assertIn('Super Admin', self.browser.page_source)
+        self.assertIn('Alterações gravadas com sucesso.', self.browser.page_source)
 
     def test_search_for_a_particular_pet(self):
         # pre register pet
@@ -244,3 +259,32 @@ class SiteTestCases(StaticLiveServerTestCase):
         # verify new photo is showing
         self.assertIn('Outras fotos', self.browser.page_source)
         self.assertEquals(img_after, img_before + 1)
+
+    def test_create_new_city(self):
+        self.login()
+
+        self.browser.get(self.live_server_url + '/pet/adoption/')
+
+        name = self.browser.find_element_by_name('name')
+        name.send_keys('Test New City')
+
+        description = self.browser.find_element_by_name('description')
+        description.send_keys('Testing Adoption')
+
+        self.select_dropdown('kind', 1)
+
+        show_new_city = self.browser.find_element_by_id('new-city')
+        show_new_city.click()
+
+        new_city = self.browser.find_element_by_id('id_new_city')
+        new_city.send_keys('Created City')
+
+        profile_picture = self.browser.find_element_by_name('profile_picture')
+        profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
+
+        submit = self.browser.find_element_by_name('submit')
+        submit.click()
+
+        self.assertIn('Testing Adoption', self.browser.page_source)
+        self.assertIn('Created City', self.browser.page_source)
+        self.assertInHTML('<h2>Test New City - Para Adoção</h2>', self.browser.page_source)

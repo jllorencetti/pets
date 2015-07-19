@@ -10,3 +10,4 @@ class PetAdmin(admin.ModelAdmin):
 admin.site.register(models.Pet, PetAdmin)
 admin.site.register(models.Kind)
 admin.site.register(models.Photo)
+admin.site.register(models.City)

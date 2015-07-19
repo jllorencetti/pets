@@ -77,6 +77,10 @@ li.active {
   color: #5bc0dE;
 }
 
+.new-city {
+  display: none;
+}
+
 @media (min-width: 768px) {
   body {
     margin-bottom: 150px;

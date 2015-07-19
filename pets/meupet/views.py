@@ -109,7 +109,9 @@ class QuickSearchView(MeuPetEspecieMixin, ListView):
         size_reverse = dict((v.upper(), k) for k, v in models.Pet.PET_SIZE)
         size_key = size_reverse.get(query.upper(), '')
 
-        filters = Q(name__icontains=query) | Q(description__icontains=query) | Q(city__icontains=query)
+        filters = Q(name__icontains=query) | \
+            Q(description__icontains=query) | \
+            Q(city__city__icontains=query)
 
         if size_key:
             filters = filters | Q(size=size_key)
