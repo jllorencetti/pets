@@ -19,7 +19,7 @@ class HomePageView(MeuPetEspecieMixin, ListView):
     context_object_name = 'pets'
 
     def get_queryset(self):
-        return models.Pet.objects.order_by('-id')[:12]
+        return models.Pet.objects.select_related('city').order_by('-id')[:12]
 
 
 class AboutPageView(MeuPetEspecieMixin, TemplateView):
