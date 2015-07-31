@@ -29,6 +29,9 @@ class City(models.Model):
     def __str__(self):
         return self.city
 
+    class Meta:
+        ordering = ['city']
+
 
 class Pet(models.Model):
     MALE = 'MA'
