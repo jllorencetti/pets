@@ -2,8 +2,12 @@
 <div class="row">
   {% for pet in pets %}
     <div class="col-xs-12 col-sm-6 col-md-4 card-pet">
-      <div class="thumbnail">
+      <div class="thumbnail {% if pet.is_found_or_adopted %} found-or-adopted{% endif %}">
         <img src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}" alt="{{ pet }}">
+
+        {% if pet.is_found_or_adopted %}
+          <h2 class="text-center"><span>{{ pet.get_status_display }}! :)</span></h2>
+        {% endif %}
 
         <div class="caption clearfix">
           <div class='pull-left'>

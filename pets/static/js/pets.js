@@ -12,6 +12,12 @@ $(document).ready(function () {
         $('.new-city').show(250);
     });
 
+    $(function () {
+        $(".found-or-adopted > h2 br")
+            .before("<span class='spacer'>")
+            .after("<span class='spacer'>");
+    });
+
     var links = document.getElementsByTagName('a');
     for (var i = 0; i < links.length; i++) {
         var currentPath = window.location.pathname;

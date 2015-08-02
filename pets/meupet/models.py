@@ -1,11 +1,7 @@
 from django.db import models
-from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from users.models import OwnerProfile
-from easy_thumbnails.files import get_thumbnailer
-
-from . import functions
 
 
 class PetManager(models.Manager):
@@ -84,9 +80,10 @@ class Pet(models.Model):
 
     def change_status(self):
         self.status = self.FOUND if self.status == self.MISSING else self.ADOPTED
-        thumb_path = get_thumbnailer(self.profile_picture)['pet_thumb'].file
-        functions.update_image(thumb_path.name, self.get_status_display(), settings.STATICFILES_DIRS[0])
         self.save()
+
+    def is_found_or_adopted(self):
+        return self.status in (self.ADOPTED, self.FOUND)
 
     def __str__(self):
         return self.name

@@ -81,6 +81,33 @@ li.active {
   display: none;
 }
 
+/** Status indicator **/
+.found-or-adopted {
+  position: relative;
+  width: 100%; /* for IE 6 */
+}
+
+.found-or-adopted > h2 {
+  position: absolute;
+  bottom: 23%;
+  left: 0;
+  width: 100%;
+}
+
+.found-or-adopted > h2 span {
+  color: white;
+  font: bold 24px/45px Helvetica, Sans-Serif;
+  letter-spacing: -1px;
+  background: rgb(27, 68, 60); /* fallback color */
+  background: rgba(27, 68, 60, 0.7);
+  padding: 10px;
+}
+
+.found-or-adopted > h2 span.spacer {
+  padding: 0 5px;
+}
+
+/** Media queries **/
 @media (min-width: 768px) {
   body {
     margin-bottom: 150px;

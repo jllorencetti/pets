@@ -20,7 +20,7 @@
 {% block content %}
   <div class="row">
     <div class="col-md-12">
-      <h2>{{ pet.name }} - {% if pet.status == pet.FOR_ADOPTION %}Para Adoção{% elif pet.status == pet.MISSING %}Desaparecido{% endif %}</h2>
+      <h2>{{ pet.name }} - {{ pet.get_status_display }}</h2>
       {% if user == pet.owner %}
         <a href="{% url 'meupet:edit' pet.id %}" class="btn btn-primary">Editar</a>
         {% if not pet.found_or_adopted %}

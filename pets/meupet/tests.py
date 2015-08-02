@@ -276,3 +276,11 @@ class MeuPetTest(TestCase):
         response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Fêmea')
+
+    def test_change_status_and_show_status_label(self):
+        pet = self.create_pet('Dog', status=Pet.FOR_ADOPTION)
+        self.client.post(reverse('meupet:change_status', args=[pet.id]))
+
+        response = self.client.get(reverse('meupet:index'))
+
+        self.assertContains(response, '<h2 class="text-center"><span>Adotado! :)</span></h2>')
