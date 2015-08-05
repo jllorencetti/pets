@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic.base import ContextMixin
 
 from meupet import models
@@ -14,3 +15,7 @@ class MeuPetEspecieMixin(ContextMixin):
         context['kind_lost'] = get_kind_list()
         context['kind_adoption'] = get_kind_list()
         return context
+
+
+def not_found(request):
+    return render(request, 'staticpages/404.html')

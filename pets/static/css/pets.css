@@ -63,6 +63,10 @@ li.active {
   font-style: italic;
 }
 
+.page-not-found-img {
+  margin-bottom: 40px;
+}
+
 /** Footer **/
 .footer {
   position: absolute;
