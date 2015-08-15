@@ -11,7 +11,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'ca#j$qam2uh*))o*1&31(_7ud1k6hrjwn+5gd
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-TEMPLATE_DEBUG = DEBUG
 
 INTERNAL_IPS = (
     '0.0.0.0',
@@ -58,17 +57,28 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, '../templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
+            ],
+        },
+    },
+]
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.Facebook2OAuth2',
@@ -137,12 +147,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, '../../static_root')
 # Setting media configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../../media')
-
-# Setting global templates folder for site-wide template
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, '../templates'),
-)
-
 
 # Setting easy_thumbnails
 THUMBNAIL_ALIASES = {
