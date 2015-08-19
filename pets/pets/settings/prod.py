@@ -151,7 +151,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../../media')
 # Setting easy_thumbnails
 THUMBNAIL_ALIASES = {
     '': {
-        'pet_thumb': {'size': (350, 350), 'crop': True},
+        'pet_thumb': {'size': (350, 350), 'crop': True, 'upscale': True},
     }
 }
 
