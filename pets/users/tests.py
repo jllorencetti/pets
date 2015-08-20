@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from django.core.urlresolvers import reverse
 
 from .models import OwnerProfile
 from users.validators import validate_facebook_url
@@ -11,9 +10,9 @@ class UserRegistrationTest(TestCase):
         self.create_user()
         self.client.login(username='tester', password='test123')
 
-    def create_user(self):
+    def create_user(self, username='tester'):
         user = OwnerProfile(first_name='Test First Name', last_name='Tester', email='te@ste.com',
-                            username='tester')
+                            username=username)
         user.set_password('test123')
         user.save()
         return user
@@ -77,7 +76,7 @@ class UserRegistrationTest(TestCase):
     def test_render_profile_with_correct_template(self):
         user = self.create_user()
 
-        response = self.client.get(reverse('users:user_profile', args=[user.id]))
+        response = self.client.get(user.get_absolute_url())
 
         self.assertTemplateUsed('users/profile.html')
         self.assertContains(response, 'Test First Name')
@@ -136,3 +135,16 @@ class UserRegistrationTest(TestCase):
         with self.assertRaises(ValidationError):
             user.save()
             user.full_clean()
+
+    def test_show_facebook_url_profile_view_if_present(self):
+        user_with_url = self.create_user()
+        user_with_url.facebook = 'https://www.facebook.com/test'
+        user_with_url.save()
+
+        user_without_url = self.create_user(username='tester2')
+
+        response_without_url = self.client.get(user_without_url.get_absolute_url())
+        response_with_url = self.client.get(user_with_url.get_absolute_url())
+
+        self.assertContains(response_without_url, 'Facebook', 1)
+        self.assertContains(response_with_url, 'Facebook', 2)
