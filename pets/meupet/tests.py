@@ -44,7 +44,7 @@ class MeuPetTest(TestCase):
         self.create_pet('Goat', 'Goat')
         self.create_pet('Cat', 'Cat')
 
-        home = self.client.get('/')
+        home = self.client.get(reverse('meupet:index'))
 
         self.assertContains(home, 'Testing Goat')
         self.assertContains(home, 'Testing Cat')
@@ -53,7 +53,7 @@ class MeuPetTest(TestCase):
         self.create_pet('Goat')
         self.create_pet('Cat')
 
-        home = self.client.get('/')
+        home = self.client.get(reverse('meupet:index'))
 
         self.assertContains(home, 'Goat')
         self.assertContains(home, 'Cat')
@@ -133,8 +133,8 @@ class MeuPetTest(TestCase):
     def test_should_redirect_if_not_confirmed(self):
         self.client.login(username='admin', password='admin')
 
-        response_lost = self.client.get('/pet/lost/')
-        response_adoption = self.client.get('/pet/adoption/')
+        response_lost = self.client.get(reverse('meupet:register_lost'))
+        response_adoption = self.client.get(reverse('meupet:register_adoption'))
 
         self.assertRedirects(response_lost, '/user/profile/edit/')
         self.assertRedirects(response_adoption, '/user/profile/edit/')
@@ -145,8 +145,8 @@ class MeuPetTest(TestCase):
         admin.save()
         self.client.login(username='admin', password='admin')
 
-        response_lost = self.client.get('/pet/lost/')
-        response_adoption = self.client.get('/pet/adoption/')
+        response_lost = self.client.get(reverse('meupet:register_lost'))
+        response_adoption = self.client.get(reverse('meupet:register_adoption'))
 
         self.assertTemplateUsed(response_lost, 'meupet/register_pet.html')
         self.assertTemplateUsed(response_adoption, 'meupet/register_pet.html')
@@ -193,7 +193,7 @@ class MeuPetTest(TestCase):
     def test_incorrect_form_submission_reload_page_with_values(self):
         self.client.login(username='admin', password='admin')
 
-        response = self.client.post('/pet/lost/', {'description': 'Test Description'}, follow=True)
+        response = self.client.post(reverse('meupet:register_lost'), {'description': 'Test Description'}, follow=True)
 
         self.assertContains(response, 'Test Description')
 
@@ -219,10 +219,10 @@ class MeuPetTest(TestCase):
     def test_search_pet(self):
         self.create_pet('Cat', city=self.test_city, size=Pet.SMALL)
 
-        response_name = self.client.get('/quick-search/', {'q': 'Testing'})
-        response_desc = self.client.get('/quick-search/', {'q': 'bla'})
-        response_city = self.client.get('/quick-search/', {'q': self.test_city})
-        response_size = self.client.get('/quick-search/', {'q': 'Pequeno'})
+        response_name = self.client.get(reverse('meupet:quick_search'), {'q': 'Testing'})
+        response_desc = self.client.get(reverse('meupet:quick_search'), {'q': 'bla'})
+        response_city = self.client.get(reverse('meupet:quick_search'), {'q': self.test_city})
+        response_size = self.client.get(reverse('meupet:quick_search'), {'q': 'Pequeno'})
 
         self.assertContains(response_name, 'Testing Pet')
         self.assertContains(response_desc, 'Testing Pet')
@@ -246,26 +246,26 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'Pequeno')
 
     def test_empty_search_redirect_to_home(self):
-        response = self.client.get('/quick-search/', {'q': ''})
+        response = self.client.get(reverse('meupet:quick_search'), {'q': ''})
 
         self.assertRedirects(response, reverse('meupet:index'))
 
     def test_invalid_size_key_shouldnt_return_pets_with_empty_size(self):
         self.create_pet('Dog')
 
-        response = self.client.get('/quick-search/', {'q': 'zzz'})
+        response = self.client.get(reverse('meupet:quick_search'), {'q': 'zzz'})
 
         self.assertContains(response, 'Nenhum amiguinho')
 
     def test_custom_search_without_filters(self):
-        response = self.client.post('/search/', {})
+        response = self.client.post(reverse('meupet:search'), {})
 
         self.assertRedirects(response, reverse('meupet:search'))
 
     def test_custom_search_with_filter(self):
         pet = self.create_pet('Dog', city=self.test_city)
 
-        response = self.client.post('/search/', {'city': self.test_city.id}, follow=True)
+        response = self.client.post(reverse('meupet:search'), {'city': self.test_city.id}, follow=True)
 
         self.assertContains(response, pet.name)
         self.assertContains(response, pet.city)

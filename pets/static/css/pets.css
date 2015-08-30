@@ -111,6 +111,31 @@ li.active {
   padding: 0 5px;
 }
 
+/** Home page **/
+.jumbotron .callout {
+  font-size: 5em;
+}
+
+.jumbotron {
+  background-color: inherit;
+}
+
+.tips {
+  text-align: center;
+}
+
+.tips .fa {
+  font-size: 7em;
+}
+
+.fa-heart {
+  color: red;
+}
+
+.fa-life-ring {
+  color: #1fa67a;
+}
+
 /** Media queries **/
 @media (min-width: 768px) {
   body {

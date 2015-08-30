@@ -41,7 +41,7 @@ THIRD_PARTS_APPS = (
 PROJECT_APPS = (
     'users',
     'meupet',
-    'common'
+    'common',
 )
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTS_APPS

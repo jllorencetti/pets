@@ -22,14 +22,6 @@ class HomePageView(MeuPetEspecieMixin, ListView):
         return models.Pet.objects.select_related('city').order_by('-id')[:12]
 
 
-class AboutPageView(MeuPetEspecieMixin, TemplateView):
-    template_name = 'staticpages/about.html'
-
-
-class AssociacoesView(MeuPetEspecieMixin, TemplateView):
-    template_name = 'staticpages/associacoes.html'
-
-
 class PetDetailView(MeuPetEspecieMixin, TemplateView):
     template_name = 'meupet/pet_detail.html'
 

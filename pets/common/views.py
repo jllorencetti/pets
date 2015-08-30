@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import ContextMixin
+from django.views.generic import TemplateView
 
 from meupet import models
 
@@ -17,5 +18,18 @@ class MeuPetEspecieMixin(ContextMixin):
         return context
 
 
+class AboutPageView(MeuPetEspecieMixin, TemplateView):
+    template_name = 'staticpages/about.html'
+
+
+class AssociacoesView(MeuPetEspecieMixin, TemplateView):
+    template_name = 'staticpages/associacoes.html'
+
+
 def not_found(request):
     return render(request, 'staticpages/404.html')
+
+
+def home(request):
+    pets = models.Pet.objects.select_related('city').order_by('-id')[:6]
+    return render(request, 'common/home.html', {'pets': pets})
