@@ -36,6 +36,7 @@ THIRD_PARTS_APPS = (
     'crispy_forms',
     'social.apps.django_app.default',
     'opbeat.contrib.django',
+    'compressor',
 )
 
 PROJECT_APPS = (
@@ -143,6 +144,12 @@ STATICFILES_DIRS = (
 
 # static root folder, where static files will be collected to
 STATIC_ROOT = os.path.join(BASE_DIR, '../../static_root')
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder"
+]
 
 # Setting media configuration
 MEDIA_URL = '/media/'
