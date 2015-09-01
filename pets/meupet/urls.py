@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.HomePageView.as_view(), name='index'),
+    url(r'^$', views.PetIndexView.as_view(), name='index'),
     url(r'^(?P<id>[0-9]+)/$', views.PetDetailView.as_view(), name='detail'),
     url(r'^(?P<pk>[0-9]+)/edit/$', views.EditPetView.as_view(), name='edit'),
     url(r'^(?P<pet_id>[0-9]+)/edit/status/$', views.change_status, name='change_status'),

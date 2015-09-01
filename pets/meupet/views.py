@@ -14,7 +14,7 @@ from . import models
 from meupet.forms import SearchForm
 
 
-class HomePageView(MeuPetEspecieMixin, ListView):
+class PetIndexView(MeuPetEspecieMixin, ListView):
     template_name = 'meupet/index.html'
     context_object_name = 'pets'
 
