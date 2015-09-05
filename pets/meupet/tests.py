@@ -103,6 +103,7 @@ class MeuPetTest(TestCase):
                                                'description': 'My lovely cat',
                                                'city': self.test_city.id,
                                                'kind': kind.id,
+                                               'status': pet.status,
                                                'profile_picture': url})
         response_get = self.client.get(pet.get_absolute_url())
 
@@ -133,11 +134,9 @@ class MeuPetTest(TestCase):
     def test_should_redirect_if_not_confirmed(self):
         self.client.login(username='admin', password='admin')
 
-        response_lost = self.client.get(reverse('meupet:register_lost'))
-        response_adoption = self.client.get(reverse('meupet:register_adoption'))
+        response = self.client.get(reverse('meupet:register'))
 
-        self.assertRedirects(response_lost, '/user/profile/edit/')
-        self.assertRedirects(response_adoption, '/user/profile/edit/')
+        self.assertRedirects(response, '/user/profile/edit/')
 
     def test_should_access_if_confirmed(self):
         admin = OwnerProfile.objects.first()
@@ -145,11 +144,9 @@ class MeuPetTest(TestCase):
         admin.save()
         self.client.login(username='admin', password='admin')
 
-        response_lost = self.client.get(reverse('meupet:register_lost'))
-        response_adoption = self.client.get(reverse('meupet:register_adoption'))
+        response = self.client.get(reverse('meupet:register'))
 
-        self.assertTemplateUsed(response_lost, 'meupet/register_pet.html')
-        self.assertTemplateUsed(response_adoption, 'meupet/register_pet.html')
+        self.assertTemplateUsed(response, 'meupet/register_pet.html')
 
     def test_only_owner_can_see_edit_page(self):
         OwnerProfile.objects.create_user(username='Other User', password='otherpass')
@@ -193,7 +190,9 @@ class MeuPetTest(TestCase):
     def test_incorrect_form_submission_reload_page_with_values(self):
         self.client.login(username='admin', password='admin')
 
-        response = self.client.post(reverse('meupet:register_lost'), {'description': 'Test Description'}, follow=True)
+        response = self.client.post(reverse('meupet:register'),
+                                    {'description': 'Test Description'},
+                                    follow=True)
 
         self.assertContains(response, 'Test Description')
 

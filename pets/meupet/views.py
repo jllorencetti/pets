@@ -50,7 +50,7 @@ class LostPetView(MeuPetEspecieMixin, TemplateView):
         return context
 
 
-class RegisterLostPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
+class RegisterPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
     template_name = 'meupet/register_pet.html'
     model = models.Pet
     form_class = forms.PetForm
@@ -60,29 +60,11 @@ class RegisterLostPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
             messages.warning(request, 'Favor confirmar suas informações antes de cadastrar algum pet.')
             return HttpResponseRedirect(reverse('users:edit'))
         else:
-            return super(RegisterLostPetView, self).get(request, *args, **kwargs)
+            return super(RegisterPetView, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
-        return super(RegisterLostPetView, self).form_valid(form)
-
-
-class RegisterAdoptionPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
-    template_name = 'meupet/register_pet.html'
-    model = models.Pet
-    form_class = forms.PetForm
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_information_confirmed:
-            messages.warning(request, 'Favor confirmar suas informações antes de cadastrar algum pet.')
-            return HttpResponseRedirect(reverse('users:edit'))
-        else:
-            return super(RegisterAdoptionPetView, self).get(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        form.instance.status = models.Pet.FOR_ADOPTION
-        return super(RegisterAdoptionPetView, self).form_valid(form)
+        return super(RegisterPetView, self).form_valid(form)
 
 
 class QuickSearchView(MeuPetEspecieMixin, ListView):

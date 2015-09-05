@@ -97,7 +97,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.login()
         self.assertIn('Cadastrar Pet', self.browser.page_source)
 
-        self.browser.get(self.live_server_url + '/pets/lost/')
+        self.browser.get(self.live_server_url + '/pets/new/')
 
         name = self.browser.find_element_by_name('name')
         name.send_keys('Test')
@@ -124,13 +124,15 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.login()
         self.assertIn('Cadastrar Pet', self.browser.page_source)
 
-        self.browser.get(self.live_server_url + '/pets/adoption/')
+        self.browser.get(self.live_server_url + '/pets/new/')
 
         name = self.browser.find_element_by_name('name')
         name.send_keys('Test')
 
         description = self.browser.find_element_by_name('description')
         description.send_keys('Testing Adoption')
+
+        self.select_dropdown('status', 1)
 
         self.select_dropdown('kind', 1)
 
@@ -157,7 +159,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.assertIn('Cadastrar Pet', self.browser.page_source)
 
         # user register a lost cat with wrong name
-        self.browser.get(self.live_server_url + '/pets/lost/')
+        self.browser.get(self.live_server_url + '/pets/new/')
         self.browser.find_element_by_name('name').send_keys('Wrong Boots')
         self.browser.find_element_by_name('description').send_keys('My dear lovely cat')
 
@@ -180,9 +182,15 @@ class SiteTestCases(StaticLiveServerTestCase):
         # click on submit
         self.browser.find_element_by_name('submit').click()
 
+        # assert pet was registered
+        self.assertInHTML('<h2>Wrong Boots - Desaparecido</h2>', self.browser.page_source)
+
         # user is redirected for the page of his pet and see the wrong name
         # then click on 'Edit' and get redirected for the editing page
         self.browser.find_element_by_link_text('Editar').click()
+
+        # user change the status to 'For Adoption'
+        self.select_dropdown('status', 1)
 
         # user inform the correct name for the pet then save
         self.browser.find_element_by_name('name').clear()
@@ -197,7 +205,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.assertIn('Grande', self.browser.page_source)
         self.assertIn('Fêmea', self.browser.page_source)
         self.assertIn('Araras', self.browser.page_source)
-        self.assertInHTML('<h2>Fuzzy Boots - Desaparecido</h2>', self.browser.page_source)
+        self.assertInHTML('<h2>Fuzzy Boots - Para Adoção</h2>', self.browser.page_source)
 
     def test_edit_profile_information(self):
         # user login
@@ -263,13 +271,15 @@ class SiteTestCases(StaticLiveServerTestCase):
     def test_create_new_city(self):
         self.login()
 
-        self.browser.get(self.live_server_url + '/pets/adoption/')
+        self.browser.get(self.live_server_url + '/pets/new/')
 
         name = self.browser.find_element_by_name('name')
         name.send_keys('Test New City')
 
         description = self.browser.find_element_by_name('description')
         description.send_keys('Testing Adoption')
+
+        self.select_dropdown('status', 1)
 
         self.select_dropdown('kind', 1)
 

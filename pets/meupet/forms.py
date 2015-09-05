@@ -11,7 +11,7 @@ class PetForm(forms.ModelForm):
     class Meta:
         model = models.Pet
         fields = ('name', 'description', 'city', 'kind',
-                  'profile_picture', 'size', 'sex',)
+                  'profile_picture', 'size', 'sex', 'status',)
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descrição'}),
@@ -19,6 +19,7 @@ class PetForm(forms.ModelForm):
             'kind': forms.Select(attrs={'class': 'form-control'}),
             'size': forms.Select(attrs={'class': 'form-control'}),
             'sex': forms.Select(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
         }
 
     def clean(self):
