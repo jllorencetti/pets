@@ -5,7 +5,10 @@ from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 
 from meupet.models import Kind, Pet, City
 from users.models import OwnerProfile
@@ -20,6 +23,7 @@ def get_test_image_file(filename='test.png'):
     image = Image.new('RGB', (200, 200), 'white')
     image.save(f, 'PNG')
     return ImageFile(f, name=filename)
+
 
 SCREEN_DUMP_LOCATION = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screendumps')
 
@@ -298,3 +302,24 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.assertIn('Testing Adoption', self.browser.page_source)
         self.assertIn('Created City', self.browser.page_source)
         self.assertInHTML('<h2>Test New City - Para Adoção</h2>', self.browser.page_source)
+
+    def test_delete_pet(self):
+        # pre register pet
+        pet = self.create_pet()
+
+        # login
+        self.login()
+
+        # go to own pet
+        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.id))
+
+        # click on delete button
+        self.browser.find_element_by_css_selector('.btn-danger').click()
+        WebDriverWait(self.browser, 2).until(ec.visibility_of_element_located(
+            (By.CSS_SELECTOR, 'input.btn-danger'))
+        )
+
+        # confirm the delete action
+        self.browser.find_element_by_css_selector('input.btn-danger').click()
+
+        self.assertNotIn('Costela', self.browser.page_source)

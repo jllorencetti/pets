@@ -110,6 +110,15 @@ class EditPetView(MeuPetEspecieMixin, UpdateView):
         return super(EditPetView, self).form_valid(form)
 
 
+def delete_pet(request, pet_id):
+    pet = get_object_or_404(models.Pet, pk=pet_id)
+    if request.method == 'POST' and request.user == pet.owner:
+        pet.delete()
+        return HttpResponseRedirect(reverse('meupet:index'))
+    else:
+        return HttpResponseRedirect(pet.get_absolute_url())
+
+
 def change_status(request, pet_id):
     pet = get_object_or_404(models.Pet, pk=pet_id)
     pet.change_status()

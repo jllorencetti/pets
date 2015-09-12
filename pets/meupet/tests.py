@@ -34,7 +34,7 @@ class MeuPetTest(TestCase):
 
     def create_pet(self, kind, name='Pet', status=Pet.MISSING, **kwargs):
         image = get_test_image_file()
-        user = OwnerProfile.objects.first()
+        user = self.admin
         kind = Kind.objects.get_or_create(kind=kind)[0]
         return Pet.objects.create(name='Testing ' + name, description='Bla',
                                   profile_picture=image, owner=user, kind=kind,
@@ -91,6 +91,25 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'Testing Own Pet')
         self.assertContains(response, 'Bla')
         self.assertContains(response, 'Salvar Alterações')
+
+    def test_owner_can_delete_pet(self):
+        pet = self.create_pet('Own Pet')
+        self.client.login(username='admin', password='admin')
+
+        response = self.client.post(reverse('meupet:delete_pet', args=[pet.id]), follow=True)
+
+        self.assertTemplateUsed(response, 'meupet/index.html')
+        self.assertNotContains(response, 'Testing Pet')
+
+    def test_other_user_can_delete_pet(self):
+        pet = self.create_pet('Own Pet')
+        OwnerProfile.objects.create_user(username='other', password='user')
+        self.client.login(username='other', password='user')
+
+        response = self.client.post(reverse('meupet:delete_pet', args=[pet.id]), follow=True)
+
+        self.assertTemplateUsed(response, 'meupet/pet_detail.html')
+        self.assertContains(response, 'Testing Pet')
 
     def test_can_edit_pet(self):
         pet = self.create_pet('Own Pet')
