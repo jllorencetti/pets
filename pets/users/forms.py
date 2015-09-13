@@ -38,6 +38,10 @@ class LoginForm(AuthenticationForm):
 
 
 class RegisterForm(UserCreationForm):
+    help_fb = 'Clique <a href="#" data-toggle="modal" data-target="#ajuda-facebook">aqui</a> ' \
+             'para saber como preencher esse campo.'
+    help_username = 'Obrigatório. 30 caracteres ou menos. Somente letras, números e @/./+/-/_.'
+
     class Meta:
         model = OwnerProfile
         fields = ('first_name', 'last_name', 'email', 'username', 'facebook', 'password1', 'password2', )
@@ -47,6 +51,8 @@ class RegisterForm(UserCreationForm):
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
         self.fields['email'].required = True
+        self.fields['facebook'].help_text = _(self.help_fb)
+        self.fields['username'].help_text = _(self.help_username)
         self.helper = FormHelper()
         self.helper.layout = Layout(
             'first_name',
