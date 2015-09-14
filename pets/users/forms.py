@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field
 
@@ -13,7 +14,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = OwnerProfile
-        fields = ('email', )
+        fields = ('email',)
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -37,22 +38,25 @@ class LoginForm(AuthenticationForm):
         self.helper.add_input(Submit('login', 'Efetuar Login'))
 
 
-class RegisterForm(UserCreationForm):
-    help_fb = 'Clique <a href="#" data-toggle="modal" data-target="#ajuda-facebook">aqui</a> ' \
-             'para saber como preencher esse campo.'
-    help_username = 'Obrigatório. 30 caracteres ou menos. Somente letras, números e @/./+/-/_.'
-
-    class Meta:
-        model = OwnerProfile
-        fields = ('first_name', 'last_name', 'email', 'username', 'facebook', 'password1', 'password2', )
-
+class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(RegisterForm, self).__init__(*args, **kwargs)
+        super(UserForm, self).__init__(*args, **kwargs)
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
         self.fields['email'].required = True
-        self.fields['facebook'].help_text = _(self.help_fb)
-        self.fields['username'].help_text = _(self.help_username)
+        self.fields['facebook'].help_text = _('Clique <a href="#" data-toggle="modal" data-target="#ajuda-facebook">'
+                                              'aqui</a> para saber como preencher esse campo.')
+
+
+class RegisterForm(UserCreationForm, UserForm):
+    class Meta:
+        model = OwnerProfile
+        fields = ('first_name', 'last_name', 'email', 'username', 'facebook', 'password1', 'password2',)
+
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        self.fields['username'].help_text = _('Obrigatório. 30 caracteres ou menos. '
+                                              'Somente letras, números e @/./+/-/_.')
         self.helper = FormHelper()
         self.helper.layout = Layout(
             'first_name',
@@ -66,16 +70,13 @@ class RegisterForm(UserCreationForm):
         self.helper.add_input(Submit('register', 'Criar Conta'))
 
 
-class UpdateUserForm(forms.ModelForm):
+class UpdateUserForm(UserForm):
     class Meta:
         model = OwnerProfile
-        fields = ('first_name', 'last_name', 'email', 'facebook', )
+        fields = ('first_name', 'last_name', 'email', 'facebook',)
 
     def __init__(self, *args, **kwargs):
         super(UpdateUserForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].required = True
-        self.fields['last_name'].required = True
-        self.fields['email'].required = True
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Gravar Alterações'))
 
