@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from .models import OwnerProfile
@@ -148,3 +149,12 @@ class UserRegistrationTest(TestCase):
 
         self.assertContains(response_without_url, 'Facebook', 1)
         self.assertContains(response_with_url, 'Facebook', 2)
+
+    def test_only_logged_user_can_edit_profile(self):
+        edit_url = reverse('users:edit')
+        redirect_url = '{0}?next={1}'.format(reverse('users:login'), reverse('users:edit'))
+
+        response = self.client.get(edit_url, follow=True)
+
+        self.assertTemplateUsed(response, 'users/login.html')
+        self.assertRedirects(response, redirect_url)
