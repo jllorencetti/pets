@@ -11,6 +11,9 @@ class PetManager(models.Manager):
     def get_for_adoption_adopted(self, kind_id):
         return self.filter(kind__id=kind_id, status__in=[Pet.FOR_ADOPTION, Pet.ADOPTED])
 
+    def get_unpublished_pets(self):
+        return self.filter(published=False)
+
 
 class Kind(models.Model):
     kind = models.TextField(max_length=100)
@@ -69,6 +72,7 @@ class Pet(models.Model):
                            choices=PET_SEX,
                            blank=True)
     profile_picture = models.ImageField(upload_to='pet_profiles')
+    published = models.BooleanField(default=False)
 
     objects = PetManager()
 

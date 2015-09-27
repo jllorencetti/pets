@@ -1,11 +1,13 @@
 import shutil
 import tempfile
+from unittest.mock import MagicMock, patch
 
 from django.conf import settings
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from meupet.models import Pet, Kind, Photo, City
+from meupet.management.commands.shareonfacebook import Command
 from users.models import OwnerProfile
 
 
@@ -302,3 +304,37 @@ class MeuPetTest(TestCase):
         response = self.client.get(reverse('meupet:index'))
 
         self.assertContains(response, '<h2 class="text-center"><span>Adotado! :)</span></h2>')
+
+    def test_get_pets_unpublished(self):
+        pet = self.create_pet('Dog')
+
+        pets = Pet.objects.get_unpublished_pets()
+
+        self.assertIn(pet, pets)
+
+    def test_dont_get_published_pet(self):
+        pet = self.create_pet('Dog', published=True)
+
+        pets = Pet.objects.get_unpublished_pets()
+
+        self.assertNotIn(pet, pets)
+
+    def test_shareonfacebook_command(self):
+        pet = self.create_pet('Dog', published=False)
+        link = {
+            'link': 'http://www.test.com/{}'.format(pet.get_absolute_url())
+        }
+
+        mock = MagicMock()
+        mock.get_renewed_token.return_value = 'token'
+        mock.get_attachment.return_value = link
+
+        cmd = Command()
+
+        cmd.get_attachment = mock.get_attachment
+        cmd.get_renewed_token = mock.get_renewed_token
+
+        with patch('facebook.GraphAPI.put_wall_post') as mock:
+            cmd.handle()
+
+            mock.assert_called_once_with(pet.name, attachment=link)
