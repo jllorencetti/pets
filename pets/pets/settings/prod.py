@@ -11,7 +11,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'ca#j$qam2uh*))o*1&31(_7ud1k6hrjwn+5gd
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-TEMPLATE_DEBUG = DEBUG
+
+INTERNAL_IPS = (
+    '0.0.0.0',
+    '127.0.0.1',
+)
 
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS', '*')]
 
@@ -31,17 +35,20 @@ THIRD_PARTS_APPS = (
     'braces',
     'crispy_forms',
     'social.apps.django_app.default',
+    'opbeat.contrib.django',
+    'compressor',
 )
 
 PROJECT_APPS = (
     'users',
     'meupet',
-    'common'
+    'common',
 )
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTS_APPS
 
 MIDDLEWARE_CLASSES = (
+    'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -51,17 +58,28 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, '../templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
+            ],
+        },
+    },
+]
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.Facebook2OAuth2',
@@ -97,6 +115,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
         'HOST': os.environ.get('DB_IP', ''),
         'PORT': os.environ.get('DB_PORT', ''),
+        'CONN_MAX_AGE': int(os.environ.get('DB_CONN_MAX_AGE', 0)),
     }
 }
 
@@ -126,20 +145,22 @@ STATICFILES_DIRS = (
 # static root folder, where static files will be collected to
 STATIC_ROOT = os.path.join(BASE_DIR, '../../static_root')
 
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder"
+]
+
+COMPRESS_OFFLINE = True
+
 # Setting media configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../../media')
 
-# Setting global templates folder for site-wide template
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, '../templates'),
-)
-
-
 # Setting easy_thumbnails
 THUMBNAIL_ALIASES = {
     '': {
-        'pet_thumb': {'size': (350, 350), 'crop': True},
+        'pet_thumb': {'size': (350, 350), 'crop': True, 'upscale': True},
     }
 }
 
@@ -164,3 +185,8 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
 
+OPBEAT = {
+    'ORGANIZATION_ID': os.environ.get('OPBEAT_ORGANIZATION_ID'),
+    'APP_ID': os.environ.get('OPBEAT_APP_ID'),
+    'SECRET_TOKEN': os.environ.get('OPBEAT_SECRET_TOKEN'),
+}

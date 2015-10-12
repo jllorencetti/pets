@@ -1,5 +1,11 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
-    font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 250px;
 }
 
 .box-shadow {
@@ -14,40 +20,130 @@ body {
 }
 
 .card-pet {
-  height: 390px;
+  margin-bottom: 15px;
 }
 
 .card-pet a {
-    margin-top: 4px;
+  margin-top: 15px;
 }
 
 li.active {
   font-weight: 800;
 }
 
-.form-mark-success {
-    display: inline;
+.form-inline {
+  display: inline;
 }
+
 /** Navbar **/
 .navbar-pets {
-    background-color: #1b443c;
+  background-color: #1b443c;
 }
 
 .navbar-pets a {
-    color: #e9f6f4;
+  color: #e9f6f4;
 }
 
-.nav>li>a:focus,
-.nav>li>a:hover,
-.nav .open>a, 
-.nav .open>a:focus, 
-.nav .open>a:hover,
-.dropdown-menu>li>a:focus,
-.dropdown-menu>li>a:hover {
+.nav > li > a:focus,
+.nav > li > a:hover,
+.nav .open > a,
+.nav .open > a:focus,
+.nav .open > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
   background-color: #1b443c;
   color: #fff;
 }
 
 .navbar-toggle .icon-bar {
   background-color: #e9f6f4;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.page-not-found-img {
+  margin-bottom: 40px;
+}
+
+/** Footer **/
+.footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #1b443c;
+  color: #e9f6f4;
+  height: 250px;
+  width: 100%;
+}
+
+.footer a {
+  color: #5bc0dE;
+}
+
+.new-city {
+  display: none;
+}
+
+/** Status indicator **/
+.found-or-adopted {
+  position: relative;
+  width: 100%; /* for IE 6 */
+}
+
+.found-or-adopted > h2 {
+  position: absolute;
+  bottom: 23%;
+  left: 0;
+  width: 100%;
+}
+
+.found-or-adopted > h2 span {
+  color: white;
+  font: bold 24px/45px Helvetica, Sans-Serif;
+  letter-spacing: -1px;
+  background: rgb(27, 68, 60); /* fallback color */
+  background: rgba(27, 68, 60, 0.7);
+  padding: 10px;
+}
+
+.found-or-adopted > h2 span.spacer {
+  padding: 0 5px;
+}
+
+/** Home page **/
+.jumbotron .callout {
+  font-size: 5em;
+}
+
+.jumbotron {
+  background-color: inherit;
+}
+
+.tips {
+  text-align: center;
+}
+
+.tips .fa {
+  font-size: 7em;
+}
+
+.fa-heart {
+  color: red;
+}
+
+.fa-life-ring {
+  color: #1fa67a;
+}
+
+/** Media queries **/
+@media (min-width: 768px) {
+  body {
+    margin-bottom: 150px;
+  }
+
+  .footer {
+    height: 150px;
+    padding-top: 20px;
+  }
 }

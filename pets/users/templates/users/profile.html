@@ -10,7 +10,7 @@
       {% endif %}
 
       <h4>Contatos</h4>
-      <a href="{{ object.facebook }}">Facebook</a> | <a href="mailto:{{ object.email }}">Email</a>
+      {% if object.facebook %}<a href="{{ object.facebook }}">Facebook</a> | {% endif %}<a href="mailto:{{ object.email }}">Email</a>
 
       <h4>Pets Cadastrados</h4>
       {% include '_partials/pets_list.html' %}

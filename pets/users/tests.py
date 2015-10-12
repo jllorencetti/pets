@@ -1,7 +1,9 @@
-from django.test import TestCase
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.test import TestCase
 
 from .models import OwnerProfile
+from users.validators import validate_facebook_url
 
 
 class UserRegistrationTest(TestCase):
@@ -9,9 +11,9 @@ class UserRegistrationTest(TestCase):
         self.create_user()
         self.client.login(username='tester', password='test123')
 
-    def create_user(self):
+    def create_user(self, username='tester'):
         user = OwnerProfile(first_name='Test First Name', last_name='Tester', email='te@ste.com',
-                            username='tester')
+                            username=username)
         user.set_password('test123')
         user.save()
         return user
@@ -75,7 +77,7 @@ class UserRegistrationTest(TestCase):
     def test_render_profile_with_correct_template(self):
         user = self.create_user()
 
-        response = self.client.get(reverse('users:user_profile', args=[user.id]))
+        response = self.client.get(user.get_absolute_url())
 
         self.assertTemplateUsed('users/profile.html')
         self.assertContains(response, 'Test First Name')
@@ -123,3 +125,36 @@ class UserRegistrationTest(TestCase):
         self.assertEquals(user.first_name, 'Test')
         self.assertEquals(user.last_name, 'Testing')
         self.assertTrue(user.is_information_confirmed)
+
+    def test_validator_facebook_profile_url(self):
+        validate_facebook_url('https://www.facebook.com/4')
+        self.assertRaises(ValidationError, validate_facebook_url, 'test@gmail.com')
+
+    def test_cant_save_user_invalid_facebook_url(self):
+        user = self.create_user()
+        user.facebook = 'a'
+        with self.assertRaises(ValidationError):
+            user.save()
+            user.full_clean()
+
+    def test_show_facebook_url_profile_view_if_present(self):
+        user_with_url = self.create_user()
+        user_with_url.facebook = 'https://www.facebook.com/test'
+        user_with_url.save()
+
+        user_without_url = self.create_user(username='tester2')
+
+        response_without_url = self.client.get(user_without_url.get_absolute_url())
+        response_with_url = self.client.get(user_with_url.get_absolute_url())
+
+        self.assertContains(response_without_url, 'Facebook', 1)
+        self.assertContains(response_with_url, 'Facebook', 2)
+
+    def test_only_logged_user_can_edit_profile(self):
+        edit_url = reverse('users:edit')
+        redirect_url = '{0}?next={1}'.format(reverse('users:login'), reverse('users:edit'))
+
+        response = self.client.get(edit_url, follow=True)
+
+        self.assertTemplateUsed(response, 'users/login.html')
+        self.assertRedirects(response, redirect_url)

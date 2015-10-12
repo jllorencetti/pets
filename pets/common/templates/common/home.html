@@ -1,0 +1,59 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+
+{% block page %}
+  <div class="container">
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-4">
+          <div>
+            <p class="callout">Divulgue.</p>
+
+            <p class="callout">Encontre.</p>
+
+            <p class="callout">Adote :)</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <img class="img-responsive" src="{% static 'img/logo.png' %}" alt="Logo Cadê meu Bicho">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row tips">
+      <div class="col-md-4">
+        <i class="fa fa-paw"></i>
+
+        <h3>Pet desaparecido?</h3>
+
+        <p>Todo mundo sabe que é horrível quando um animalzinho desaparece.</p>
+
+        <p>Queremos ajudar você a encontra-lo, <a href="{% url 'users:create' %}">crie uma conta</a>
+          e cadastre uma ou várias fotos e compartilhe nas redes sociais.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fa fa-life-ring"></i>
+
+        <h3>Encontrou algum?</h3>
+
+        <p>Você provavelmente acaba de salvar uma vida.</p>
+
+        <p>Use a <a href="{% url 'meupet:search' %}">busca</a> e descubra se
+          existe alguém procurando por ele. Você também pode navegar livremente
+          entre as <a href="{% url 'meupet:index' %}">categorias</a>.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fa fa-heart"></i>
+
+        <h3>Vaga no coração?</h3>
+
+        <p>Bicho é tudo de bom.</p>
+
+        <p>Existem animais esperando que alguém os leve pra casa, veja-os
+          <a href="{% url 'meupet:index' %}">aqui</a>.</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

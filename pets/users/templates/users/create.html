@@ -1,0 +1,49 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h4>Entre com o Twitter ou o Facebook:</h4>
+  <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static 'img/facebook.png' %}" alt="Facebook"/></a>
+  <a href="{% url 'social:begin' 'twitter' %}"><img src="{% static 'img/twitter.png' %}" alt="Twitter"/></a>
+
+  <div id="ajuda-facebook" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Obter endereço de perfil no Facebook</h4>
+        </div>
+        <div class="modal-body">
+          <ol>
+            <li>
+              <p>No Facebook, localize seu nome na barra de navegação superior. Clique nele</p>
+
+              <p><img class="img-responsive" src="{% static 'img/kdmeubicho_nome.png' %}"
+                      alt="Barra de navegação do Facebook"></p>
+            </li>
+            <li>
+              <p>Após a página carregar o endereço do seu perfil ficará na barra de endereço do seu navegador</p>
+
+              <p><img class="img-responsive" src="{% static 'img/kdmeubicho_endereco.png' %}"
+                      alt="Barra de endereço do perfil no Facebook"></p>
+            </li>
+            <li>
+              <p>Copie ele e cole no campo do formulário</p>
+
+              <p><img class="img-responsive" src="{% static 'img/kdmeubicho_form.png' %}"
+                      alt="Formulário preenchido"></p>
+            </li>
+          </ol>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Ou crie uma conta:</h4>
+  {% crispy form %}
+{% endblock content %}

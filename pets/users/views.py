@@ -31,7 +31,7 @@ class CreateUserView(MeuPetEspecieMixin, CreateView):
         return reverse('meupet:index')
 
 
-class EditUserProfileView(MeuPetEspecieMixin, UpdateView):
+class EditUserProfileView(MeuPetEspecieMixin, LoginRequiredMixin, UpdateView):
     template_name = 'users/edit_profile.html'
     model = OwnerProfile
     form_class = UpdateUserForm

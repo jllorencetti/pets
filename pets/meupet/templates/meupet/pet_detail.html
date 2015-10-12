@@ -3,15 +3,15 @@
 {% load thumbnail %}
 
 {% block metatags %}
-  <meta property="og:title" content="{{ pet.name }} | Cadê meu Pet?">
+  <meta property="og:title" content="{{ pet.name }} | Cadê meu Bicho?">
   <meta property="og:description" content="{{ pet.description }}">
   <meta property="og:url" content="{{ current_url }}">
   <meta property="og:image"
         content="http://www.cademeubicho.com{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}">
-  <meta property="og:site_name" content="Cadê meu Pet?">
+  <meta property="og:site_name" content="Cadê meu Bicho?">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ pet.name }} | Cadê meu Pet?">
+  <meta name="twitter:title" content="{{ pet.name }} | Cadê meu Bicho?">
   <meta name="twitter:description" content="{{ pet.description }}">
   <meta name="twitter:image:src"
         content="http://www.cademeubicho.com{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}">
@@ -20,11 +20,11 @@
 {% block content %}
   <div class="row">
     <div class="col-md-12">
-      <h2>{{ pet.name }}</h2>
+      <h2>{{ pet.name }} - {{ pet.get_status_display }}</h2>
       {% if user == pet.owner %}
-        <a href="{% url 'meupet:edit' pet.id %}" class="btn btn-primary">Editar</a>
+
         {% if not pet.found_or_adopted %}
-          <form action="{% url 'meupet:change_status' pet.id %}" method="post" class="form-mark-success">
+          <form action="{% url 'meupet:change_status' pet.id %}" method="post" class="form-inline">
             {% csrf_token %}
             <input type="submit" class="btn btn-success" value="
               Marcar como
@@ -36,7 +36,42 @@
             "/>
           </form>
         {% endif %}
+
+        <a href="{% url 'meupet:edit' pet.id %}" class="btn btn-primary">Editar</a>
+
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_pet">
+          Apagar Pet
+        </button>
+
       {% endif %}
+    </div>
+  </div>
+
+  <div class="modal fade" id="delete_pet">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Apagar Cadastro</h4>
+        </div>
+
+        <div class="modal-body">
+          <p>Deseja realmente apagar esse pet?</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+
+          <form action="{% url 'meupet:delete_pet' pet.id %}" method="post" class="form-inline">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Apagar"/>
+          </form>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -72,8 +107,28 @@
           </p>
 
           <p>
+            <strong>Cidade:</strong><br/>
+            {{ pet.city|title }}
+          </p>
+
+          {% if pet.size %}
+            <p>
+              <strong>Tamanho:</strong><br/>
+              {{ pet.get_size_display }}
+            </p>
+          {% endif %}
+
+          {% if pet.sex %}
+            <p>
+              <strong>Sexo:</strong><br/>
+              {{ pet.get_sex_display }}
+            </p>
+          {% endif %}
+
+          <p>
             <strong>Contato:</strong><br/>
             <a href="{% url 'users:user_profile' pet.owner.id %}">{{ pet.owner.get_full_name }}</a>
+            {% if pet.owner.facebook %} | <a href="{{ pet.owner.facebook }}">Facebook</a>{% endif %}
           </p>
 
           <p>
@@ -85,7 +140,6 @@
               <img src="{% static 'img/twitter.png' %}" alt="Twitter"/>
             </a>
           </p>
-          {% if pet.owner.facebook %}<a href="{{ pet.owner.facebook }}">Facebook</a>{% endif %}
         </div>
       </div>
     </div>

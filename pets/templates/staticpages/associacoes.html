@@ -3,10 +3,30 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-lg-4">
-      <h4>SAPA - Sociedade Ambientalista Protetora dos Animais</h4>
-      <img src="{% static 'img/sapa.jpg' %}" alt="Logo SAPA"/>
-      <a href="https://www.facebook.com/Sapa.Araras">Facebook</a>
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/sapa.jpg' %}" alt="Logo SAPA">
+
+        <div class="caption clearfix">
+          <h4 class="text-center">SAPA - Sociedade Ambientalista Protetora dos Animais</h4>
+          <a href="https://www.facebook.com/Sapa.Araras" class="btn btn-info pull-right"
+             role="button">Facebook</a>
+        </div>
+      </div>
     </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/sempreaseulado.jpg' %}" alt="Logo Sempre a seu Lado">
+
+        <div class="caption clearfix">
+          <h4 class="text-center">Sempre a seu Lado Araras</h4>
+          <a href="https://www.facebook.com/oscipsempreaseulado" class="btn btn-info pull-right"
+             role="button">Facebook</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 {% endblock %}

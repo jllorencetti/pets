@@ -1,0 +1,23 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+
+{% block body %}
+  <div class="col-md-12">
+    <div class="text-center">
+
+      <h1>Página não encontrada</h1>
+
+      <p>
+        Ops, parece que a página que você tentou acessar não foi encontrada,
+        clique <a href="/">aqui</a> para voltar para a página inicial.
+      </p>
+
+      <img class="img-thumbnail page-not-found-img" src="{% static 'img/404_dog.jpg' %}" alt="Desenho de um cachorro sentado">
+    </div>
+  </div>
+{% endblock %}
+
+{% block ga_log_not_found %}
+    var url = "/404/?url=" + window.location.pathname + window.location.search + "&from=" + document.referrer;
+    ga('send', 'pageview', url);
+{% endblock %}
