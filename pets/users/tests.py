@@ -13,7 +13,7 @@ class UserRegistrationTest(TestCase):
 
     def create_user(self, username='tester'):
         user = OwnerProfile(first_name='Test First Name', last_name='Tester', email='te@ste.com',
-                            username=username)
+                            username=username, is_information_confirmed=True)
         user.set_password('test123')
         user.save()
         return user
@@ -158,3 +158,17 @@ class UserRegistrationTest(TestCase):
 
         self.assertTemplateUsed(response, 'users/login.html')
         self.assertRedirects(response, redirect_url)
+
+    def test_redirect_logged_user_to_next(self):
+        self.create_user()
+        url = '{}?next={}'.format(reverse('users:login'), reverse('meupet:register'))
+
+        response = self.client.post(
+            url, {
+                'username': 'tester',
+                'password': 'test123',
+            },
+            follow=True
+        )
+
+        self.assertRedirects(response, reverse('meupet:register'))

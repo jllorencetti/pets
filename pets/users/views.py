@@ -6,6 +6,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
+from django.utils.http import is_safe_url
 
 from common.views import get_kind_list, MeuPetEspecieMixin
 from users.forms import LoginForm, RegisterForm, UpdateUserForm
@@ -49,6 +50,9 @@ def user_login(request):
     context['kind_lost'] = get_kind_list()
     context['kind_adoption'] = get_kind_list()
 
+    redirect_to = request.POST.get('next',
+                                   request.GET.get('next', ''))
+
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
@@ -56,6 +60,10 @@ def user_login(request):
                                 password=form.data.get('password'))
             if user and user.is_active:
                 login(request, user)
+
+                if is_safe_url(redirect_to):
+                    return HttpResponseRedirect(redirect_to)
+
                 return HttpResponseRedirect(reverse('meupet:index'))
     else:
         form = LoginForm()
