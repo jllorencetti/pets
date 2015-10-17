@@ -32,8 +32,8 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li><a href="{% url 'meupet:index' %}">Pets</a></li>
+        <li><a href="{% url 'meupet:register' %}">Cadastrar Pet</a></li>
         {% if user.is_authenticated %}
-          <li><a href="{% url 'meupet:register' %}">Cadastrar Pet</a></li>
           <li><a href="{% url 'users:profile' %}">Seu Perfil</a></li>
           <li><a href="{% url 'users:logout' %}">Logout</a></li>
         {% else %}
