@@ -78,14 +78,14 @@
       <div class="col-md-2">
         <h3>Desaparecidos</h3>
         <ul class="nav">
-          {% for kind in kind_lost %}
-            <li><a href="{% url 'meupet:lost' kind.id %}">{{ kind }}</a></li>
+          {% for kind, count in kind_lost %}
+		  <li><a href="{% url 'meupet:lost' kind.id %}">{{ kind }} ({{ count }})</a></li>
           {% endfor %}
         </ul>
         <h3>Para Adoção</h3>
         <ul class="nav">
-          {% for kind in kind_adoption %}
-            <li><a href="{% url 'meupet:adoption' kind.id %}">{{ kind }}</a></li>
+          {% for kind, count in kind_adoption %}
+		  <li><a href="{% url 'meupet:adoption' kind.id %}">{{ kind }} ({{ count }})</a></li>
           {% endfor %}
         </ul>
       </div>

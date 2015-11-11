@@ -14,6 +14,13 @@ class PetManager(models.Manager):
     def get_unpublished_pets(self):
         return self.filter(published=False)
 
+    def get_by_kind_and_status(self, kind, status):
+        pets = self.filter(kind=kind).filter(status=status)
+        count = pets.count()
+
+        return pets if count > 0 else None
+
+
 
 class Kind(models.Model):
     kind = models.TextField(max_length=100)
