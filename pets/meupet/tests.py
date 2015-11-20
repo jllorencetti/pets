@@ -3,11 +3,11 @@ import tempfile
 from unittest.mock import MagicMock, patch
 
 from django.conf import settings
-from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.test import TestCase
 
-from meupet.models import Pet, Kind, Photo, City
 from meupet.management.commands.shareonfacebook import Command
+from meupet.models import Pet, Kind, Photo, City
 from users.models import OwnerProfile
 
 
@@ -52,6 +52,7 @@ class MeuPetTest(TestCase):
         self.assertContains(home, 'Testing Cat')
 
     def test_display_kinds_sidebar(self):
+        Kind.objects.get_or_create(kind='0 Pets')
         self.create_pet('Goat')
         self.create_pet('Cat')
 
@@ -59,6 +60,7 @@ class MeuPetTest(TestCase):
 
         self.assertContains(home, 'Goat')
         self.assertContains(home, 'Cat')
+        self.assertNotContains(home, '0 Pets')
 
     def test_display_only_pets_from_kind(self):
         self.create_pet('Goat', 'Goat')

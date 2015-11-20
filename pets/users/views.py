@@ -5,10 +5,10 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
 from django.utils.http import is_safe_url
+from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
 
-from common.views import get_kind_list, MeuPetEspecieMixin
+from common.views import get_adoption_kinds, get_lost_kinds, MeuPetEspecieMixin
 from users.forms import LoginForm, RegisterForm, UpdateUserForm
 from users.models import OwnerProfile
 
@@ -25,8 +25,8 @@ class CreateUserView(MeuPetEspecieMixin, CreateView):
     def get_success_url(self):
         messages.success(self.request, 'Conta criada com sucesso. Obrigado!')
         user = authenticate(
-            username=self.request.POST.get('username'),
-            password=self.request.POST.get('password1')
+                username=self.request.POST.get('username'),
+                password=self.request.POST.get('password1')
         )
         login(self.request, user)
         return reverse('meupet:index')
@@ -47,11 +47,10 @@ class EditUserProfileView(MeuPetEspecieMixin, LoginRequiredMixin, UpdateView):
 
 def user_login(request):
     context = RequestContext(request)
-    context['kind_lost'] = get_kind_list()
-    context['kind_adoption'] = get_kind_list()
+    context['kind_lost'] = get_lost_kinds()
+    context['kind_adoption'] = get_adoption_kinds()
 
-    redirect_to = request.POST.get('next',
-                                   request.GET.get('next', ''))
+    redirect_to = request.POST.get('next', request.GET.get('next', ''))
 
     if request.method == 'POST':
         form = LoginForm(data=request.POST)

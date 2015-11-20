@@ -1,46 +1,28 @@
-from functools import reduce
-
+from django.db.models import Count
 from django.shortcuts import render
-from django.views.generic.base import ContextMixin
 from django.views.generic import TemplateView
+from django.views.generic.base import ContextMixin
 
 from meupet import models
 
 
-def get_kind_list():
-    return models.Kind.objects.all().order_by('kind')
+def get_adoption_kinds():
+    return get_kind_list([models.Pet.FOR_ADOPTION, models.Pet.ADOPTED])
+
+
+def get_lost_kinds():
+    return get_kind_list([models.Pet.MISSING, models.Pet.FOUND])
+
+
+def get_kind_list(status):
+    return models.Kind.objects.filter(pet__status__in=status).annotate(num_pets=Count('pet')).order_by('kind')
 
 
 class MeuPetEspecieMixin(ContextMixin):
-
     def get_context_data(self, **kwargs):
         context = super(MeuPetEspecieMixin, self).get_context_data(**kwargs)
-        kinds = models.Kind.objects.all()
-
-        status_list = [("kind_lost", models.Pet.MISSING),
-                       ("kind_adoption", models.Pet.FOR_ADOPTION)]
-
-        kind_list = models.Kind.objects.all()
-
-        pets = [(status_name, kind,
-                 models.Pet.objects.get_by_kind_and_status(kind, status))
-                for kind in kind_list
-                for status_name, status in status_list]
-
-        pets = [(status, kind, p.count())
-                for status, kind, p in pets
-                if not p is None]
-
-        print(pets)
-
-        def _reduce(agg, elem):
-            status, kind, count = elem
-            agg.setdefault(status, []).append((kind, count))
-            agg[status].sort(key=lambda kind_count: kind_count[0].kind)
-            return agg
-
-        context.update(reduce(_reduce, pets, {}))
-
+        context['kind_lost'] = get_lost_kinds()
+        context['kind_adoption'] = get_adoption_kinds()
         return context
 
 

@@ -8,10 +8,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <title>Cadê meu Bicho</title>
   {% compress css %}
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
-  <link rel="stylesheet" href="{% static 'css/pets.css' %}"/>
-  <link rel="stylesheet" href="{% static 'css/lightbox.css' %}"/>
-  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/pets.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/lightbox.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
   {% endcompress %}
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,300,400' rel='stylesheet' type='text/css'>
   {% block metatags %}{% endblock %}
@@ -56,47 +56,47 @@
 </div>
 
 {% block page %}
-<div class="container">
-  <div class="row">
-    {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <div class="alert {% if message.tags %}
+  <div class="container">
+    <div class="row">
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <div class="alert {% if message.tags %}
             {% if 'error' in message.tags %}
                 alert-danger
             {% else %}
                 alert-{{ message.tags }}
             {% endif %}
           {% endif %}" role="alert">
-            {{ message }}
-          </div>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
-    {% block body %}
-      <div class="col-md-2">
-        <h3>Desaparecidos</h3>
-        <ul class="nav">
-          {% for kind, count in kind_lost %}
-		  <li><a href="{% url 'meupet:lost' kind.id %}">{{ kind }} ({{ count }})</a></li>
+              {{ message }}
+            </div>
           {% endfor %}
         </ul>
-        <h3>Para Adoção</h3>
-        <ul class="nav">
-          {% for kind, count in kind_adoption %}
-		  <li><a href="{% url 'meupet:adoption' kind.id %}">{{ kind }} ({{ count }})</a></li>
-          {% endfor %}
-        </ul>
-      </div>
+      {% endif %}
 
-      <div class="col-md-10">
-        {% block content %}
-        {% endblock content %}
-      </div>
-    {% endblock body %}
+      {% block body %}
+        <div class="col-md-2">
+          <h3>Desaparecidos</h3>
+          <ul class="nav">
+            {% for kind in kind_lost %}
+              <li><a href="{% url 'meupet:lost' kind.id %}">{{ kind }} ({{ kind.num_pets }})</a></li>
+            {% endfor %}
+          </ul>
+          <h3>Para Adoção</h3>
+          <ul class="nav">
+            {% for kind in kind_adoption %}
+              <li><a href="{% url 'meupet:adoption' kind.id %}">{{ kind }} ({{ kind.num_pets }})</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="col-md-10">
+          {% block content %}
+          {% endblock content %}
+        </div>
+      {% endblock body %}
+    </div>
   </div>
-</div>
 {% endblock %}
 
 <div class="footer">
@@ -124,10 +124,10 @@
   </div>
 </div>
 {% compress js %}
-<script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/lightbox.js' %}"></script>
-<script src="{% static 'js/pets.js' %}"></script>
+  <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/lightbox.js' %}"></script>
+  <script src="{% static 'js/pets.js' %}"></script>
 {% if not debug %}
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
