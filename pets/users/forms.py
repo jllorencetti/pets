@@ -1,18 +1,28 @@
+from crispy_forms.bootstrap import FormActions
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Layout, Field, HTML
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field
+from password_reset.forms import PasswordRecoveryForm, PasswordResetForm
 
 from users.models import OwnerProfile
 
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
+        self.url = reverse('users:recover_password')
         super(LoginForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('login', 'Efetuar Login'))
+        self.helper.layout = Layout(
+            'username',
+            'password',
+            FormActions(
+                Submit('login', 'Efetuar Login'),
+                HTML('<a href="{}" class="btn btn-warning">Recuperar minha senha</a>'.format(self.url))
+            )
+        )
 
 
 class UserForm(forms.ModelForm):
@@ -22,8 +32,9 @@ class UserForm(forms.ModelForm):
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
         self.fields['email'].required = True
-        self.fields['facebook'].help_text = _('Clique <a href="#" data-toggle="modal" data-target="#ajuda-facebook">'
-                                              'aqui</a> para saber como preencher esse campo.')
+        self.fields['facebook'].help_text = _(
+                'Clique <a href="#" data-toggle="modal" data-target="#ajuda-facebook">'
+                'aqui</a> para saber como preencher esse campo.')
 
 
 class RegisterForm(UserForm):
@@ -76,3 +87,18 @@ class UpdateUserForm(UserForm):
     def save(self, commit=True):
         self.instance.is_information_confirmed = True
         super(UpdateUserForm, self).save()
+
+
+class UsersPasswordRecoveryForm(PasswordRecoveryForm):
+    def __init__(self, *args, **kwargs):
+        super(UsersPasswordRecoveryForm, self).__init__(*args, **kwargs)
+        self.fields['username_or_email'].label = ''
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('recover', 'Recuperar minha senha'))
+
+
+class UsersPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(UsersPasswordResetForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('recover', 'Recuperar minha senha'))

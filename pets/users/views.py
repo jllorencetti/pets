@@ -7,10 +7,34 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.http import is_safe_url
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
+from password_reset.views import Recover, RecoverDone, Reset, ResetDone
 
 from common.views import get_adoption_kinds, get_lost_kinds, MeuPetEspecieMixin
-from users.forms import LoginForm, RegisterForm, UpdateUserForm
+from users.forms import LoginForm, RegisterForm, UpdateUserForm, UsersPasswordRecoveryForm, UsersPasswordResetForm
 from users.models import OwnerProfile
+
+
+class RecoverView(MeuPetEspecieMixin, Recover):
+    template_name = 'users/recover.html'
+    form_class = UsersPasswordRecoveryForm
+    success_url_name = 'users:recover_password_sent'
+    email_template_name = 'users/recover_email.txt'
+    search_fields = ['username', 'email']
+
+
+class RecoverDoneView(MeuPetEspecieMixin, RecoverDone):
+    template_name = 'users/recover.html'
+
+
+class RecoverResetView(MeuPetEspecieMixin, Reset):
+    template_name = 'users/reset.html'
+    success_url = 'users:recover_password_done'
+    form_class = UsersPasswordResetForm
+    token_expires = 3600 * 2
+
+
+class RecoverResetDoneView(MeuPetEspecieMixin, ResetDone):
+    template_name = 'users/reset_done.html'
 
 
 class CreateUserView(MeuPetEspecieMixin, CreateView):

@@ -37,6 +37,7 @@ THIRD_PARTS_APPS = (
     'social.apps.django_app.default',
     'opbeat.contrib.django',
     'compressor',
+    'password_reset',
 )
 
 PROJECT_APPS = (
@@ -190,3 +191,10 @@ OPBEAT = {
     'APP_ID': os.environ.get('OPBEAT_APP_ID'),
     'SECRET_TOKEN': os.environ.get('OPBEAT_SECRET_TOKEN'),
 }
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')

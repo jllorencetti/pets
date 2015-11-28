@@ -1,0 +1,31 @@
+{% extends '_layouts/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-7 col-md-offset-1">
+      <h2>Recuperação de senha</h2>
+      {% if form %}
+        <p>
+          Para recuperar sua senha, informe seu endereço de email ou usuário.
+        </p>
+
+        {% crispy form %}
+      {% else %}
+        <p>
+          Um email acabou de ser enviado para <strong>{{ email }}</strong>.
+        </p>
+        <p>
+          Use o link nesse email para configurar uma nova senha. O link é válido por duas horas.
+        </p>
+
+        <p>
+          <a class="btn btn-primary" href="{% url 'meupet:index' %}" title="Volta para a página inicial">
+            Voltar para a página inicial
+          </a>
+        </p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
