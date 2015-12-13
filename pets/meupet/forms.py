@@ -31,6 +31,9 @@ class PetForm(forms.ModelForm):
             self.cleaned_data['city'] = new_city
             self.errors.pop('city', None)
 
+    def clean_name(self):
+        return self.cleaned_data['name'].title()
+
 
 class SearchForm(forms.Form):
     empty_choice = (('', '------------'),)

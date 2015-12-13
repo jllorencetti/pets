@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
+from meupet import forms
 from meupet.management.commands.shareonfacebook import Command
 from meupet.models import Pet, Kind, Photo, City
 from users.models import OwnerProfile
@@ -41,6 +42,14 @@ class MeuPetTest(TestCase):
         return Pet.objects.create(name='Testing ' + name, description='Bla',
                                   profile_picture=image, owner=user, kind=kind,
                                   status=status, **kwargs)
+
+    def test_titleize_name(self):
+        data = {
+            'name': 'TESTING NAME'
+        }
+        form = forms.PetForm(data=data)
+        form.is_valid()
+        self.assertEquals(form.cleaned_data['name'], 'Testing Name')
 
     def test_display_all_pets(self):
         self.create_pet('Goat', 'Goat')
