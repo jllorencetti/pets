@@ -35,6 +35,18 @@ li.active {
   display: inline;
 }
 
+/** Pets **/
+.btn-category {
+  color: #1b443c;
+  background-color: transparent;
+  border-color: #1b443c;
+  margin-bottom: 5px;
+}
+
+.btn-category > .badge {
+  background-color: #1b443c;
+}
+
 /** Navbar **/
 .navbar-pets {
   background-color: #1b443c;

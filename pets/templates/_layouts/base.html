@@ -79,13 +79,17 @@
           <h3>Desaparecidos</h3>
           <ul class="nav">
             {% for kind in kind_lost %}
-              <li><a href="{% url 'meupet:lost' kind.id %}">{{ kind }} ({{ kind.num_pets }})</a></li>
+              <li><a class="btn btn-category" href="{% url 'meupet:lost' kind.id %}">
+                {{ kind }} <span class="badge">{{ kind.num_pets }}</span></a>
+              </li>
             {% endfor %}
           </ul>
           <h3>Para Adoção</h3>
           <ul class="nav">
             {% for kind in kind_adoption %}
-              <li><a href="{% url 'meupet:adoption' kind.id %}">{{ kind }} ({{ kind.num_pets }})</a></li>
+              <li><a class="btn btn-category" href="{% url 'meupet:adoption' kind.id %}">
+                {{ kind }} <span class="badge">{{ kind.num_pets }}</span></a>
+              </li>
             {% endfor %}
           </ul>
         </div>
