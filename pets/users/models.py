@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 
 class OwnerProfile(AbstractUser):
     is_information_confirmed = models.BooleanField(default=False)
-    facebook = models.CharField(max_length=250, blank=True, null=True,
+    facebook = models.URLField(max_length=250, blank=True, null=True,
                                 validators=[validate_facebook_url])
 
     def get_absolute_url(self):
