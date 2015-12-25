@@ -10,11 +10,13 @@
         {% endif %}
 
         <div class="caption clearfix">
-          <div class='pull-left'>
-            <h4>{{ pet }}</h4>
-            <span><span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{ pet.city|title }} </span>
+          <h4>{{ pet }}</h4>
+          <div class="pull-left align-with-btn">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{ pet.city|title }}
           </div>
-          <a href="{% url 'meupet:detail' pet.id %}" class="btn btn-info pull-right" role="button">Detalhes</a>
+          <div class="pull-right">
+            <a href="{% url 'meupet:detail' pet.id %}" class="btn btn-info pull-right" role="button">Detalhes</a>
+          </div>
         </div>
       </div>
     </div>

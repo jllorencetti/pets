@@ -23,8 +23,14 @@ body {
   margin-bottom: 15px;
 }
 
-.card-pet a {
-  margin-top: 15px;
+.align-with-btn {
+  line-height: 34px
+}
+
+.card-pet h4 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 li.active {
