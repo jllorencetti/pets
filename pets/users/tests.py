@@ -172,3 +172,10 @@ class UserRegistrationTest(TestCase):
         )
 
         self.assertRedirects(response, reverse('meupet:register'))
+
+    def test_logged_user_cant_create_account(self):
+        """Authenticated user must not access the form for account creation"""
+        self.login_new_user()
+        response = self.client.get(reverse('users:create'))
+
+        self.assertRedirects(response, reverse('meupet:index'))

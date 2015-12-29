@@ -1,12 +1,13 @@
-from braces.views import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.http import is_safe_url
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
+
+from braces.views import LoginRequiredMixin, AnonymousRequiredMixin
 from password_reset.views import Recover, RecoverDone, Reset, ResetDone
 
 from common.views import get_adoption_kinds, get_lost_kinds, MeuPetEspecieMixin
@@ -37,10 +38,11 @@ class RecoverResetDoneView(MeuPetEspecieMixin, ResetDone):
     template_name = 'users/reset_done.html'
 
 
-class CreateUserView(MeuPetEspecieMixin, CreateView):
+class CreateUserView(AnonymousRequiredMixin, MeuPetEspecieMixin, CreateView):
     model = OwnerProfile
     form_class = RegisterForm
     template_name = 'users/create.html'
+    authenticated_redirect_url = reverse_lazy('meupet:index')
 
     def form_valid(self, form):
         form.instance.is_information_confirmed = True
