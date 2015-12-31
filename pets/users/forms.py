@@ -1,9 +1,8 @@
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field, HTML
+from crispy_forms.layout import Submit, Layout, Field
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from password_reset.forms import PasswordRecoveryForm, PasswordResetForm
 
@@ -12,15 +11,14 @@ from users.models import OwnerProfile
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
-        self.url = reverse('users:recover_password')
         super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
         self.helper = FormHelper()
         self.helper.layout = Layout(
             'username',
             'password',
             FormActions(
-                Submit('login', 'Efetuar Login'),
-                HTML('<a href="{}" class="btn btn-warning">Recuperar minha senha</a>'.format(self.url))
+                Submit('login', 'Efetuar Login', css_class='btn-block'),
             )
         )
 

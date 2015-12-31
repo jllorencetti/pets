@@ -10,7 +10,7 @@ from django.views.generic import CreateView, TemplateView, UpdateView, DetailVie
 from braces.views import LoginRequiredMixin, AnonymousRequiredMixin
 from password_reset.views import Recover, RecoverDone, Reset, ResetDone
 
-from common.views import get_adoption_kinds, get_lost_kinds, MeuPetEspecieMixin
+from common.views import MeuPetEspecieMixin
 from users.forms import LoginForm, RegisterForm, UpdateUserForm, UsersPasswordRecoveryForm, UsersPasswordResetForm
 from users.models import OwnerProfile
 
@@ -73,8 +73,6 @@ class EditUserProfileView(MeuPetEspecieMixin, LoginRequiredMixin, UpdateView):
 
 def user_login(request):
     context = RequestContext(request)
-    context['kind_lost'] = get_lost_kinds()
-    context['kind_adoption'] = get_adoption_kinds()
 
     redirect_to = request.POST.get('next', request.GET.get('next', ''))
 
