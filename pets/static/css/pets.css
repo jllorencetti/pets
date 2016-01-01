@@ -37,6 +37,20 @@ li.active {
   font-weight: 800;
 }
 
+/** Forms **/
+.nonfield {
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.errorlist {
+  list-style: none;
+  padding-left: 0;
+  font-weight: 700;
+  color: #A94442;
+}
+
 .form-inline {
   display: inline;
 }

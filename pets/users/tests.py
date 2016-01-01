@@ -106,7 +106,7 @@ class UserRegistrationTest(TestCase):
             follow=True
         )
         self.assertTemplateUsed(response, 'users/login.html')
-        self.assertContains(response, 'alert-danger')
+        self.assertContains(response, 'nonfield')
 
     def test_user_account_without_social_login_should_be_confirmed_by_default(self):
         self.client.post(

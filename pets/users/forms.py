@@ -1,4 +1,3 @@
-from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field
 from django import forms
@@ -13,14 +12,8 @@ class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            'username',
-            'password',
-            FormActions(
-                Submit('login', 'Efetuar Login', css_class='btn-block'),
-            )
-        )
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password'].widget.attrs.update({'class': 'form-control'})
 
 
 class UserForm(forms.ModelForm):

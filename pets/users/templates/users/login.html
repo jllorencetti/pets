@@ -1,11 +1,32 @@
 {% extends '_layouts/base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 
 {% block body %}
   <div class="col-md-4 col-md-offset-4">
     <h1 class="text-center">Autenticação</h1>
-    {% crispy form %}
+    <form method="post">
+      {{ form.non_field_errors }}
+      {% csrf_token %}
+      <div class="form-group{% if form.username.errors %} has-error{% endif %}">
+        <label for="{{ form.username.id_for_label }}" class="control-label">{{ form.username.label }}</label>
+        <div class="controls">
+          {{ form.username }}
+          {{ form.username.errors }}
+        </div>
+      </div>
+      <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+        <label for="{{ form.password.id_for_label }}" class="control-label">{{ form.password.label }}</label>
+        <div class="controls">
+          {{ form.password }}
+          {{ form.password.errors }}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="controls">
+          <input class="btn btn-primary btn-block" type="submit" value="Entrar" name="login">
+        </div>
+      </div>
+    </form>
     <a href="{% url 'users:recover_password' %}">Esqueceu a senha?</a>
     <h4>Entre com o Facebook ou Twitter</h4>
     <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static 'img/facebook.png' %}" alt="Facebook"/></a>
