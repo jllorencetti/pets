@@ -3,81 +3,81 @@
 <form class="form-horizontal col-md-6" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
 
-  <div class="form-group">
+  <div class="form-group{% if form.status.errors %} has-error{% endif %}">
     <label for="status" class="col-sm-2 control-label">Situação:</label>
 
     <div class="col-sm-10">
       {{ form.status }}
-      {{ form.errors.status }}
+      {{ form.status.errors }}
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group{% if form.name.errors %} has-error{% endif %}">
     <label for="name" class="col-sm-2 control-label">Nome</label>
 
     <div class="col-sm-10">
       {{ form.name }}
-      {{ form.errors.name }}
+      {{ form.name.errors }}
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group{% if form.description.errors %} has-error{% endif %}">
     <label for="description" class="col-sm-2 control-label">Descrição</label>
 
     <div class="col-sm-10">
       {{ form.description }}
-      {{ form.errors.description }}
+      {{ form.description.errors }}
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group{% if form.city.errors %} has-error{% endif %}">
     <label for="name" class="col-sm-2 control-label">Cidade</label>
 
     <div class="col-sm-10">
       {{ form.city }}
-      {{ form.errors.city }}
+      {{ form.city.errors }}
       <p>Não encontrou sua cidade? <a id="new-city" href="#">Clique aqui</a></p>
 
       <div class="new-city">
         {{ form.new_city }}
-        {{ form.errors.new_city }}
+        {{ form.new_city.errors }}
       </div>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group{% if form.kind.errors %} has-error{% endif %}">
     <label for="kind" class="col-sm-2 control-label">Espécie</label>
 
     <div class="col-sm-10">
       {{ form.kind }}
-      {{ form.errors.kind }}
+      {{ form.kind.errors }}
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group{% if form.size.errors %} has-error{% endif %}">
     <label for="size" class="col-sm-2 control-label">Tamanho</label>
 
     <div class="col-sm-10">
       {{ form.size }}
-      {{ form.errors.size }}
+      {{ form.size.errors }}
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group{% if form.sex.errors %} has-error{% endif %}">
     <label for="sex" class="col-sm-2 control-label">Sexo</label>
 
     <div class="col-sm-10">
       {{ form.sex }}
-      {{ form.errors.sex }}
+      {{ form.sex.errors }}
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group{% if form.profile_picture.errors %} has-error{% endif %}">
     <label for="profile_picture" class="col-sm-2 control-label">Foto</label>
 
     <div class="col-sm-10">
       <input type="file" id="profile_picture" name="profile_picture">
-      {{ form.errors.profile_picture }}
+      {{ form.profile_picture.errors }}
     </div>
   </div>
 
