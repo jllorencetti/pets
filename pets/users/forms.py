@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field
+from crispy_forms.layout import Submit
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
@@ -34,18 +34,18 @@ class RegisterForm(UserForm):
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['facebook'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
+
         self.fields['username'].help_text = _('Obrigatório. 30 caracteres ou menos. '
                                               'Somente letras, números e @/./+/-/_.')
-        self.helper.layout = Layout(
-            'first_name',
-            'last_name',
-            'email',
-            'username',
-            Field('facebook', placeholder=_('Insira o endereço completo do seu perfil no Facebook.')),
-            'password1',
-            'password2'
-        )
-        self.helper.add_input(Submit('register', 'Criar Conta'))
+        self.fields['facebook'].widget.attrs.update(
+                {'placeholder': 'Insira o endereço completo do seu perfil no Facebook.'})
 
     class Meta:
         model = OwnerProfile

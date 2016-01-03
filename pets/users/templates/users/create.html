@@ -1,12 +1,7 @@
 {% extends '_layouts/base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 
 {% block content %}
-  <h4>Entre com o Twitter ou o Facebook:</h4>
-  <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static 'img/facebook.png' %}" alt="Facebook"/></a>
-  <a href="{% url 'social:begin' 'twitter' %}"><img src="{% static 'img/twitter.png' %}" alt="Twitter"/></a>
-
   <div id="ajuda-facebook" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -44,6 +39,76 @@
     </div>
   </div>
 
-  <h4>Ou crie uma conta:</h4>
-  {% crispy form %}
+  <div class="col-md-10">
+    <h4>Entre com o Facebook ou Twitter:</h4>
+    <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static 'img/facebook.png' %}" alt="Facebook"/></a>
+    <a href="{% url 'social:begin' 'twitter' %}"><img src="{% static 'img/twitter.png' %}" alt="Twitter"/></a>
+
+    <h4>Ou crie uma conta:</h4>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group{% if form.first_name.errors %} has-error{% endif %}">
+        <label for="{{ form.first_name.id_for_label }}" class="control-label">Nome</label>
+
+        <div class="controls">
+          {{ form.first_name }}
+          {{ form.first_name.errors }}
+        </div>
+      </div>
+      <div class="form-group{% if form.last_name.errors %} has-error{% endif %}">
+        <label for="{{ form.last_name.id_for_label }}" class="control-label">Sobrenome</label>
+
+        <div class="controls">
+          {{ form.last_name }}
+          {{ form.last_name.errors }}
+        </div>
+      </div>
+      <div class="form-group{% if form.email.errors %} has-error{% endif %}">
+        <label for="{{ form.email.id_for_label }}" class="control-label">Endereço de email</label>
+
+        <div class="controls">
+          {{ form.email }}
+          {{ form.email.errors }}
+        </div>
+      </div>
+      <div class="form-group{% if form.username.errors %} has-error{% endif %}">
+        <label for="{{ form.username.id_for_label }}" class="control-label">Usuário</label>
+
+        <div class="controls">
+          {{ form.username }}
+          <div class="help-block">{{ form.username.help_text }}</div>
+          {{ form.username.errors }}
+        </div>
+      </div>
+      <div class="form-group{% if form.facebook.errors %} has-error{% endif %}">
+        <label for="{{ form.facebook.id_for_label }}" class="control-label">Facebook</label>
+
+        <div class="controls">
+          {{ form.facebook }}
+          <div class="help-block">{{ form.facebook.help_text|safe }}</div>
+          {{ form.facebook.errors }}
+        </div>
+      </div>
+      <div class="form-group{% if form.password1.errors %} has-error{% endif %}">
+        <label for="{{ form.password1.id_for_label }}" class="control-label">Senha</label>
+
+        <div class="controls">
+          {{ form.password1 }}
+          {{ form.password1.errors }}
+        </div>
+      </div>
+      <div class="form-group{% if form.password2.errors %} has-error{% endif %}">
+        <label for="{{ form.password2.id_for_label }}" class="control-label">Confirmação de senha</label>
+
+        <div class="controls">
+          {{ form.password2 }}
+          {{ form.password2.errors }}
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="submit" name="submit" class="btn btn-primary" value="Criar Contar">
+      </div>
+    </form>
+  </div>
 {% endblock content %}
