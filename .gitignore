@@ -6,3 +6,4 @@ media
 *.pyc
 *.log
 screendumps
+static_root

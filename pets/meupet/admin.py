@@ -4,7 +4,8 @@ from . import models
 
 
 class PetAdmin(admin.ModelAdmin):
-    list_display = ('name', 'kind', 'description', 'status', 'published')
+    list_display = ('name', 'kind', 'description', 'status',
+                    'published', 'created', 'modified')
 
 
 admin.site.register(models.Pet, PetAdmin)

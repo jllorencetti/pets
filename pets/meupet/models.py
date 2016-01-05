@@ -73,6 +73,8 @@ class Pet(models.Model):
                            blank=True)
     profile_picture = models.ImageField(upload_to='pet_profiles')
     published = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     objects = PetManager()
 
