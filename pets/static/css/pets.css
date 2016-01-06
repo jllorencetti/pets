@@ -55,6 +55,10 @@ li.active {
   display: inline;
 }
 
+.form-title {
+  border-bottom: 1px solid #e5e5e5;
+}
+
 /** Pets **/
 .btn-category {
   color: #1b443c;

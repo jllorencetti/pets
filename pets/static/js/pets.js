@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#profile_picture').on('change', function () {
+    $('#id_profile_picture').on('change', function () {
         var reader = new FileReader();
         reader.onload = function (e) {
             $('#picture').attr('src', e.target.result);
