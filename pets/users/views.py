@@ -43,13 +43,16 @@ class CreateUserView(AnonymousRequiredMixin, MeuPetEspecieMixin, CreateView):
     form_class = RegisterForm
     template_name = 'users/create.html'
     authenticated_redirect_url = reverse_lazy('meupet:index')
+    msg = 'Sua conta foi criada com sucesso, acesse <a href="{0}">essa ' \
+          'página</a> e realize o cadastro do pet :)'
 
     def form_valid(self, form):
         form.instance.is_information_confirmed = True
         return super(CreateUserView, self).form_valid(form)
 
     def get_success_url(self):
-        messages.success(self.request, 'Conta criada com sucesso. Obrigado!')
+        url = reverse('meupet:register')
+        messages.success(self.request, self.msg.format(url))
         user = authenticate(
                 username=self.request.POST.get('username'),
                 password=self.request.POST.get('password1')
