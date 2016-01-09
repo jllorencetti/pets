@@ -84,8 +84,8 @@ class QuickSearchView(MeuPetEspecieMixin, ListView):
         size_key = size_reverse.get(query.upper(), '')
 
         filters = Q(name__icontains=query) | \
-            Q(description__icontains=query) | \
-            Q(city__city__icontains=query)
+                  Q(description__icontains=query) | \
+                  Q(city__city__icontains=query)
 
         if size_key:
             filters = filters | Q(size=size_key)
@@ -135,37 +135,24 @@ def upload_image(request, pet_id):
 
 class SearchView(MeuPetEspecieMixin, View):
     def get(self, request):
-        form = SearchForm()
-        return render(request, 'meupet/search.html', {'form': form})
+        return render(request, 'meupet/search.html', {'form': SearchForm()})
 
     def post(self, request):
         form = SearchForm(request.POST)
-        if form.is_valid():
-            pet_city = form.cleaned_data['city']
-            pet_size = form.cleaned_data['size']
-            pet_status = form.cleaned_data['status']
-            pet_kind = form.cleaned_data['kind']
-            pet_sex = form.cleaned_data['sex']
 
-            if not any([pet_size, pet_city, pet_kind, pet_status, pet_sex]):
-                messages.error(self.request, 'É necessário selecionar ao menos um filtro')
-                return HttpResponseRedirect(reverse('meupet:search'))
+        if not form.is_valid():
+            return render(request, 'meupet/search.html', {'form': form})
 
-            query = Q()
+        query = self._build_query(form.cleaned_data)
 
-            if pet_city:
-                query = query & Q(city=pet_city)
-            if pet_size:
-                query = query & Q(size=pet_size)
-            if pet_status:
-                query = query & Q(status=pet_status)
-            if pet_kind:
-                query = query & Q(kind=pet_kind)
-            if pet_sex:
-                query = query & Q(sex=pet_sex)
+        pets = models.Pet.objects.filter(query)
+        return render(request, 'meupet/search.html', {'form': form, 'pets': pets})
 
-            pets = models.Pet.objects.filter(query)
-        else:
-            return HttpResponseRedirect(reverse('meupet:search'))
+    def _build_query(self, cleaned_data):
+        query = Q()
 
-        return render(request, 'meupet/search.html', {'request': request, 'form': form, 'pets': pets})
+        for key, value in cleaned_data.items():
+            if value:
+                query = query & Q(**{key: value})
+
+        return query

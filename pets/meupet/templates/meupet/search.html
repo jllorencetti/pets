@@ -5,6 +5,9 @@
   <div class="col-md-12">
     <div class="row">
 
+      {% for error in form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+      {% endfor %}
       <form class="form-inline" action="" method="post">
         {% csrf_token %}
 

@@ -291,7 +291,7 @@ class MeuPetTest(TestCase):
     def test_custom_search_without_filters(self):
         response = self.client.post(reverse('meupet:search'), {})
 
-        self.assertRedirects(response, reverse('meupet:search'))
+        self.assertContains(response, 'É necessário selecionar ao menos um filtro')
 
     def test_custom_search_with_filter(self):
         pet = self.create_pet('Dog', city=self.test_city)

@@ -26,7 +26,7 @@ class PetForm(forms.ModelForm):
         cleaned_data = super(PetForm, self).clean()
         if cleaned_data.get('new_city'):
             new_city, _ = models.City.objects.get_or_create(
-                city=cleaned_data.get('new_city').title()
+                    city=cleaned_data.get('new_city').title()
             )
             self.cleaned_data['city'] = new_city
             self.errors.pop('city', None)
@@ -63,3 +63,10 @@ class SearchForm(forms.Form):
             tuple(models.City.objects.values_list('id', 'city'))
         self.fields['kind'].choices = self.empty_choice + \
             tuple(models.Kind.objects.values_list('id', 'kind'))
+
+    def clean(self):
+        cleaned_data = super(SearchForm, self).clean()
+
+        if not any([cleaned_data['size'], cleaned_data['city'], cleaned_data['kind'],
+                    cleaned_data['status'], cleaned_data['sex']]):
+            raise forms.ValidationError('É necessário selecionar ao menos um filtro')
