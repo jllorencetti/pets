@@ -3,6 +3,19 @@ from django import forms
 from meupet import models
 
 
+def _build_choice_field(label, choices=None):
+    empty_choice = (('', '------------'),)
+    field = forms.ChoiceField(
+            widget=forms.Select(attrs={'class': 'form-control'}),
+            label=label,
+            choices=empty_choice,
+            required=False
+    )
+    if choices:
+        field.choices += choices
+    return field
+
+
 class PetForm(forms.ModelForm):
     new_city = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Nome da cidade'}
@@ -36,33 +49,16 @@ class PetForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    empty_choice = (('', '------------'),)
-
-    city = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
-                             label='Cidade',
-                             required=False)
-    kind = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
-                             label='Espécie',
-                             required=False)
-    size = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
-                             label='Tamanho',
-                             choices=empty_choice + models.Pet.PET_SIZE,
-                             required=False)
-    status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
-                               label='Status',
-                               choices=empty_choice + models.Pet.PET_STATUS,
-                               required=False)
-    sex = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
-                            label='Sexo',
-                            choices=empty_choice + models.Pet.PET_SEX,
-                            required=False)
+    city = _build_choice_field('Cidade')
+    kind = _build_choice_field('Espécie')
+    size = _build_choice_field('Tamanho', models.Pet.PET_SIZE)
+    status = _build_choice_field('Status', models.Pet.PET_STATUS)
+    sex = _build_choice_field('Sexo', models.Pet.PET_SEX)
 
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
-        self.fields['city'].choices = self.empty_choice + \
-            tuple(models.City.objects.values_list('id', 'city'))
-        self.fields['kind'].choices = self.empty_choice + \
-            tuple(models.Kind.objects.values_list('id', 'kind'))
+        self.fields['city'].choices += tuple(models.City.objects.values_list('id', 'city'))
+        self.fields['kind'].choices += tuple(models.Kind.objects.values_list('id', 'kind'))
 
     def clean(self):
         cleaned_data = super(SearchForm, self).clean()
