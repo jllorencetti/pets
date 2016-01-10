@@ -7,3 +7,6 @@ exclude_paths:
 - "pets/functional_tests/*"
 - "pets/meupet/tests.py"
 - "pets/users/tests.py"
+- "pets/common/migrations/*"
+- "pets/meupet/migrations/*"
+- "pets/users/migrations/*"
