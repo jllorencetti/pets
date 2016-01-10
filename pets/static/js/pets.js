@@ -22,7 +22,7 @@ $(document).ready(function () {
     for (var i = 0; i < links.length; i++) {
         var currentPath = window.location.pathname;
         var link = links[i];
-        if (link.pathname == currentPath && link.href.indexOf('#') == -1) {
+        if (link.pathname === currentPath && link.href.indexOf('#') === -1) {
             $(link.parentNode).addClass('active');
         }
     }
