@@ -71,7 +71,8 @@ class Pet(models.Model):
     sex = models.CharField(max_length=2,
                            choices=PET_SEX,
                            blank=True)
-    profile_picture = models.ImageField(upload_to='pet_profiles')
+    profile_picture = models.ImageField(upload_to='pet_profiles',
+                                        help_text='Tamanho máximo da imagem é 2MB')
     published = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

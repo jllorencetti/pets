@@ -1,10 +1,17 @@
 $(document).ready(function () {
-    $('#id_profile_picture').on('change', function () {
+    $('input[type="file"]').on('change', function () {
         var reader = new FileReader();
         reader.onload = function (e) {
             $('#picture').attr('src', e.target.result);
         };
         reader.readAsDataURL(this.files[0]);
+
+        if (this.files[0].size > 2 * 1024 * 1024) {
+            this.setCustomValidity('Imagem excede tamanho máximo de 2MB');
+            return;
+        }
+
+        this.setCustomValidity('');
     });
 
     $('#new-city').on('click', function (e) {
