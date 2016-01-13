@@ -1,0 +1,12 @@
+{% extends '_layouts/base.html' %}
+
+{% block content %}
+  <h3>Resultado da pesquisa</h3>
+  {% if pets %}
+    {% include '_partials/pets_list.html' %}
+  {% else %}
+    <p>Nenhum animalzinho encontrado.</p>
+    <p>Acesse a busca avançada clicando <a href="{% url 'meupet:search' %}">aqui</a>,
+      e tente realizar uma nova consulta.</p>
+  {% endif %}
+{% endblock %}

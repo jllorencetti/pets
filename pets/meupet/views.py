@@ -68,17 +68,14 @@ class RegisterPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
 
 
 class QuickSearchView(MeuPetEspecieMixin, ListView):
-    template_name = 'meupet/index.html'
+    template_name = 'meupet/quicksearch.html'
     context_object_name = 'pets'
 
-    def get(self, request, *args, **kwargs):
-        if not request.GET.get('q'):
-            return HttpResponseRedirect(reverse('meupet:index'))
-        else:
-            return super(QuickSearchView, self).get(request, *args, **kwargs)
-
     def get_queryset(self):
-        query = self.request.GET.get("q")
+        query = self.request.GET.get('q')
+
+        if not query:
+            return
 
         size_reverse = dict((v.upper(), k) for k, v in models.Pet.PET_SIZE)
         size_key = size_reverse.get(query.upper(), '')

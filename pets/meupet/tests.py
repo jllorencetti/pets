@@ -276,17 +276,19 @@ class MeuPetTest(TestCase):
 
         self.assertContains(response, 'Pequeno')
 
-    def test_empty_search_redirect_to_home(self):
+    def test_empty_quicksearch_show_suggestion_to_advanced_search(self):
         response = self.client.get(reverse('meupet:quick_search'), {'q': ''})
 
-        self.assertRedirects(response, reverse('meupet:index'))
+        self.assertTemplateUsed(response, 'meupet/quicksearch.html')
+        self.assertContains(response, 'Nenhum animalzinho encontrado')
+        self.assertContains(response, reverse('meupet:search'), 2)
 
-    def test_invalid_size_key_shouldnt_return_pets_with_empty_size(self):
+    def test_quicksearch_should_return_pet(self):
         self.create_pet('Dog')
 
-        response = self.client.get(reverse('meupet:quick_search'), {'q': 'zzz'})
+        response = self.client.get(reverse('meupet:quick_search'), {'q': 'Pet'})
 
-        self.assertContains(response, 'Nenhum amiguinho')
+        self.assertContains(response, 'Testing Pet')
 
     def test_custom_search_without_filters(self):
         response = self.client.post(reverse('meupet:search'), {})
