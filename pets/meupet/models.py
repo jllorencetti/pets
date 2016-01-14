@@ -95,6 +95,9 @@ class Pet(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-id']
+
 
 class Photo(models.Model):
     pet = models.ForeignKey(Pet)
