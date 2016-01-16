@@ -1,5 +1,6 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from decouple import config, Csv
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -7,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'ca#j$qam2uh*))o*1&31(_7ud1k6hrjwn+5gd9qf2g1ukv2td1')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -17,7 +18,7 @@ INTERNAL_IPS = (
     '127.0.0.1',
 )
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS', '*')]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 # Application definition
 
@@ -110,13 +111,13 @@ WSGI_APPLICATION = 'pets.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': os.environ.get('DB_NAME', os.path.join(BASE_DIR, '../db.sqlite3')),
-        'USER': os.environ.get('DB_USERNAME', ''),
-        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': os.environ.get('DB_IP', ''),
-        'PORT': os.environ.get('DB_PORT', ''),
-        'CONN_MAX_AGE': int(os.environ.get('DB_CONN_MAX_AGE', 0)),
+        'ENGINE': config('DB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USERNAME'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_IP'),
+        'PORT': config('DB_PORT'),
+        'CONN_MAX_AGE': config('DB_CONN_MAX_AGE', cast=int),
     }
 }
 
@@ -180,21 +181,21 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = [
     'email',
 ]
 
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY', default='')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET', default='')
 
-SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
-SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
+SOCIAL_AUTH_TWITTER_KEY = config('SOCIAL_AUTH_TWITTER_KEY', default='')
+SOCIAL_AUTH_TWITTER_SECRET = config('SOCIAL_AUTH_TWITTER_SECRET', default='')
 
 OPBEAT = {
-    'ORGANIZATION_ID': os.environ.get('OPBEAT_ORGANIZATION_ID'),
-    'APP_ID': os.environ.get('OPBEAT_APP_ID'),
-    'SECRET_TOKEN': os.environ.get('OPBEAT_SECRET_TOKEN'),
+    'ORGANIZATION_ID': config('OPBEAT_ORGANIZATION_ID', default=''),
+    'APP_ID': config('OPBEAT_APP_ID', default=''),
+    'SECRET_TOKEN': config('OPBEAT_SECRET_TOKEN', default=''),
 }
 
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')

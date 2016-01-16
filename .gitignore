@@ -7,3 +7,4 @@ media
 *.log
 screendumps
 static_root
+.env
