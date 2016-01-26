@@ -43,6 +43,9 @@ class Command(BaseCommand):
         api = facebook.GraphAPI(self.get_renewed_token())
 
         for pet in Pet.objects.get_unpublished_pets():
-            api.put_wall_post(pet.name, attachment=self.get_attachment(pet))
+            msg = '{}: {}, {}'.format(pet.get_status_display(), pet.name, pet.city)
+
+            api.put_wall_post(msg, attachment=self.get_attachment(pet))
+
             pet.published = True
             pet.save()
