@@ -6,8 +6,8 @@ $(document).ready(function () {
         };
         reader.readAsDataURL(this.files[0]);
 
-        if (this.files[0].size > 2 * 1024 * 1024) {
-            this.setCustomValidity('Imagem excede tamanho máximo de 2MB');
+        if (this.files[0].size > 8 * 1024 * 1024) {
+            this.setCustomValidity('Imagem excede tamanho máximo de 8MB');
             return;
         }
 
