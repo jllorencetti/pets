@@ -147,8 +147,8 @@ class UserRegistrationTest(TestCase):
         response_without_url = self.client.get(user_without_url.get_absolute_url())
         response_with_url = self.client.get(user_with_url.get_absolute_url())
 
-        self.assertContains(response_without_url, 'Facebook', 1)
-        self.assertContains(response_with_url, 'Facebook', 2)
+        self.assertContains(response_without_url, 'Facebook', 0)
+        self.assertContains(response_with_url, 'Facebook', 1)
 
     def test_only_logged_user_can_edit_profile(self):
         edit_url = reverse('users:edit')
