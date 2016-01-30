@@ -111,23 +111,31 @@
 
         <p>O objetivo do Cadê meu Bicho é proporcionar o encontro entre os melhores ou futuro melhores amigos. :)</p>
       </div>
-      <div class="col-md-4 col-md-offset-4">
+      <div class="col-md-4">
         <h4>Contato</h4>
 
         <ul class='list-unstyled'>
-          <li>
-            <i class="glyphicon glyphicon-thumbs-up"></i> <a href="https://www.facebook.com/kdmeubicho">Facebook</a>
-          </li>
           <li>
             <i class="glyphicon glyphicon-envelope"></i> <a href="mailto:contato@cademeubicho.com">contato@cademeubicho.com</a>
           </li>
         </ul>
         <i>Feito com &hearts; em Araras - São Paulo</i>
       </div>
+      <div class="col-md-4">
+        <div class="fb-page" data-href="https://www.facebook.com/kdmeubicho/" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/kdmeubicho/"><a href="https://www.facebook.com/kdmeubicho/">Cadê meu Bicho</a></blockquote></div></div>
+      </div>
     </div>
   </div>
 </div>
 {% compress js %}
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=388312971328768";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
   <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/lightbox.js' %}"></script>

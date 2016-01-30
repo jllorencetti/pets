@@ -172,14 +172,18 @@ li.active {
   color: #1fa67a;
 }
 
+.fa-facebook {
+  color: #3a5795;
+}
+
 /** Media queries **/
 @media (min-width: 768px) {
   body {
-    margin-bottom: 150px;
+    margin-bottom: 190px;
   }
 
   .footer {
-    height: 150px;
+    height: 190px;
     padding-top: 20px;
   }
 }
