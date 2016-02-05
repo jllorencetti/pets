@@ -39,5 +39,4 @@ def not_found(request):
 
 
 def home(request):
-    pets = models.Pet.objects.select_related('city').order_by('-id')[:6]
-    return render(request, 'common/home.html', {'pets': pets})
+    return render(request, 'common/home.html')
