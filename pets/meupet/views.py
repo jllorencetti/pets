@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.db.models import Q
@@ -8,7 +9,7 @@ from django.views.generic import TemplateView, ListView, CreateView, \
 
 from braces.views import LoginRequiredMixin
 
-from common.views import MeuPetEspecieMixin
+from common.views import MeuPetEspecieMixin, get_lost_kinds, get_adoption_kinds
 from . import forms
 from . import models
 from meupet.forms import SearchForm
@@ -54,6 +55,9 @@ class RegisterPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
     template_name = 'meupet/register_pet.html'
     model = models.Pet
     form_class = forms.PetForm
+
+    def get_success_url(self):
+        return reverse('meupet:registered', args=[self.object.id])
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_information_confirmed:
@@ -153,3 +157,14 @@ class SearchView(MeuPetEspecieMixin, View):
                 query = query & Q(**{key: value})
 
         return query
+
+
+def registered(request, pk):
+    context = {
+        'pet_id': pk,
+        'facebook_url': settings.FACEBOOK_SHARE_URL.format(pk),
+        'twitter_url': settings.TWITTER_SHARE_URL.format(pk),
+        'kind_adoption': get_adoption_kinds(),
+        'kind_lost': get_lost_kinds(),
+    }
+    return render(request, 'meupet/registered.html', context)

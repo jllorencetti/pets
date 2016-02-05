@@ -1,0 +1,37 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-9">
+
+      <h2>Obrigado!</h2>
+
+      <p>O cadastro será compartilhado na nossa página no Facebook automaticamente.</p>
+
+      <p>
+        Para aumentar ainda mais a rede de divulgação, sugerimos que você também
+        compartilhe o cadastro em suas redes sociais.</p>
+
+      <p>Você pode utilizar os botões abaixo para compartilhar no Facebook ou Twitter:</p>
+
+      <ul class="list-unstyled list-inline">
+        <li>
+          <a href="{{ facebook_url }}" target="_blank">
+            <img src="{% static 'img/facebook.png' %}" alt="Facebook"/>
+          </a>
+        </li>
+        <li>|</li>
+        <li>
+          <a href="{{ twitter_url }}" target="_blank">
+            <img src="{% static 'img/twitter.png' %}" alt="Twitter"/>
+          </a>
+        </li>
+      </ul>
+
+      <p>Para visualizar o cadastro clique <a href="{% url 'meupet:detail' pet_id %}">aqui</a>.</p>
+
+      <p>Boa sorte, estamos na torcida! <i class="fa fa-heart-o"></i></p>
+    </div>
+  </div>
+{% endblock %}

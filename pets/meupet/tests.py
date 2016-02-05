@@ -1,3 +1,4 @@
+import os
 import shutil
 import tempfile
 from unittest.mock import MagicMock, patch
@@ -331,6 +332,65 @@ class MeuPetTest(TestCase):
         pets = Pet.objects.get_unpublished_pets()
 
         self.assertNotIn(pet, pets)
+
+
+class PetRegisterTest(TestCase):
+    def _create_image(self, filename='test.png'):
+        from PIL import Image
+
+        path = os.path.join(tempfile.mkdtemp(), filename)
+        with open(path, 'wb') as f:
+            image = Image.new('RGB', (200, 200), 'white')
+            image.save(f, 'PNG')
+
+        return open(path, 'rb')
+
+    def setUp(self):
+        self.kind = Kind.objects.create(kind='Test Kind')
+        self.city = City.objects.create(city='Testing City')
+        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
+        self.client.login(username='admin', password='admin')
+        self.image = self._create_image()
+
+    def tearDown(self):
+        self.image.close()
+
+    def test_show_registered_page(self):
+        """A thank you page should be shown after registering the pet"""
+        response = self.client.post(reverse('meupet:register'),
+                                    data={'name': 'Testing Fuzzy Boots',
+                                          'description': 'My lovely cat',
+                                          'city': self.city.id,
+                                          'kind': self.kind.id,
+                                          'status': Pet.MISSING,
+                                          'profile_picture': self.image},
+                                    follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'meupet/registered.html')
+
+
+class RegisteredViewTest(TestCase):
+    def setUp(self):
+        self.kind = Kind.objects.create(kind='Test Kind')
+        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
+        self.client.login(username='admin', password='admin')
+        self.pet = Pet.objects.create(name='Test pet', profile_picture=get_test_image_file(),
+                                      owner=self.admin, kind=self.kind, status=Pet.MISSING)
+
+    def test_html_registered_page(self):
+        contents = [
+            'Obrigado',
+            'https://www.facebook.com/sharer.php?u=http://cademeubicho.com/pets/{}/'.format(self.pet.id),
+            'https://twitter.com/share?url=http://cademeubicho.com/pets/{}/'.format(self.pet.id),
+            reverse('meupet:detail', args=[self.pet.id])
+        ]
+
+        response = self.client.get(reverse('meupet:registered', args=[self.pet.id]))
+
+        for expected in contents:
+            with self.subTest():
+                self.assertContains(response, expected)
 
 
 class ManagementCommandTest(TestCase):

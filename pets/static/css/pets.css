@@ -164,7 +164,8 @@ li.active {
   font-size: 7em;
 }
 
-.fa-heart {
+.fa-heart,
+.fa-heart-o {
   color: red;
 }
 

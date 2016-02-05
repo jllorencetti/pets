@@ -97,34 +97,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.login()
         self.assertIn('Cadastrar Pet', self.browser.page_source)
 
-    def test_add_lost_pet(self):
-        self.login()
-        self.assertIn('Cadastrar Pet', self.browser.page_source)
-
-        self.browser.get(self.live_server_url + '/pets/new/')
-
-        name = self.browser.find_element_by_name('name')
-        name.send_keys('Test')
-
-        description = self.browser.find_element_by_name('description')
-        description.send_keys('Testing')
-
-        kind = self.browser.find_element_by_name('kind')
-        kind = Select(kind)
-        kind.select_by_index(1)
-
-        self.select_dropdown('city', 1)
-
-        profile_picture = self.browser.find_element_by_name('profile_picture')
-        profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
-
-        submit = self.browser.find_element_by_name('submit')
-        submit.click()
-
-        self.assertIn('Testing', self.browser.page_source)
-        self.assertInHTML('<h2>Test - Desaparecido</h2>', self.browser.page_source)
-
-    def test_add_pet_for_adoption(self):
+    def test_register_pet(self):
         self.login()
         self.assertIn('Cadastrar Pet', self.browser.page_source)
 
@@ -148,8 +121,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         submit = self.browser.find_element_by_name('submit')
         submit.click()
 
-        self.assertIn('Testing Adoption', self.browser.page_source)
-        self.assertInHTML('<h2>Test - Para Adoção</h2>', self.browser.page_source)
+        self.assertIn('Obrigado', self.browser.page_source)
 
     def test_logout(self):
         self.login()
@@ -187,6 +159,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.find_element_by_name('submit').click()
 
         # assert pet was registered
+        self.browser.find_element_by_link_text('aqui').click()
         self.assertInHTML('<h2>Wrong Boots - Desaparecido</h2>', self.browser.page_source)
 
         # user is redirected for the page of his pet and see the wrong name
@@ -299,9 +272,11 @@ class SiteTestCases(StaticLiveServerTestCase):
         submit = self.browser.find_element_by_name('submit')
         submit.click()
 
-        self.assertIn('Testing Adoption', self.browser.page_source)
+        self.assertIn('Obrigado', self.browser.page_source)
+
+        self.browser.get(self.live_server_url + '/pets/')
+
         self.assertIn('Created City', self.browser.page_source)
-        self.assertInHTML('<h2>Test New City - Para Adoção</h2>', self.browser.page_source)
 
     def test_delete_pet(self):
         # pre register pet
