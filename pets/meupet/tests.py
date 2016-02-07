@@ -3,9 +3,8 @@ import shutil
 import tempfile
 from unittest.mock import MagicMock, patch
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from meupet import forms
 from meupet.management.commands.shareonfacebook import Command
@@ -24,17 +23,19 @@ def get_test_image_file(filename='test.png'):
     return ImageFile(f, name=filename)
 
 
+MEDIA_ROOT = tempfile.mkdtemp()
+
+
+@override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class MeuPetTest(TestCase):
     def setUp(self):
-        self._original_media_root = settings.MEDIA_ROOT
-        self._temp_media = tempfile.mkdtemp()
-        settings.MEDIA_ROOT = self._temp_media
         self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
         self.test_city, _ = City.objects.get_or_create(city='Testing City')
 
-    def tearDown(self):
-        shutil.rmtree(self._temp_media, ignore_errors=True)
-        settings.MEDIA_ROOT = self._original_media_root
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(MEDIA_ROOT, ignore_errors=True)
+        super().tearDownClass()
 
     def create_pet(self, kind, name='Pet', status=Pet.MISSING, **kwargs):
         image = get_test_image_file()
@@ -334,6 +335,7 @@ class MeuPetTest(TestCase):
         self.assertNotIn(pet, pets)
 
 
+@override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class PetRegisterTest(TestCase):
     def _create_image(self, filename='test.png'):
         from PIL import Image
@@ -370,6 +372,7 @@ class PetRegisterTest(TestCase):
         self.assertTemplateUsed(response, 'meupet/registered.html')
 
 
+@override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class RegisteredViewTest(TestCase):
     def setUp(self):
         self.kind = Kind.objects.create(kind='Test Kind')
