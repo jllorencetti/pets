@@ -1,4 +1,3 @@
-import os
 import shutil
 import tempfile
 from unittest.mock import MagicMock, patch
@@ -12,15 +11,10 @@ from meupet.models import Pet, Kind, Photo, City
 from users.models import OwnerProfile
 
 
-def get_test_image_file(filename='test.png'):
-    from six import BytesIO
-    from PIL import Image
+def get_test_image_file():
     from django.core.files.images import ImageFile
-
-    f = BytesIO()
-    image = Image.new('RGB', (200, 200), 'white')
-    image.save(f, 'PNG')
-    return ImageFile(f, name=filename)
+    file = tempfile.NamedTemporaryFile(suffix='.png')
+    return ImageFile(file, name=file.name)
 
 
 MEDIA_ROOT = tempfile.mkdtemp()
@@ -337,15 +331,14 @@ class MeuPetTest(TestCase):
 
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class PetRegisterTest(TestCase):
-    def _create_image(self, filename='test.png'):
+    def _create_image(self):
         from PIL import Image
 
-        path = os.path.join(tempfile.mkdtemp(), filename)
-        with open(path, 'wb') as f:
+        with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as f:
             image = Image.new('RGB', (200, 200), 'white')
             image.save(f, 'PNG')
 
-        return open(path, 'rb')
+        return open(f.name, mode='rb')
 
     def setUp(self):
         self.kind = Kind.objects.create(kind='Test Kind')
