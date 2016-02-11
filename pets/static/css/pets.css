@@ -5,7 +5,7 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif;
-  margin-bottom: 250px;
+  margin-bottom: 345px;
 }
 
 .box-shadow {
@@ -109,7 +109,7 @@ li.active {
   bottom: 0;
   background-color: #1b443c;
   color: #e9f6f4;
-  height: 250px;
+  height: 345px;
   width: 100%;
 }
 
