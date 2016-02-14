@@ -17,7 +17,27 @@ to improve the site performance.
 
 It's still a work in progress
 
-In order to make development and deploy to production simpler there's two settings module.
-'dev' for development and 'prod' for production, both based on the 'base' settings.
 
-Look in the settings modules for environment variables which need to be configured.
+### How to contribute to the project
+
+1. Fork and clone the repository;
+2. Configure your instance (python-decouple);
+   * Remember to configure the username, password and database in your postgreSQL. 
+3. Install Pillow dependencies;
+4. Install PhantonJS, see the julionc [tutorial](https://gist.github.com/julionc/7476620);
+5. Install project requirements;
+6. Execute all tests, it will take some minutes. 
+
+```console
+git clone https://github.com/<username>/pets.git && cd pets
+cp contrib/sample-env pets/.env
+sudo apt-get install python-dev python3.x-dev libjpeg8-dev 
+#Install PhantomJS
+pip install -r requirements.txt
+cd pets && python manage.py test
+```
+
+__Some observations:__
+* Use Python 3.4 or newer; 
+* In order to make development and deploy to production simpler there's two settings module 'dev' for development and 'prod' for production, both based on the 'base' settings.
+* Do not make changes if some test fail. Ask for help.
