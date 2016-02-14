@@ -14,6 +14,11 @@ class PetManager(models.Manager):
     def get_unpublished_pets(self):
         return self.filter(published=False)
 
+    def get_unsolved_cases(self):
+        qs = self.filter(status__in=[Pet.MISSING, Pet.FOR_ADOPTION])
+
+        return qs
+
 
 class Kind(models.Model):
     kind = models.TextField(max_length=100)
