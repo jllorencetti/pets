@@ -20,13 +20,14 @@
 {% block content %}
   <div class="row">
     <div class="col-md-12">
-      <h2>{{ pet.name }} - {{ pet.get_status_display }}</h2>
-      {% if user == pet.owner %}
-
-        {% if not pet.found_or_adopted %}
-          <form action="{% url 'meupet:change_status' pet.id %}" method="post" class="form-inline">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-success" value="
+      <div class="pet-heading">
+        <h2 class="pull-left">{{ pet.name }} - {{ pet.get_status_display }}</h2>
+        {% if user == pet.owner %}
+          <div class="pull-right">
+            {% if not pet.found_or_adopted %}
+              <form action="{% url 'meupet:change_status' pet.id %}" method="post" class="form-inline">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-success" value="
               Marcar como
               {% if pet.status == pet.MISSING %}
               encontrado!
@@ -34,16 +35,19 @@
               adotado!
               {% endif %}
             "/>
-          </form>
+              </form>
+            {% endif %}
+
+            <a href="{% url 'meupet:edit' pet.id %}" class="btn btn-primary">Editar</a>
+
+            <a href="{% url 'meupet:poster' pet.id %}" class="btn btn-primary">Gerar Cartaz</a>
+
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_pet">
+              Apagar Pet
+            </button>
+          </div>
         {% endif %}
-
-        <a href="{% url 'meupet:edit' pet.id %}" class="btn btn-primary">Editar</a>
-
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_pet">
-          Apagar Pet
-        </button>
-
-      {% endif %}
+      </div>
     </div>
   </div>
 
