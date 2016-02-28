@@ -428,7 +428,11 @@ class ManagementCommandTest(TestCase):
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class PosterTest(TestCase):
     def setUp(self):
-        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
+        self.admin = OwnerProfile.objects.create_user(
+            username='admin',
+            password='admin',
+            phone='99 99999-9999'
+        )
         self.city = City.objects.create(city='Test City')
         self.pet = Pet.objects.create(
             name='Testing Pet',
@@ -455,6 +459,7 @@ class PosterTest(TestCase):
             'Testing Pet',
             'Lost imaginary pet',
             'Porte médio, macho',
+            '99 99999-9999'
         ]
 
         for expected in contents:

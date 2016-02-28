@@ -39,10 +39,23 @@
             </h2>
           {% endif %}
 
-          <p class="poster-description">{{ pet.description }}</p>
+          <p class="font-1_8rem">{{ pet.description }}</p>
+
+          <h3>Contato</h3>
+
+          <ul class="list-unstyled font-1_8rem">
+            <li>
+              Email <i class="fa fa-envelope"></i>: {{ pet.owner.email }}
+            </li>
+            {% if pet.owner.phone %}
+              <li>
+                Telefone <i class="fa fa-phone"></i>: {{ pet.owner.phone }}
+              </li>
+            {% endif %}
+          </ul>
 
           <div class="pull-right">
-            <p class="poster-description">Acesse: www.cademeubicho.com</p>
+            <p class="font-1_8rem">Acesse: www.cademeubicho.com</p>
           </div>
         </div>
 

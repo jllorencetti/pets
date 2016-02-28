@@ -90,6 +90,14 @@
           {{ form.facebook.errors }}
         </div>
       </div>
+      <div class="form-group{% if form.phone.errors %} has-error{% endif %}">
+        <label for="{{ form.phone.id_for_label }}" class="control-label">Telefone</label>
+
+        <div class="controls">
+          {{ form.phone }}
+          {{ form.phone.errors }}
+        </div>
+      </div>
       <div class="form-group{% if form.password1.errors %} has-error{% endif %}">
         <label for="{{ form.password1.id_for_label }}" class="control-label">Senha</label>
 

@@ -2,8 +2,9 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from .models import OwnerProfile
+from users.forms import RegisterForm, UpdateUserForm
 from users.validators import validate_facebook_url
+from .models import OwnerProfile
 
 
 class UserRegistrationTest(TestCase):
@@ -179,3 +180,65 @@ class UserRegistrationTest(TestCase):
         response = self.client.get(reverse('users:create'))
 
         self.assertRedirects(response, reverse('meupet:index'))
+
+
+class UserDetailViewTest(TestCase):
+    def test_show_information_on_profile(self):
+        self.user = OwnerProfile.objects.create_user(
+            first_name='Test First Name',
+            last_name='Tester',
+            email='te@ste.com',
+            username='first_user',
+            is_information_confirmed=True,
+            phone='(99) 99999-9999'
+        )
+
+        self.resp = self.client.get(self.user.get_absolute_url())
+
+        contents = [
+            'Test First Name',
+            'Tester',
+            'te@ste.com',
+            '(99) 99999-9999'
+        ]
+
+        for expected in contents:
+            with self.subTest():
+                self.assertContains(self.resp, expected)
+
+
+class UserCreateViewTest(TestCase):
+    def test_show_form_inputs(self):
+        resp = self.client.get(reverse('users:create'))
+
+        contents = [
+            'name="first_name"',
+            'name="last_name"',
+            'name="email"',
+            'name="username"',
+            'name="facebook"',
+            'name="phone"',
+            'name="password1"',
+            'name="password2"',
+        ]
+
+        for expected in contents:
+            with self.subTest():
+                self.assertContains(resp, expected)
+
+
+class RegisterFormTest(TestCase):
+    def test_form_has_fields(self):
+        form = RegisterForm()
+        expected = ['first_name', 'last_name', 'email', 'username',
+                    'facebook', 'phone', 'password1', 'password2', ]
+
+        self.assertSequenceEqual(expected, list(form.fields))
+
+
+class UpdateUserFormTest(TestCase):
+    def test_form_has_fields(self):
+        form = UpdateUserForm()
+        expected = ['first_name', 'last_name', 'email', 'facebook', 'phone', ]
+
+        self.assertSequenceEqual(expected, list(form.fields))

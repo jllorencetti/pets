@@ -197,7 +197,7 @@ li.active {
 }
 
 .poster-headline {
-  font-size: 7rem;
+  font-size: 6rem;
 }
 
 .poster-subheadline {
@@ -205,8 +205,8 @@ li.active {
   font-style: italic;
 }
 
-.poster-description {
-  font-size: 2rem;
+.font-1_8rem {
+  font-size: 1.8rem;
 }
 
 @media print {
