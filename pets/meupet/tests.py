@@ -430,7 +430,7 @@ class RegisteredViewTest(TestCase):
                 self.assertContains(response, expected)
 
 
-class ManagementCommandTest(TestCase):
+class ManagementCommandShareOnFacebookTest(TestCase):
     def setUp(self):
         self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
         self.city = City.objects.create(city='Araras')
