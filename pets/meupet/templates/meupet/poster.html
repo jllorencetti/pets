@@ -1,0 +1,65 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% block page %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="text-center hidden-print">
+          <a onclick="window.print()" class="btn btn-primary">Imprimir <i class="fa fa-print"></i></a>
+        </div>
+
+        <div class="page">
+          <div class="pull-left print-logo">
+            <img class="img-responsive" src="{% static 'img/logo.png' %}" alt="Logo Cadê meu Bicho">
+          </div>
+          <div class="pull-right print-logo">
+            <img class="img-responsive" src="{% static 'img/logo.png' %}" alt="Logo Cadê meu Bicho">
+          </div>
+
+          <h1 class="text-center text-uppercase poster-headline">
+            {{ pet.get_status_display }}
+          </h1>
+
+          <div class="text-center">
+            <img class="img-responsive img-rounded img-thumbnail"
+                 src="{{ pet.profile_picture|thumbnail_url:'pet_poster' }}"
+                 alt="{{ pet.name }} foto principal">
+          </div>
+
+          <h2 class="text-center poster-headline">
+            {{ pet.name }}
+          </h2>
+
+          {% if pet.size and pet.sex %}
+            <h2 class="text-center poster-subheadline">
+              Porte {{ pet.get_size_display|lower }}, {{ pet.get_sex_display|lower }}
+            </h2>
+          {% endif %}
+
+          <p class="font-1_8rem">{{ pet.description }}</p>
+
+          <h3>Contato</h3>
+
+          <ul class="list-unstyled font-1_8rem">
+            <li>
+              Email <i class="fa fa-envelope"></i>: {{ pet.owner.email }}
+            </li>
+            {% if pet.owner.phone %}
+              <li>
+                Telefone <i class="fa fa-phone"></i>: {{ pet.owner.phone }}
+              </li>
+            {% endif %}
+          </ul>
+
+          <div class="pull-right">
+            <p class="font-1_8rem">Acesse: www.cademeubicho.com</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

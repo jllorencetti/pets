@@ -464,3 +464,45 @@ class ManagementCommandShareOnFacebookTest(TestCase):
         with patch('facebook.GraphAPI.put_wall_post') as mock:
             cmd.handle()
             return mock
+
+
+@override_settings(MEDIA_ROOT=MEDIA_ROOT)
+class PosterTest(TestCase):
+    def setUp(self):
+        self.admin = OwnerProfile.objects.create_user(
+            username='admin',
+            password='admin',
+            phone='99 99999-9999'
+        )
+        self.city = City.objects.create(city='Test City')
+        self.pet = Pet.objects.create(
+            name='Testing Pet',
+            city=self.city,
+            status=Pet.MISSING,
+            owner=self.admin,
+            description='Lost imaginary pet',
+            size=Pet.MEDIUM,
+            sex=Pet.MALE,
+            profile_picture=get_test_image_file()
+        )
+        self.resp = self.client.get(reverse('meupet:poster', kwargs={'pk': self.pet.id}))
+
+    def test_template_used(self):
+        self.assertTemplateUsed(self.resp, 'meupet/poster.html')
+
+    def test_pet_in_context(self):
+        pet = self.resp.context['pet']
+        self.assertIsInstance(pet, Pet)
+
+    def test_poster_info(self):
+        contents = [
+            'Desaparecido',
+            'Testing Pet',
+            'Lost imaginary pet',
+            'Porte médio, macho',
+            '99 99999-9999'
+        ]
+
+        for expected in contents:
+            with self.subTest():
+                self.assertContains(self.resp, expected)

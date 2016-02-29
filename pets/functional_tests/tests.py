@@ -160,7 +160,7 @@ class SiteTestCases(StaticLiveServerTestCase):
 
         # assert pet was registered
         self.browser.find_element_by_link_text('aqui').click()
-        self.assertInHTML('<h2>Wrong Boots - Desaparecido</h2>', self.browser.page_source)
+        self.assertInHTML('<h2 class="pull-left">Wrong Boots - Desaparecido</h2>', self.browser.page_source)
 
         # user is redirected for the page of his pet and see the wrong name
         # then click on 'Edit' and get redirected for the editing page
@@ -182,7 +182,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.assertIn('Grande', self.browser.page_source)
         self.assertIn('Fêmea', self.browser.page_source)
         self.assertIn('Araras', self.browser.page_source)
-        self.assertInHTML('<h2>Fuzzy Boots - Para Adoção</h2>', self.browser.page_source)
+        self.assertInHTML('<h2 class="pull-left">Fuzzy Boots - Para Adoção</h2>', self.browser.page_source)
 
     def test_edit_profile_information(self):
         # user login

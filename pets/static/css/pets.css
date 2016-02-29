@@ -71,6 +71,15 @@ li.active {
   background-color: #1b443c;
 }
 
+.pet-heading {
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.pet-heading h2 {
+  margin: 0;
+}
+
 /** Navbar **/
 .navbar-pets {
   background-color: #1b443c;
@@ -175,6 +184,35 @@ li.active {
 
 .fa-facebook {
   color: #3a5795;
+}
+
+/** Poster **/
+.page {
+  width: 768px;
+  margin: 0 auto;
+}
+
+.print-logo {
+  width: 10%;
+}
+
+.poster-headline {
+  font-size: 6rem;
+}
+
+.poster-subheadline {
+  font-size: 2.5rem;
+  font-style: italic;
+}
+
+.font-1_8rem {
+  font-size: 1.8rem;
+}
+
+@media print {
+  body {
+    margin-bottom: 0;
+  }
 }
 
 /** Media queries **/

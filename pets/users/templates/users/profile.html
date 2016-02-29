@@ -10,7 +10,21 @@
       {% endif %}
 
       <h4>Contatos</h4>
-      {% if object.facebook %}<a href="{{ object.facebook }}">Facebook</a> | {% endif %}<a href="mailto:{{ object.email }}">Email</a>
+      <ul class="list-unstyled">
+        {% if object.facebook %}
+          <li>
+            <a href="{{ object.facebook }}">Facebook</a>
+          </li>
+        {% endif %}
+        <li>
+          Email <i class="fa fa-envelope"></i>: <a href="mailto:{{ object.email }}">{{ object.email }}</a>
+        </li>
+        {% if object.phone %}
+          <li>
+            Telefone <i class="fa fa-phone"></i>: {{ object.phone }}
+          </li>
+        {% endif %}
+      </ul>
 
       <h4>Pets Cadastrados</h4>
       {% include '_partials/pets_list.html' %}

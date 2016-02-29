@@ -168,3 +168,8 @@ def registered(request, pk):
         'kind_lost': get_lost_kinds(),
     }
     return render(request, 'meupet/registered.html', context)
+
+
+def poster(request, pk):
+    pet = get_object_or_404(models.Pet, pk=pk)
+    return render(request, 'meupet/poster.html', {'pet': pet})

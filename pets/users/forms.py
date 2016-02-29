@@ -24,8 +24,9 @@ class UserForm(forms.ModelForm):
         self.fields['last_name'].required = True
         self.fields['email'].required = True
         self.fields['facebook'].help_text = _(
-                'Clique <a href="#" data-toggle="modal" data-target="#ajuda-facebook">'
-                'aqui</a> para saber como preencher esse campo.')
+            'Clique <a href="#" data-toggle="modal" data-target="#ajuda-facebook">'
+            'aqui</a> para saber como preencher esse campo.')
+        self.fields['phone'].widget.attrs.update({'class': 'form-control'})
 
 
 class RegisterForm(UserForm):
@@ -41,15 +42,16 @@ class RegisterForm(UserForm):
         self.fields['facebook'].widget.attrs.update({'class': 'form-control'})
         self.fields['password1'].widget.attrs.update({'class': 'form-control'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
+        self.fields['facebook'].widget.attrs.update(
+            {'placeholder': 'Insira o endereço completo do seu perfil no Facebook.'})
 
         self.fields['username'].help_text = _('Obrigatório. 30 caracteres ou menos. '
                                               'Somente letras, números e @/./+/-/_.')
-        self.fields['facebook'].widget.attrs.update(
-                {'placeholder': 'Insira o endereço completo do seu perfil no Facebook.'})
 
     class Meta:
         model = OwnerProfile
-        fields = ('first_name', 'last_name', 'email', 'username', 'facebook', 'password1', 'password2',)
+        fields = ('first_name', 'last_name', 'email', 'username',
+                  'facebook', 'phone', 'password1', 'password2',)
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -69,7 +71,7 @@ class RegisterForm(UserForm):
 class UpdateUserForm(UserForm):
     class Meta:
         model = OwnerProfile
-        fields = ('first_name', 'last_name', 'email', 'facebook',)
+        fields = ('first_name', 'last_name', 'email', 'facebook', 'phone',)
 
     def __init__(self, *args, **kwargs):
         super(UpdateUserForm, self).__init__(*args, **kwargs)
