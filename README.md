@@ -21,7 +21,7 @@ It's still a work in progress
 ### How to contribute to the project
 
 1. Fork and clone the repository;
-2. Configure your instance (python-decouple);
+2. Configure your instance;
    * Remember to configure the username, password and database in your postgreSQL. 
 3. Install Pillow dependencies;
 4. Install PhantonJS, see the julionc [tutorial](https://gist.github.com/julionc/7476620);
