@@ -1,5 +1,5 @@
-from django.utils.timezone import timedelta
+from django.utils.timezone import timedelta, now
 
-def get_unsolved_cases_perdiod_range(period_end):
-    period_start = period_end - timedelta(days=90)
-    return [period_start, period_end]
+
+def get_date_3_months_ago(target_date=now()):
+    return target_date - timedelta(days=90)

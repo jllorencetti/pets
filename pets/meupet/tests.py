@@ -6,12 +6,13 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 from django.utils.timezone import now, timedelta
 
+
 from meupet import forms
 from meupet.management.commands.shareonfacebook import Command
 from meupet.models import Pet, Kind, Photo, City
 from users.models import OwnerProfile
 
-from meupet.services import get_unsolved_cases_perdiod_range
+from meupet.services import get_date_3_months_ago
 
 
 def get_test_image_file():
@@ -337,24 +338,37 @@ class MeuPetTest(TestCase):
 
     def test_get_unsolved_cases_return(self):
         """get_unsolved_cases method must return opened cases"""
-        self.create_pet('Dog', 'Pet1', Pet.ADOPTED)
-        self.create_pet('Bird', 'Pet2', Pet.ADOPTED)
-        self.create_pet('Cat', 'Pet3', Pet.MISSING)
-        self.create_pet('Dog', 'Pet4', Pet.FOR_ADOPTION)
+        today_4months_ago = now() - timedelta(days=120)
+        self.create_pet('Dog', 'Pet1', Pet.ADOPTED, modified=today_4months_ago)
+        self.create_pet('Bird', 'Pet2', Pet.ADOPTED, modified=today_4months_ago)
+        self.create_pet('Cat', 'Pet3', Pet.MISSING, modified=today_4months_ago)
+        self.create_pet('Dog', 'Pet4', Pet.FOR_ADOPTION, modified=today_4months_ago)
 
         unsolved_cases = Pet.objects.get_unsolved_cases()
 
         self.assertEqual(len(unsolved_cases), 2)
 
-    def test_get_unsolved_cases_perdiod_range(self):
-        """get_unsolved_cases_perdiod_range service must return period start and end"""
+    def test_get_date_3_months_ago(self):
+        """get_date_3_months_ago service must return a date 3 months ago"""
         today = now()
         today_3months_ago = today - timedelta(days=90)
 
-        period_range = get_unsolved_cases_perdiod_range(today)
+        self.assertTrue(get_date_3_months_ago(today) == today_3months_ago)
 
-        self.assertTrue(period_range[0] == today_3months_ago)
-        self.assertTrue(period_range[1] == today)
+
+    def test_get_unsolved_cases_return_period(self):
+        """get_unsolved_cases method must return cases still open in 3 months"""
+        today = now()
+        today_2months_ago = now() - timedelta(days=60)
+        today_4months_ago = now() - timedelta(days=120)
+        self.create_pet('Cat', 'Pet1', Pet.MISSING, modified=today)
+        self.create_pet('Dog', 'Pet2', Pet.FOR_ADOPTION, modified=today_2months_ago)
+        self.create_pet('Cat', 'Pet3', Pet.MISSING, modified=today_4months_ago)
+        self.create_pet('Dog', 'Pet4', Pet.FOR_ADOPTION, modified=today_4months_ago)
+
+        unsolved_cases = Pet.objects.get_unsolved_cases()
+
+        self.assertEqual(len(unsolved_cases), 2)
 
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class PetRegisterTest(TestCase):
