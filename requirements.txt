@@ -1,4 +1,4 @@
-Django==1.8.9
+Django>=1.8,<1.9
 django-braces==1.8.1
 django-crispy-forms==1.6.0
 django-compressor==2.0
@@ -10,6 +10,6 @@ Pillow==3.1.1
 python-social-auth==0.2.14
 python3-openid==3.0.9
 selenium==2.51.1
-opbeat==3.2.1
+opbeat==3.2.2
 psycopg2==2.6.1
 python-decouple==3.0
