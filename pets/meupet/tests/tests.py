@@ -1,27 +1,27 @@
 import shutil
 import tempfile
-from unittest.mock import MagicMock, patch
 
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 
 from meupet import forms
-from meupet.management.commands.shareonfacebook import Command
 from meupet.models import Pet, Kind, Photo, City
 from users.models import OwnerProfile
-
-
-def get_test_image_file():
-    from django.core.files.images import ImageFile
-    file = tempfile.NamedTemporaryFile(suffix='.png')
-    return ImageFile(file, name=file.name)
 
 
 MEDIA_ROOT = tempfile.mkdtemp()
 
 
+class MeuPetTestCase(TestCase):
+    @staticmethod
+    def get_test_image_file():
+        from django.core.files.images import ImageFile
+        file = tempfile.NamedTemporaryFile(suffix='.png')
+        return ImageFile(file, name=file.name)
+
+
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
-class MeuPetTest(TestCase):
+class MeuPetTest(MeuPetTestCase):
     def setUp(self):
         self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
         self.test_city, _ = City.objects.get_or_create(city='Testing City')
@@ -32,7 +32,7 @@ class MeuPetTest(TestCase):
         super().tearDownClass()
 
     def create_pet(self, kind, name='Pet', status=Pet.MISSING, **kwargs):
-        image = get_test_image_file()
+        image = self.get_test_image_file()
         user = self.admin
         kind = Kind.objects.get_or_create(kind=kind)[0]
         return Pet.objects.create(name='Testing ' + name, description='Bla',
@@ -234,7 +234,7 @@ class MeuPetTest(TestCase):
         self.assertContains(response, 'another_picture')
 
     def test_show_more_photos_in_pet_detail(self):
-        photo = Photo(image=get_test_image_file())
+        photo = Photo(image=self.get_test_image_file())
         pet = self.create_pet('Cat')
         pet.photo_set.add(photo)
         pet.save()
@@ -327,141 +327,3 @@ class MeuPetTest(TestCase):
         pets = Pet.objects.get_unpublished_pets()
 
         self.assertNotIn(pet, pets)
-
-
-@override_settings(MEDIA_ROOT=MEDIA_ROOT)
-class PetRegisterTest(TestCase):
-    def _create_image(self):
-        from PIL import Image
-
-        with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as f:
-            image = Image.new('RGB', (200, 200), 'white')
-            image.save(f, 'PNG')
-
-        return open(f.name, mode='rb')
-
-    def setUp(self):
-        self.kind = Kind.objects.create(kind='Test Kind')
-        self.city = City.objects.create(city='Testing City')
-        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
-        self.client.login(username='admin', password='admin')
-        self.image = self._create_image()
-
-    def tearDown(self):
-        self.image.close()
-
-    def test_show_registered_page(self):
-        """A thank you page should be shown after registering the pet"""
-        response = self.client.post(reverse('meupet:register'),
-                                    data={'name': 'Testing Fuzzy Boots',
-                                          'description': 'My lovely cat',
-                                          'city': self.city.id,
-                                          'kind': self.kind.id,
-                                          'status': Pet.MISSING,
-                                          'profile_picture': self.image},
-                                    follow=True)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'meupet/registered.html')
-
-
-@override_settings(MEDIA_ROOT=MEDIA_ROOT)
-class RegisteredViewTest(TestCase):
-    def setUp(self):
-        self.kind = Kind.objects.create(kind='Test Kind')
-        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
-        self.client.login(username='admin', password='admin')
-        self.pet = Pet.objects.create(name='Test pet', profile_picture=get_test_image_file(),
-                                      owner=self.admin, kind=self.kind, status=Pet.MISSING)
-
-    def test_html_registered_page(self):
-        contents = [
-            'Obrigado',
-            'https://www.facebook.com/sharer.php?u=http://cademeubicho.com/pets/{}/'.format(self.pet.id),
-            'https://twitter.com/share?url=http://cademeubicho.com/pets/{}/'.format(self.pet.id),
-            reverse('meupet:detail', args=[self.pet.id])
-        ]
-
-        response = self.client.get(reverse('meupet:registered', args=[self.pet.id]))
-
-        for expected in contents:
-            with self.subTest():
-                self.assertContains(response, expected)
-
-
-class ManagementCommandTest(TestCase):
-    def setUp(self):
-        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
-        self.city = City.objects.create(city='Araras')
-        self.pet = Pet.objects.create(
-            name='Testing Pet',
-            city=self.city,
-            status=Pet.MISSING,
-            owner=self.admin
-        )
-
-    def test_shareonfacebook_command(self):
-        link = {
-            'link': 'http://www.test.com/{}'.format(self.pet.get_absolute_url())
-        }
-
-        mock = self.call_mocked_command(link)
-
-        expected = 'Desaparecido: Testing Pet, Araras'
-        mock.assert_called_once_with(expected, attachment=link)
-
-    def call_mocked_command(self, link):
-        mock = MagicMock()
-        mock.get_renewed_token.return_value = 'token'
-        mock.get_attachment.return_value = link
-
-        cmd = Command()
-
-        cmd.get_attachment = mock.get_attachment
-        cmd.get_renewed_token = mock.get_renewed_token
-
-        with patch('facebook.GraphAPI.put_wall_post') as mock:
-            cmd.handle()
-            return mock
-
-
-@override_settings(MEDIA_ROOT=MEDIA_ROOT)
-class PosterTest(TestCase):
-    def setUp(self):
-        self.admin = OwnerProfile.objects.create_user(
-            username='admin',
-            password='admin',
-            phone='99 99999-9999'
-        )
-        self.city = City.objects.create(city='Test City')
-        self.pet = Pet.objects.create(
-            name='Testing Pet',
-            city=self.city,
-            status=Pet.MISSING,
-            owner=self.admin,
-            description='Lost imaginary pet',
-            size=Pet.MEDIUM,
-            sex=Pet.MALE,
-            profile_picture=get_test_image_file()
-        )
-        self.resp = self.client.get(reverse('meupet:poster', kwargs={'pk': self.pet.id}))
-
-    def test_template_used(self):
-        self.assertTemplateUsed(self.resp, 'meupet/poster.html')
-
-    def test_pet_in_context(self):
-        pet = self.resp.context['pet']
-        self.assertIsInstance(pet, Pet)
-
-    def test_poster_info(self):
-        contents = [
-            'Desaparecido',
-            'Testing Pet',
-            'Lost imaginary pet',
-            'Porte médio, macho',
-            '99 99999-9999'
-        ]
-
-        for expected in contents:
-            with self.subTest():
-                self.assertContains(self.resp, expected)
