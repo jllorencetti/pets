@@ -159,6 +159,8 @@ li.active {
 /** Home page **/
 .jumbotron .callout {
   font-size: 5em;
+  font-weight: 200;
+  margin-bottom: 10px;
 }
 
 .jumbotron {
