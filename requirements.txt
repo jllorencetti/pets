@@ -9,7 +9,7 @@ easy-thumbnails==2.3
 Pillow==3.1.1
 python-social-auth==0.2.14
 python3-openid==3.0.9
-selenium==2.51.1
-opbeat==3.2.2
+selenium==2.52.0
+opbeat==3.3
 psycopg2==2.6.1
 python-decouple==3.0
