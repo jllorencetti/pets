@@ -88,13 +88,13 @@ class MeuPetTest(MeuPetTestCase):
         response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Editar')
-        self.assertContains(response, reverse('meupet:edit', args=[pet.id]))
+        self.assertContains(response, reverse('meupet:edit', args=[pet.slug]))
 
     def test_load_data_for_editing_pet(self):
         pet = self.create_pet('Own Pet', 'Own Pet')
         self.client.login(username='admin', password='admin')
 
-        response = self.client.get(reverse('meupet:edit', args=[pet.id]))
+        response = self.client.get(reverse('meupet:edit', args=[pet.slug]))
 
         self.assertTemplateUsed(response, 'meupet/edit.html')
         self.assertContains(response, 'Testing Own Pet')
@@ -105,7 +105,7 @@ class MeuPetTest(MeuPetTestCase):
         pet = self.create_pet('Own Pet')
         self.client.login(username='admin', password='admin')
 
-        response = self.client.post(reverse('meupet:delete_pet', args=[pet.id]), follow=True)
+        response = self.client.post(reverse('meupet:delete_pet', args=[pet.slug]), follow=True)
 
         self.assertTemplateUsed(response, 'meupet/index.html')
         self.assertNotContains(response, 'Testing Pet')
@@ -115,7 +115,7 @@ class MeuPetTest(MeuPetTestCase):
         OwnerProfile.objects.create_user(username='other', password='user')
         self.client.login(username='other', password='user')
 
-        response = self.client.post(reverse('meupet:delete_pet', args=[pet.id]), follow=True)
+        response = self.client.post(reverse('meupet:delete_pet', args=[pet.slug]), follow=True)
 
         self.assertTemplateUsed(response, 'meupet/pet_detail.html')
         self.assertContains(response, 'Testing Pet')
@@ -126,7 +126,7 @@ class MeuPetTest(MeuPetTestCase):
         self.client.login(username='admin', password='admin')
         url = Pet.objects.first().profile_picture.url
 
-        response_post = self.client.post(reverse('meupet:edit', args=[pet.id]),
+        response_post = self.client.post(reverse('meupet:edit', args=[pet.slug]),
                                          data={'name': 'Testing Fuzzy Boots',
                                                'description': 'My lovely cat',
                                                'city': self.test_city.id,
@@ -181,7 +181,7 @@ class MeuPetTest(MeuPetTestCase):
         pet = self.create_pet('Own Pet')
         self.client.login(username='Other User', password='otherpass')
 
-        response = self.client.get(reverse('meupet:edit', args=[pet.id]))
+        response = self.client.get(reverse('meupet:edit', args=[pet.slug]))
 
         self.assertRedirects(response, pet.get_absolute_url())
 
@@ -308,7 +308,7 @@ class MeuPetTest(MeuPetTestCase):
 
     def test_change_status_and_show_status_label(self):
         pet = self.create_pet('Dog', status=Pet.FOR_ADOPTION)
-        self.client.post(reverse('meupet:change_status', args=[pet.id]))
+        self.client.post(reverse('meupet:change_status', args=[pet.slug]))
 
         response = self.client.get(reverse('meupet:index'))
 
@@ -327,3 +327,19 @@ class MeuPetTest(MeuPetTestCase):
         pets = Pet.objects.get_unpublished_pets()
 
         self.assertNotIn(pet, pets)
+
+    def test_get_pet_by_pk(self):
+        pet = self.create_pet('Pet')
+
+        resp = self.client.get(reverse('meupet:detail', kwargs={'pk_or_slug': pet.id}))
+
+        self.assertEqual(200, resp.status_code)
+        self.assertContains(resp, 'Testing Pet')
+
+    def test_get_pet_by_slug(self):
+        pet = self.create_pet('Pet')
+
+        resp = self.client.get(reverse('meupet:detail', kwargs={'pk_or_slug': pet.slug}))
+
+        self.assertEqual(200, resp.status_code)
+        self.assertContains(resp, 'Testing Pet')

@@ -228,7 +228,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.login()
 
         # go to own pet
-        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.id))
+        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.slug))
 
         # upload some new photo
         profile_picture = self.browser.find_element_by_name('another_picture')
@@ -286,7 +286,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.login()
 
         # go to own pet
-        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.id))
+        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.slug))
 
         # click on delete button
         self.browser.find_element_by_css_selector('.btn-danger').click()

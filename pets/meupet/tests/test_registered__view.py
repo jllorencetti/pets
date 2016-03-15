@@ -19,12 +19,12 @@ class RegisteredViewTest(MeuPetTestCase):
     def test_html_registered_page(self):
         contents = [
             'Obrigado',
-            'https://www.facebook.com/sharer.php?u=http://cademeubicho.com/pets/{}/'.format(self.pet.id),
-            'https://twitter.com/share?url=http://cademeubicho.com/pets/{}/'.format(self.pet.id),
-            reverse('meupet:detail', args=[self.pet.id])
+            'https://www.facebook.com/sharer.php?u=http://cademeubicho.com/pets/{}/'.format(self.pet.slug),
+            'https://twitter.com/share?url=http://cademeubicho.com/pets/{}/'.format(self.pet.slug),
+            reverse('meupet:detail', args=[self.pet.slug])
         ]
 
-        response = self.client.get(reverse('meupet:registered', args=[self.pet.id]))
+        response = self.client.get(reverse('meupet:registered', args=[self.pet.slug]))
 
         for expected in contents:
             with self.subTest():

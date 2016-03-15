@@ -25,7 +25,7 @@ class PosterTest(MeuPetTestCase):
             sex=Pet.MALE,
             profile_picture=self.get_test_image_file()
         )
-        self.resp = self.client.get(reverse('meupet:poster', kwargs={'pk': self.pet.id}))
+        self.resp = self.client.get(reverse('meupet:poster', kwargs={'slug': self.pet.slug}))
 
     def test_template_used(self):
         self.assertTemplateUsed(self.resp, 'meupet/poster.html')
