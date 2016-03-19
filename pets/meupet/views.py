@@ -134,10 +134,11 @@ def change_status(request, slug):
 
 def upload_image(request, slug):
     pet = get_object_or_404(models.Pet, slug=slug)
-    if request.method == 'POST' and request.FILES.get('another_picture', False):
-        picture = request.FILES['another_picture']
-        photo = models.Photo(pet_id=pet.id, image=picture)
-        photo.save()
+    picture = request.FILES.get('another_picture', False)
+
+    if request.user == pet.owner and request.method == 'POST' and picture:
+        models.Photo.objects.create(pet_id=pet.id, image=picture)
+
     return HttpResponseRedirect(reverse('meupet:detail', kwargs={'pk_or_slug': pet.slug}))
 
 
