@@ -25,7 +25,7 @@
         {% if user == pet.owner %}
           <div class="pull-right">
             {% if not pet.found_or_adopted %}
-              <form action="{% url 'meupet:change_status' pet.id %}" method="post" class="form-inline">
+              <form action="{% url 'meupet:change_status' pet.slug %}" method="post" class="form-inline">
                 {% csrf_token %}
                 <input type="submit" class="btn btn-success" value="
               Marcar como
@@ -38,9 +38,9 @@
               </form>
             {% endif %}
 
-            <a href="{% url 'meupet:edit' pet.id %}" class="btn btn-primary">Editar</a>
+            <a href="{% url 'meupet:edit' pet.slug %}" class="btn btn-primary">Editar</a>
 
-            <a href="{% url 'meupet:poster' pet.id %}" class="btn btn-primary">Gerar Cartaz</a>
+            <a href="{% url 'meupet:poster' pet.slug %}" class="btn btn-primary">Gerar Cartaz</a>
 
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_pet">
               Apagar Pet
@@ -69,7 +69,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 
-          <form action="{% url 'meupet:delete_pet' pet.id %}" method="post" class="form-inline">
+          <form action="{% url 'meupet:delete_pet' pet.slug %}" method="post" class="form-inline">
             {% csrf_token %}
             <input type="submit" class="btn btn-danger" value="Apagar"/>
           </form>
@@ -81,13 +81,13 @@
 
   <div class="row">
     <div class="col-md-5">
-      <a href="{{ pet.profile_picture.url }}" data-lightbox="{{ pet.id }}" data-title="{{ pet }}">
+      <a href="{{ pet.profile_picture.url }}" data-lightbox="{{ pet.slug }}" data-title="{{ pet }}">
         <img class="img-thumbnail" src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}"
              alt="{{ pet }}"/>
       </a>
       {% if user == pet.owner %}
         <form class="form-horizontal" method="POST" enctype="multipart/form-data"
-              action="{% url 'meupet:upload_image' pet.id %}">
+              action="{% url 'meupet:upload_image' pet.slug %}">
           {% csrf_token %}
           <input name="pet_id" value="{{ pet.id }}" hidden="hidden">
 
@@ -155,7 +155,7 @@
         <div class="row">
           {% for photo in pet.photo_set.all %}
             <div class="col-md-3">
-              <a href="{{ photo.image.url }}" data-lightbox="{{ pet.id }}" data-title="{{ pet }}">
+              <a href="{{ photo.image.url }}" data-lightbox="{{ pet.slug }}" data-title="{{ pet }}">
                 <img class="img-thumbnail" src="{{ photo.image|thumbnail_url:'pet_thumb' }}"
                      alt="{{ pet }}"/>
               </a>

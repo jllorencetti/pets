@@ -101,7 +101,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.login()
         self.assertIn('Cadastrar Pet', self.browser.page_source)
 
-        self.browser.get(self.live_server_url + '/pets/new/')
+        self.browser.get(self.live_server_url + '/pets/novo/')
 
         name = self.browser.find_element_by_name('name')
         name.send_keys('Test')
@@ -135,7 +135,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.assertIn('Cadastrar Pet', self.browser.page_source)
 
         # user register a lost cat with wrong name
-        self.browser.get(self.live_server_url + '/pets/new/')
+        self.browser.get(self.live_server_url + '/pets/novo/')
         self.browser.find_element_by_name('name').send_keys('Wrong Boots')
         self.browser.find_element_by_name('description').send_keys('My dear lovely cat')
 
@@ -228,7 +228,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.login()
 
         # go to own pet
-        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.id))
+        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.slug))
 
         # upload some new photo
         profile_picture = self.browser.find_element_by_name('another_picture')
@@ -248,7 +248,7 @@ class SiteTestCases(StaticLiveServerTestCase):
     def test_create_new_city(self):
         self.login()
 
-        self.browser.get(self.live_server_url + '/pets/new/')
+        self.browser.get(self.live_server_url + '/pets/novo/')
 
         name = self.browser.find_element_by_name('name')
         name.send_keys('Test New City')
@@ -286,7 +286,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.login()
 
         # go to own pet
-        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.id))
+        self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.slug))
 
         # click on delete button
         self.browser.find_element_by_css_selector('.btn-danger').click()

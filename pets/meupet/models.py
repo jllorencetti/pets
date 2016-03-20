@@ -1,8 +1,15 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils.timezone import now
 
 from users.models import OwnerProfile
+
+from django.utils.text import slugify
+
+from users.models import OwnerProfile
+
+from autoslug import AutoSlugField
+
+from django.utils.timezone import now
 
 from meupet.services import get_date_3_months_ago
 
@@ -38,6 +45,13 @@ class City(models.Model):
 
     class Meta:
         ordering = ['city']
+
+
+def get_slug(instance):
+    city = ''
+    if instance.city:
+        city = instance.city.city
+    return slugify('{}-{}'.format(instance.name, city))
 
 
 class Pet(models.Model):
@@ -84,11 +98,14 @@ class Pet(models.Model):
     published = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(default=now())
+    slug = AutoSlugField(max_length=50,
+                         populate_from=get_slug,
+                         unique=True)
 
     objects = PetManager()
 
     def get_absolute_url(self):
-        return reverse('meupet:detail', kwargs={'id': self.id})
+        return reverse('meupet:detail', kwargs={'pk_or_slug': self.slug})
 
     def found_or_adopted(self):
         return self.status == self.ADOPTED or self.status == self.FOUND

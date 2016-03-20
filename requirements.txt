@@ -1,15 +1,17 @@
-Django==1.8.9
+Django>=1.8,<1.9
+django-autoslug==1.9.3
 django-braces==1.8.1
 django-crispy-forms==1.6.0
 django-compressor==2.0
 django-debug-toolbar==1.4
 django-password-reset==0.8.2
+django-test-without-migrations==0.4
 easy-thumbnails==2.3
 -e git://github.com/pythonforfacebook/facebook-sdk.git@8c0d34291aaafec00e02eaa71cc2a242790a0fcc#egg=facebook_sdk-master
 Pillow==3.1.1
 python-social-auth==0.2.14
 python3-openid==3.0.9
-selenium==2.51.1
-opbeat==3.2.1
+selenium==2.52.0
+opbeat==3.3
 psycopg2==2.6.1
 python-decouple==3.0
