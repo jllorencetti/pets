@@ -1,17 +1,16 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.text import slugify
 
 from users.models import OwnerProfile
 
 from django.utils.text import slugify
 
-from users.models import OwnerProfile
-
-from autoslug import AutoSlugField
-
 from django.utils.timezone import now
 
 from meupet.services import get_date_3_months_ago
+
+from autoslug import AutoSlugField
 
 
 class PetManager(models.Manager):
