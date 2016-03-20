@@ -6,6 +6,7 @@ from django.core.management import BaseCommand
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 from django.utils.timezone import now, timedelta
+from django.core import mail
 
 
 from meupet import forms
@@ -112,6 +113,7 @@ class MeuPetTest(TestCase):
         self.client.login(username='admin', password='admin')
 
         response = self.client.post(reverse('meupet:delete_pet', args=[pet.id]), follow=True)
+
 
         self.assertTemplateUsed(response, 'meupet/index.html')
         self.assertNotContains(response, 'Testing Pet')
@@ -470,7 +472,7 @@ class ManagementCommandShareOnFacebookTest(TestCase):
 
 class ManagementCommandRequestUnsolvedCases(TestCase):
     def setUp(self):
-        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin', email='pets.adim@mailinator.com')
+        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin', email='pauloromanocarvalho@gmail.com')
         today = now()
         today_2months_ago = now() - timedelta(days=60)
         today_4months_ago = now() - timedelta(days=120)
@@ -478,6 +480,7 @@ class ManagementCommandRequestUnsolvedCases(TestCase):
         self.create_pet('Dog', 'Pet2', Pet.FOR_ADOPTION, modified=today_2months_ago)
         self.create_pet('Cat', 'Pet3', Pet.MISSING, modified=today_4months_ago)
         self.create_pet('Dog', 'Pet4', Pet.FOR_ADOPTION, modified=today_4months_ago)
+        self.cmd = CmdRequestUnsolvedcasesStatus()
 
     def create_pet(self, kind, name='Pet', status=Pet.MISSING, **kwargs):
         image = get_test_image_file()
@@ -488,9 +491,14 @@ class ManagementCommandRequestUnsolvedCases(TestCase):
                                   status=status, **kwargs)
 
     def test_cmd_request_unsolvedcases_status(self):
-        """Must have a management cmd to request unsolved cases"""
-        cmd = CmdRequestUnsolvedcasesStatus()
-        self.assertIsInstance(cmd, BaseCommand)
+        """Must have a management cmd to request unsolved cases status"""
+        self.assertIsInstance(self.cmd, BaseCommand)
+
+
+    def test_cmd_request_unsolvedcases_sendmail(self):
+        """Cmd must send e-mail"""
+        self.cmd.handle()
+        self.assertTrue(len(mail.outbox) > 0)
 
 
 
