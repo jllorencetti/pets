@@ -8,8 +8,26 @@ class LostKindView(TestCase):
     def setUp(self):
         self.kind = Kind.objects.create(kind='Kind')
 
-    def test_get(self):
+    def test_get_lost(self):
         resp = self.client.get(resolve_url('meupet:lost', self.kind.id))
+
+        self.assertEqual(200, resp.status_code)
+        self.assertTemplateUsed(resp, 'meupet/pet_list.html')
+
+    def test_get_lost_slug(self):
+        resp = self.client.get(resolve_url('meupet:lost', self.kind.slug))
+
+        self.assertEqual(200, resp.status_code)
+        self.assertTemplateUsed(resp, 'meupet/pet_list.html')
+
+    def test_get_adoption(self):
+        resp = self.client.get(resolve_url('meupet:adoption', self.kind.id))
+
+        self.assertEqual(200, resp.status_code)
+        self.assertTemplateUsed(resp, 'meupet/pet_list.html')
+
+    def test_get_adoption_slug(self):
+        resp = self.client.get(resolve_url('meupet:adoption', self.kind.slug))
 
         self.assertEqual(200, resp.status_code)
         self.assertTemplateUsed(resp, 'meupet/pet_list.html')
