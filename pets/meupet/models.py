@@ -96,7 +96,7 @@ class Pet(models.Model):
                                         help_text='Tamanho máximo da imagem é 8MB')
     published = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(default=now())
+    modified = models.DateTimeField(auto_now_add=True)
     slug = AutoSlugField(max_length=50,
                          populate_from=get_slug,
                          unique=True)
