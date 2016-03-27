@@ -15,8 +15,8 @@ class Command(BaseCommand):
         self.config = Configuration.objects.first()
         super(Command, self).__init__()
 
-    def handle(self, *args, **options):
-        unsolved_cases = Pet.objects.get_unsolved_cases()
+    def handle(self, queryset=None, *args, **options):
+        unsolved_cases = queryset or Pet.objects.get_unsolved_cases()
 
         for pet in unsolved_cases:
             send_mail(
