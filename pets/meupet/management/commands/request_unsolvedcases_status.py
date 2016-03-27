@@ -4,7 +4,6 @@ from django.conf import settings
 from common.models import Configuration
 from django.template.loader import render_to_string
 from meupet.models import Pet
-from users.models import OwnerProfile
 
 
 class Command(BaseCommand):
@@ -21,7 +20,7 @@ class Command(BaseCommand):
 
         for pet in unsolved_cases:
             send_mail(
-                subject='Teste',
+                subject='Atualização de Status do Seu Pet',
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[pet.owner.email],
                 message=render_to_string('meupet/request_unsolvedcases_status.txt', {'pet': pet})

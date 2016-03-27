@@ -21,6 +21,33 @@ class MeuPetTestCase(TestCase):
         file = tempfile.NamedTemporaryFile(suffix='.png')
         return ImageFile(file, name=file.name)
 
+    def create_pet(self, kind, name='Pet', status=Pet.MISSING, **kwargs):
+        image = self.get_test_image_file()
+        user = self.admin
+        kind = Kind.objects.get_or_create(kind=kind)[0]
+        return Pet.objects.create(name='Testing ' + name, description='Bla',
+                                  profile_picture=image, owner=user, kind=kind,
+                                  status=status, **kwargs)
+
+    def create_some_pets(self):
+        today = now()
+        today_2months_ago = now() - timedelta(days=60)
+        today_4months_ago = now() - timedelta(days=120)
+
+        pet1 = self.create_pet('Cat', 'Pet1', Pet.MISSING)
+        pet2 = self.create_pet('Dog', 'Pet2', Pet.FOR_ADOPTION)
+        pet3 = self.create_pet('Cat', 'Pet3', Pet.MISSING)
+        pet4 = self.create_pet('Dog', 'Pet4', Pet.FOR_ADOPTION)
+
+        pet1.modified = today
+        pet1.save()
+        pet2.modified = today_2months_ago
+        pet2.save()
+        pet3.modified = today_4months_ago
+        pet3.save()
+        pet4.modified = today_4months_ago
+        pet4.save()
+
 
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class MeuPetTest(MeuPetTestCase):
@@ -32,14 +59,6 @@ class MeuPetTest(MeuPetTestCase):
     def tearDownClass(cls):
         shutil.rmtree(MEDIA_ROOT, ignore_errors=True)
         super().tearDownClass()
-
-    def create_pet(self, kind, name='Pet', status=Pet.MISSING, **kwargs):
-        image = self.get_test_image_file()
-        user = self.admin
-        kind = Kind.objects.get_or_create(kind=kind)[0]
-        return Pet.objects.create(name='Testing ' + name, description='Bla',
-                                  profile_picture=image, owner=user, kind=kind,
-                                  status=status, **kwargs)
 
     def test_titleize_name(self):
         data = {
@@ -350,18 +369,6 @@ class MeuPetTest(MeuPetTestCase):
         """Test if get_unsolved_cases method exists in PetManager"""
         self.assertTrue(hasattr(Pet.objects.get_unsolved_cases, '__call__'))
 
-    def test_get_unsolved_cases_return(self):
-        """get_unsolved_cases method must return opened cases"""
-        today_4months_ago = now() - timedelta(days=120)
-        self.create_pet('Dog', 'Pet1', Pet.ADOPTED, modified=today_4months_ago)
-        self.create_pet('Bird', 'Pet2', Pet.ADOPTED, modified=today_4months_ago)
-        self.create_pet('Cat', 'Pet3', Pet.MISSING, modified=today_4months_ago)
-        self.create_pet('Dog', 'Pet4', Pet.FOR_ADOPTION, modified=today_4months_ago)
-
-        unsolved_cases = Pet.objects.get_unsolved_cases()
-
-        self.assertEqual(len(unsolved_cases), 2)
-
     def test_get_date_3_months_ago(self):
         """get_date_3_months_ago service must return a date 3 months ago"""
         today = now()
@@ -370,15 +377,9 @@ class MeuPetTest(MeuPetTestCase):
         self.assertTrue(get_date_3_months_ago(today) == today_3months_ago)
 
 
-    def test_get_unsolved_cases_return_period(self):
+    def test_get_unsolved_cases_return(self):
         """get_unsolved_cases method must return cases still open in 3 months"""
-        today = now()
-        today_2months_ago = now() - timedelta(days=60)
-        today_4months_ago = now() - timedelta(days=120)
-        self.create_pet('Cat', 'Pet1', Pet.MISSING, modified=today)
-        self.create_pet('Dog', 'Pet2', Pet.FOR_ADOPTION, modified=today_2months_ago)
-        self.create_pet('Cat', 'Pet3', Pet.MISSING, modified=today_4months_ago)
-        self.create_pet('Dog', 'Pet4', Pet.FOR_ADOPTION, modified=today_4months_ago)
+        self.create_some_pets()
 
         unsolved_cases = Pet.objects.get_unsolved_cases()
 
