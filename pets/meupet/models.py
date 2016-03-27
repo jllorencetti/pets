@@ -14,11 +14,17 @@ from autoslug import AutoSlugField
 
 
 class PetManager(models.Manager):
-    def get_lost_or_found(self, kind_id):
-        return self.filter(kind__id=kind_id, status__in=[Pet.MISSING, Pet.FOUND])
+    def _filter_by_kind(self, kind):
+        try:
+            return self.filter(kind__id=int(kind)).select_related('city')
+        except ValueError:
+            return self.filter(kind__slug=kind).select_related('city')
 
-    def get_for_adoption_adopted(self, kind_id):
-        return self.filter(kind__id=kind_id, status__in=[Pet.FOR_ADOPTION, Pet.ADOPTED])
+    def get_lost_or_found(self, kind):
+        return self._filter_by_kind(kind).filter(status__in=[Pet.MISSING, Pet.FOUND])
+
+    def get_for_adoption_adopted(self, kind):
+        return self._filter_by_kind(kind).filter(status__in=[Pet.FOR_ADOPTION, Pet.ADOPTED])
 
     def get_unpublished_pets(self):
         return self.filter(published=False)
@@ -30,7 +36,8 @@ class PetManager(models.Manager):
 
 
 class Kind(models.Model):
-    kind = models.TextField(max_length=100)
+    kind = models.TextField(max_length=100, unique=True)
+    slug = AutoSlugField(max_length=30, populate_from='kind')
 
     def __str__(self):
         return self.kind

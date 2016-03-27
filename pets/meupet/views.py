@@ -4,15 +4,15 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.db.models import Q
-from django.views.generic import TemplateView, ListView, CreateView, \
+from django.views.generic import ListView, CreateView, \
     UpdateView, View
 
 from braces.views import LoginRequiredMixin
 
 from common.views import MeuPetEspecieMixin, get_lost_kinds, get_adoption_kinds
+from meupet.forms import SearchForm
 from . import forms
 from . import models
-from meupet.forms import SearchForm
 
 
 class PetIndexView(MeuPetEspecieMixin, ListView):
@@ -37,22 +37,23 @@ def pet_detail_view(request, pk_or_slug):
     return render(request, 'meupet/pet_detail.html', context)
 
 
-class AdoptionPetView(MeuPetEspecieMixin, TemplateView):
-    template_name = 'meupet/pet_list.html'
+def get_kind_list_context(pets):
+    context = {
+        'kind_lost': get_lost_kinds(),
+        'kind_adoption': get_adoption_kinds(),
+        'pets': pets
+    }
+    return context
 
-    def get_context_data(self, **kwargs):
-        context = super(AdoptionPetView, self).get_context_data(**kwargs)
-        context['pets'] = models.Pet.objects.get_for_adoption_adopted(context['id'])
-        return context
+
+def lost_pets(request, kind):
+    context = get_kind_list_context(models.Pet.objects.get_lost_or_found(kind))
+    return render(request, 'meupet/pet_list.html', context)
 
 
-class LostPetView(MeuPetEspecieMixin, TemplateView):
-    template_name = 'meupet/pet_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(LostPetView, self).get_context_data(**kwargs)
-        context['pets'] = models.Pet.objects.get_lost_or_found(context['id'])
-        return context
+def adoption_pets(request, kind):
+    context = get_kind_list_context(models.Pet.objects.get_for_adoption_adopted(kind))
+    return render(request, 'meupet/pet_list.html', context)
 
 
 class RegisterPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
