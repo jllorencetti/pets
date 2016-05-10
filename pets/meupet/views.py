@@ -9,7 +9,7 @@ from django.views.generic import ListView, CreateView, \
 
 from braces.views import LoginRequiredMixin
 
-from common.views import MeuPetEspecieMixin, get_lost_kinds, get_adoption_kinds
+from common.views import MeuPetEspecieMixin
 from meupet.forms import SearchForm
 from . import forms
 from . import models
@@ -31,16 +31,16 @@ def pet_detail_view(request, pk_or_slug):
     context = {
         'pet': pet,
         'current_url': request.build_absolute_uri(request.get_full_path()),
-        'kind_lost': get_lost_kinds(),
-        'kind_adoption': get_adoption_kinds(),
+        'kind_lost': models.Kind.objects.lost_kinds(),
+        'kind_adoption': models.Kind.objects.adoption_kinds(),
     }
     return render(request, 'meupet/pet_detail.html', context)
 
 
 def get_kind_list_context(pets):
     context = {
-        'kind_lost': get_lost_kinds(),
-        'kind_adoption': get_adoption_kinds(),
+        'kind_lost': models.Kind.objects.lost_kinds(),
+        'kind_adoption': models.Kind.objects.adoption_kinds(),
         'pets': pets
     }
     return context
@@ -173,8 +173,8 @@ def registered(request, slug):
         'pet_slug': slug,
         'facebook_url': settings.FACEBOOK_SHARE_URL.format(slug),
         'twitter_url': settings.TWITTER_SHARE_URL.format(slug),
-        'kind_adoption': get_adoption_kinds(),
-        'kind_lost': get_lost_kinds(),
+        'kind_lost': models.Kind.objects.lost_kinds(),
+        'kind_adoption': models.Kind.objects.adoption_kinds(),
     }
     return render(request, 'meupet/registered.html', context)
 

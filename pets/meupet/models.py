@@ -24,9 +24,22 @@ class PetManager(models.Manager):
         return self.filter(published=False)
 
 
+class KindManager(models.Manager):
+    def count_pets(self, status):
+        return self.filter(pet__status__in=status).annotate(num_pets=models.Count('pet')).order_by('kind')
+
+    def lost_kinds(self):
+        return self.count_pets([Pet.MISSING, Pet.FOUND])
+
+    def adoption_kinds(self):
+        return self.count_pets([Pet.FOR_ADOPTION, Pet.ADOPTED])
+
+
 class Kind(models.Model):
     kind = models.TextField(max_length=100, unique=True)
     slug = AutoSlugField(max_length=30, populate_from='kind')
+
+    objects = KindManager()
 
     def __str__(self):
         return self.kind
