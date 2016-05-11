@@ -9,13 +9,12 @@ from django.views.generic import ListView, CreateView, \
 
 from braces.views import LoginRequiredMixin
 
-from common.views import MeuPetEspecieMixin
 from meupet.forms import SearchForm
 from . import forms
 from . import models
 
 
-class PetIndexView(MeuPetEspecieMixin, ListView):
+class PetIndexView(ListView):
     template_name = 'meupet/index.html'
     context_object_name = 'pets'
 
@@ -31,32 +30,19 @@ def pet_detail_view(request, pk_or_slug):
     context = {
         'pet': pet,
         'current_url': request.build_absolute_uri(request.get_full_path()),
-        'kind_lost': models.Kind.objects.lost_kinds(),
-        'kind_adoption': models.Kind.objects.adoption_kinds(),
     }
     return render(request, 'meupet/pet_detail.html', context)
 
 
-def get_kind_list_context(pets):
-    context = {
-        'kind_lost': models.Kind.objects.lost_kinds(),
-        'kind_adoption': models.Kind.objects.adoption_kinds(),
-        'pets': pets
-    }
-    return context
-
-
 def lost_pets(request, kind):
-    context = get_kind_list_context(models.Pet.objects.get_lost_or_found(kind))
-    return render(request, 'meupet/pet_list.html', context)
+    return render(request, 'meupet/pet_list.html', {'pets': models.Pet.objects.get_lost_or_found(kind)})
 
 
 def adoption_pets(request, kind):
-    context = get_kind_list_context(models.Pet.objects.get_for_adoption_adopted(kind))
-    return render(request, 'meupet/pet_list.html', context)
+    return render(request, 'meupet/pet_list.html', {'pets': models.Pet.objects.get_for_adoption_adopted(kind)})
 
 
-class RegisterPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
+class RegisterPetView(LoginRequiredMixin, CreateView):
     template_name = 'meupet/register_pet.html'
     model = models.Pet
     form_class = forms.PetForm
@@ -76,7 +62,7 @@ class RegisterPetView(LoginRequiredMixin, MeuPetEspecieMixin, CreateView):
         return super(RegisterPetView, self).form_valid(form)
 
 
-class QuickSearchView(MeuPetEspecieMixin, ListView):
+class QuickSearchView(ListView):
     template_name = 'meupet/quicksearch.html'
     context_object_name = 'pets'
 
@@ -100,7 +86,7 @@ class QuickSearchView(MeuPetEspecieMixin, ListView):
         return pets
 
 
-class EditPetView(MeuPetEspecieMixin, UpdateView):
+class EditPetView(UpdateView):
     template_name = 'meupet/edit.html'
     form_class = forms.PetForm
     model = models.Pet
@@ -143,7 +129,7 @@ def upload_image(request, slug):
     return HttpResponseRedirect(reverse('meupet:detail', kwargs={'pk_or_slug': pet.slug}))
 
 
-class SearchView(MeuPetEspecieMixin, View):
+class SearchView(View):
     def get(self, request):
         return render(request, 'meupet/search.html', {'form': SearchForm()})
 
@@ -173,8 +159,6 @@ def registered(request, slug):
         'pet_slug': slug,
         'facebook_url': settings.FACEBOOK_SHARE_URL.format(slug),
         'twitter_url': settings.TWITTER_SHARE_URL.format(slug),
-        'kind_lost': models.Kind.objects.lost_kinds(),
-        'kind_adoption': models.Kind.objects.adoption_kinds(),
     }
     return render(request, 'meupet/registered.html', context)
 

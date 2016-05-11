@@ -1,5 +1,4 @@
-{% load static %}
-{% load compress %}
+{% load static compress meupet_tags %}
 <!DOCTYPE html>
 <html>
 <head lang="pt-br">
@@ -87,24 +86,7 @@
       {% endif %}
 
       {% block body %}
-        <div class="col-md-2">
-          <h3>Desaparecidos</h3>
-          <ul class="nav">
-            {% for kind in kind_lost %}
-              <li><a class="btn btn-category" href="{% url 'meupet:lost' kind.slug %}">
-                {{ kind }} <span class="badge">{{ kind.num_pets }}</span></a>
-              </li>
-            {% endfor %}
-          </ul>
-          <h3>Para Adoção</h3>
-          <ul class="nav">
-            {% for kind in kind_adoption %}
-              <li><a class="btn btn-category" href="{% url 'meupet:adoption' kind.slug %}">
-                {{ kind }} <span class="badge">{{ kind.num_pets }}</span></a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
+        {% sidemenu %}
 
         <div class="col-md-10">
           {% block content %}

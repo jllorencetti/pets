@@ -10,12 +10,11 @@ from django.views.generic import CreateView, TemplateView, UpdateView, DetailVie
 from braces.views import LoginRequiredMixin, AnonymousRequiredMixin
 from password_reset.views import Recover, RecoverDone, Reset, ResetDone
 
-from common.views import MeuPetEspecieMixin
 from users.forms import LoginForm, RegisterForm, UpdateUserForm, UsersPasswordRecoveryForm, UsersPasswordResetForm
 from users.models import OwnerProfile
 
 
-class RecoverView(MeuPetEspecieMixin, Recover):
+class RecoverView(Recover):
     template_name = 'users/recover.html'
     form_class = UsersPasswordRecoveryForm
     success_url_name = 'users:recover_password_sent'
@@ -23,22 +22,22 @@ class RecoverView(MeuPetEspecieMixin, Recover):
     search_fields = ['username', 'email']
 
 
-class RecoverDoneView(MeuPetEspecieMixin, RecoverDone):
+class RecoverDoneView(RecoverDone):
     template_name = 'users/recover.html'
 
 
-class RecoverResetView(MeuPetEspecieMixin, Reset):
+class RecoverResetView(Reset):
     template_name = 'users/reset.html'
     success_url = 'users:recover_password_done'
     form_class = UsersPasswordResetForm
     token_expires = 3600 * 2
 
 
-class RecoverResetDoneView(MeuPetEspecieMixin, ResetDone):
+class RecoverResetDoneView(ResetDone):
     template_name = 'users/reset_done.html'
 
 
-class CreateUserView(AnonymousRequiredMixin, MeuPetEspecieMixin, CreateView):
+class CreateUserView(AnonymousRequiredMixin, CreateView):
     model = OwnerProfile
     form_class = RegisterForm
     template_name = 'users/create.html'
@@ -61,7 +60,7 @@ class CreateUserView(AnonymousRequiredMixin, MeuPetEspecieMixin, CreateView):
         return reverse('meupet:index')
 
 
-class EditUserProfileView(MeuPetEspecieMixin, LoginRequiredMixin, UpdateView):
+class EditUserProfileView(LoginRequiredMixin, UpdateView):
     template_name = 'users/edit_profile.html'
     model = OwnerProfile
     form_class = UpdateUserForm
@@ -101,7 +100,7 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('meupet:index'))
 
 
-class UserProfileView(MeuPetEspecieMixin, LoginRequiredMixin, TemplateView):
+class UserProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'users/profile.html'
 
     def get_context_data(self, **kwargs):
@@ -111,7 +110,7 @@ class UserProfileView(MeuPetEspecieMixin, LoginRequiredMixin, TemplateView):
         return context
 
 
-class ProfileDetailView(MeuPetEspecieMixin, DetailView):
+class ProfileDetailView(DetailView):
     template_name = 'users/profile.html'
     model = OwnerProfile
 
