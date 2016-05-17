@@ -1,5 +1,6 @@
 [![Code Climate](https://codeclimate.com/github/dirtycoder/pets/badges/gpa.svg)](https://codeclimate.com/github/dirtycoder/pets)
 [![Build Status](https://travis-ci.org/dirtycoder/pets.svg?branch=next)](https://travis-ci.org/dirtycoder/pets)
+[![Coverage Status](https://coveralls.io/repos/github/dirtycoder/pets/badge.svg?branch=next)](https://coveralls.io/github/dirtycoder/pets?branch=next)
 [![Requirements Status](https://requires.io/github/dirtycoder/pets/requirements.svg?branch=next)](https://requires.io/github/dirtycoder/pets/requirements/?branch=next)
 
 ## Pets
