@@ -1,11 +1,11 @@
 {% extends '_layouts/base.html' %}
-
 {% load crispy_forms_tags %}
+
+{% block title %}Recuperação de senha{% endblock %}
 
 {% block content %}
   <div class="row">
     <div class="col-md-7 col-md-offset-1">
-      <h2>Recuperação de senha</h2>
       {% if form %}
         <p>
           Para recuperar sua senha, informe seu endereço de email ou usuário.

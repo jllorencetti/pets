@@ -35,11 +35,19 @@ def pet_detail_view(request, pk_or_slug):
 
 
 def lost_pets(request, kind):
-    return render(request, 'meupet/pet_list.html', {'pets': models.Pet.objects.get_lost_or_found(kind)})
+    return render(request, 'meupet/pet_list.html', {
+        'pets': models.Pet.objects.get_lost_or_found(kind),
+        'kind': kind,
+        'status': 'Desaparecidos'
+    })
 
 
 def adoption_pets(request, kind):
-    return render(request, 'meupet/pet_list.html', {'pets': models.Pet.objects.get_for_adoption_adopted(kind)})
+    return render(request, 'meupet/pet_list.html', {
+        'pets': models.Pet.objects.get_for_adoption_adopted(kind),
+        'kind': kind,
+        'status': 'Para Adoção'
+    })
 
 
 class RegisterPetView(LoginRequiredMixin, CreateView):
@@ -60,30 +68,6 @@ class RegisterPetView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super(RegisterPetView, self).form_valid(form)
-
-
-class QuickSearchView(ListView):
-    template_name = 'meupet/quicksearch.html'
-    context_object_name = 'pets'
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-
-        if not query:
-            return
-
-        size_reverse = dict((v.upper(), k) for k, v in models.Pet.PET_SIZE)
-        size_key = size_reverse.get(query.upper(), '')
-
-        filters = Q(name__icontains=query) | \
-                  Q(description__icontains=query) | \
-                  Q(city__city__icontains=query)
-
-        if size_key:
-            filters = filters | Q(size=size_key)
-
-        pets = models.Pet.objects.filter(filters)
-        return pets
 
 
 class EditPetView(UpdateView):

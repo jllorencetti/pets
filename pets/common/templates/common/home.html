@@ -1,67 +1,81 @@
 {% extends '_layouts/base.html' %}
 {% load static %}
 
+{% block extra_navbar_css %}navbar-fixed-top navbar-home{% endblock %}
+
+{% block heading %}{% endblock %}
+
 {% block page %}
-  <div class="container">
-    <div class="jumbotron">
-      <div class="row">
-        <div class="col-md-offset-2 col-md-4">
-          <div>
-            <h1 class="callout">Divulgue.</h1>
-
-            <h1 class="callout">Encontre.</h1>
-
-            <h1 class="callout">Adote :)</h1>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <img class="img-responsive" src="{% static 'img/logo.png' %}" alt="Logo Cadê meu Bicho">
-        </div>
+  <div class="banner">
+    <div class="container">
+      <div class="callout">
+        <div class="intro-text">Divulgue</div>
+        <div class="intro-text">Encontre</div>
+        <div class="intro-text">Adote :)</div>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    <div class="row tips">
-      <div class="col-md-3">
-        <i class="fa fa-paw"></i>
+  <div class="features">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 feature">
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-paw fa-inverse fa-stack-1x"></i>
+        </span>
 
-        <h3>Pet desaparecido?</h3>
+          <h3>Pet desaparecido?</h3>
 
-        <p>Todo mundo sabe que é horrível quando um animalzinho desaparece.</p>
+          <p>Todo mundo sabe que é horrível quando um animalzinho desaparece.</p>
 
-        <p>Queremos ajudar você a encontra-lo, <a href="{% url 'users:create' %}">crie uma conta</a>
-          e cadastre uma ou várias fotos e compartilhe nas redes sociais.</p>
+          <p>Queremos ajudar você a encontra-lo, <a href="{% url 'users:create' %}">crie uma conta</a>
+            e cadastre uma ou várias fotos e compartilhe nas redes sociais.</p>
+        </div>
+
+        <div class="col-md-6 feature">
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-circle fa-stack-2x c-green"></i>
+          <i class="fa fa-life-ring fa-inverse fa-stack-1x"></i>
+        </span>
+
+          <h3>Encontrou algum?</h3>
+
+          <p>Você provavelmente acaba de salvar uma vida.</p>
+
+          <p>Use a <a href="{% url 'meupet:search' %}">busca</a> e descubra se
+            existe alguém procurando por ele. Você também pode navegar livremente
+            entre as <a href="{% url 'meupet:index' %}">categorias</a>.</p>
+        </div>
       </div>
-      <div class="col-md-3">
-        <i class="fa fa-life-ring"></i>
 
-        <h3>Encontrou algum?</h3>
+      <div class="row">
+        <div class="col-md-6 feature">
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-circle fa-stack-2x c-red"></i>
+          <i class="fa fa-heart fa-inverse fa-stack-1x"></i>
+        </span>
 
-        <p>Você provavelmente acaba de salvar uma vida.</p>
+          <h3>Vaga no coração?</h3>
 
-        <p>Use a <a href="{% url 'meupet:search' %}">busca</a> e descubra se
-          existe alguém procurando por ele. Você também pode navegar livremente
-          entre as <a href="{% url 'meupet:index' %}">categorias</a>.</p>
-      </div>
-      <div class="col-md-3">
-        <i class="fa fa-heart"></i>
+          <p>Bicho é tudo de bom.</p>
 
-        <h3>Vaga no coração?</h3>
+          <p>Existem animais esperando que alguém os leve pra casa, veja-os
+            <a href="{% url 'meupet:index' %}">aqui</a>.</p>
+        </div>
 
-        <p>Bicho é tudo de bom.</p>
+        <div class="col-md-6 feature">
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-circle fa-stack-2x c-blue"></i>
+          <i class="fa fa-facebook fa-inverse fa-stack-1x"></i>
+        </span>
 
-        <p>Existem animais esperando que alguém os leve pra casa, veja-os
-          <a href="{% url 'meupet:index' %}">aqui</a>.</p>
-      </div>
-      <div class="col-md-3">
-        <i class="fa fa-facebook"></i>
+          <h3>Facebook</h3>
 
-        <h3>Facebook</h3>
+          <p>Curta nossa <a href="https://www.facebook.com/kdmeubicho/">página</a> no Facebook.</p>
 
-        <p>Curta nossa <a href="https://www.facebook.com/kdmeubicho/">página</a> no Facebook.</p>
-
-        <p>Assim você ficará sabendo quando novos animais forem cadastrados no site.</p>
+          <p>Assim você ficará sabendo quando novos animais forem cadastrados no site.</p>
+        </div>
       </div>
     </div>
   </div>

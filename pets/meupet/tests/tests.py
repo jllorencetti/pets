@@ -243,19 +243,6 @@ class MeuPetTest(MeuPetTestCase):
 
         self.assertContains(response, 'Outras fotos')
 
-    def test_search_pet(self):
-        self.create_pet('Cat', city=self.test_city, size=Pet.SMALL)
-
-        response_name = self.client.get(reverse('meupet:quick_search'), {'q': 'Testing'})
-        response_desc = self.client.get(reverse('meupet:quick_search'), {'q': 'bla'})
-        response_city = self.client.get(reverse('meupet:quick_search'), {'q': self.test_city})
-        response_size = self.client.get(reverse('meupet:quick_search'), {'q': 'Pequeno'})
-
-        self.assertContains(response_name, 'Testing Pet')
-        self.assertContains(response_desc, 'Testing Pet')
-        self.assertContains(response_city, self.test_city)
-        self.assertContains(response_size, 'Testing Pet')
-
     def test_show_city(self):
         pet = self.create_pet('Cat')
         pet.city = self.test_city
@@ -271,20 +258,6 @@ class MeuPetTest(MeuPetTestCase):
         response = self.client.get(pet.get_absolute_url())
 
         self.assertContains(response, 'Pequeno')
-
-    def test_empty_quicksearch_show_suggestion_to_advanced_search(self):
-        response = self.client.get(reverse('meupet:quick_search'), {'q': ''})
-
-        self.assertTemplateUsed(response, 'meupet/quicksearch.html')
-        self.assertContains(response, 'Nenhum animalzinho encontrado')
-        self.assertContains(response, reverse('meupet:search'), 2)
-
-    def test_quicksearch_should_return_pet(self):
-        self.create_pet('Dog')
-
-        response = self.client.get(reverse('meupet:quick_search'), {'q': 'Pet'})
-
-        self.assertContains(response, 'Testing Pet')
 
     def test_custom_search_without_filters(self):
         response = self.client.post(reverse('meupet:search'), {})
