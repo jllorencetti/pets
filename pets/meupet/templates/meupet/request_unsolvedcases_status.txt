@@ -1,0 +1,8 @@
+Olá {{ pet.owner.first_name }}, tudo bem?
+
+Gostariamos de saber se {{ pet.name }} já foi {% if pet.status == pet.MISSING %}encontrado{% else %}adotado{% endif %}. Se sim, por favor, atualize o cadastro do seu Pet.
+
+Atencionsamente,
+
+__
+Cadê meu bicho

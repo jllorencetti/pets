@@ -197,6 +197,7 @@ OPBEAT = {
     'SECRET_TOKEN': config('OPBEAT_SECRET_TOKEN', default=''),
 }
 
+EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_USE_TLS = True
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')

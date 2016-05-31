@@ -4,6 +4,12 @@ from django.utils.text import slugify
 
 from users.models import OwnerProfile
 
+from django.utils.text import slugify
+
+from django.utils.timezone import now
+
+from meupet.services import get_date_3_months_ago
+
 from autoslug import AutoSlugField
 
 
@@ -22,6 +28,11 @@ class PetManager(models.Manager):
 
     def get_unpublished_pets(self):
         return self.filter(published=False)
+
+    def get_unsolved_cases(self):
+        qs = self.filter(status__in=[Pet.MISSING, Pet.FOR_ADOPTION],
+                         modified__lte=get_date_3_months_ago())
+        return qs
 
 
 class KindManager(models.Manager):
@@ -105,7 +116,7 @@ class Pet(models.Model):
                                         help_text='Tamanho máximo da imagem é 8MB')
     published = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    modified = models.DateTimeField(auto_now_add=True)
     slug = AutoSlugField(max_length=50,
                          populate_from=get_slug,
                          unique=True)

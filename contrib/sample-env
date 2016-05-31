@@ -1,0 +1,17 @@
+DJANGO_SETTINGS_MODULE=pets.settings.dev
+DB_NAME=pets
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_IP=127.0.0.1
+DB_PORT=5432
+DB_ENGINE=django.db.backends.postgresql_psycopg2
+DB_CONN_MAX_AGE=0
+SECRET_KEY=dummy_key
+ALLOWED_HOSTS=127.0.0.1, .localhost
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+EMAIL_USE_TLS=False
+EMAIL_HOST=''
+EMAIL_PORT=465
+EMAIL_HOST_USER=''
+EMAIL_HOST_PASSWORD=''
+DEFAULT_FROM_EMAIL=''
