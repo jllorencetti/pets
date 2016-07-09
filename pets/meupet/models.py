@@ -103,7 +103,7 @@ class Pet(models.Model):
                            blank=True)
     profile_picture = models.ImageField(upload_to='pet_profiles',
                                         help_text='Tamanho máximo da imagem é 8MB')
-    published = models.BooleanField(default=False)
+    published = models.BooleanField(default=False)  # published on facebook
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     slug = AutoSlugField(max_length=50,
@@ -111,6 +111,7 @@ class Pet(models.Model):
                          unique=True)
 
     objects = PetManager()
+
 
     def get_absolute_url(self):
         return reverse('meupet:detail', kwargs={'pk_or_slug': self.slug})
@@ -124,6 +125,15 @@ class Pet(models.Model):
 
     def is_found_or_adopted(self):
         return self.status in (self.ADOPTED, self.FOUND)
+
+    def get_status(self):
+        return dict(self.PET_STATUS).get(self.status)
+
+    def get_sex(self):
+        return dict(self.PET_SEX).get(self.sex)
+
+    def get_size(self):
+        return dict(self.PET_SIZE).get(self.size)
 
     def __str__(self):
         return self.name
