@@ -52,13 +52,13 @@ Then you have to set following variables:
 
 #### Database
 
-* **`DB_NAME`**, **`DB_USERNAME`**, **`DB_PASSWORD`**, **`DB_IP`**, **`DB_PORT`**: Credentials to access Pets's database.
-* **`DB_ENGINE`**: Django databse backend to connect to Pets's database (e.g. `django.db.backends.postgresql_psycopg2`)
+* **`DATABASE_URL`**: (e.g. `postgres://username:password@server:port/database_name`) [Database URL](https://github.com/kennethreitz/dj-database-url#url-schema)
 * **`DB_CONN_MAX_AGE`**: (e.g. `0`) [Django's database `CONN_MAX_AGE`](https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-CONN_MAX_AGE`)
 
 #### Mail server for sending e-mails
 
 * **`EMAIL_PORT`**, **`EMAIL_HOST`**, **`EMAIL_HOST_PASSWORD`** and **`EMAIL_HOST_USER`**: SMTP credentials to a mail server.
+* **`EMAIL_BACKEND`**: (e.g. `django.core.mail.backends.console.EmailBackend`) [Django's email backend](https://docs.djangoproject.com/en/1.8/topics/email/#topic-email-backends)
 
 #### OAuth
 

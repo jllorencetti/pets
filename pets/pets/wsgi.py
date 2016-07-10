@@ -7,9 +7,11 @@ For more information on this file, see
 https://docs.djangoproject.com/en/dev/howto/deployment/wsgi/
 """
 
-import os
+from os import environ
+from decouple import config
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pets.settings.dev")
+settings_module = config("DJANGO_SETTINGS_MODULE", default="pets.settings.dev")
+environ['DJANGO_SETTINGS_MODULE'] = settings_module
 
 from django.core.wsgi import get_wsgi_application
 

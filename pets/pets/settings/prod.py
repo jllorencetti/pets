@@ -1,6 +1,7 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from decouple import config, Csv
+from dj_database_url import parse as db_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -18,7 +19,7 @@ INTERNAL_IPS = (
     '127.0.0.1',
 )
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
 
 # Application definition
 
@@ -112,16 +113,10 @@ WSGI_APPLICATION = 'pets.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+conn_max_age = config('DB_CONN_MAX_AGE', default=0, cast=int)
+default_db_url = config('DATABASE_URL')
 DATABASES = {
-    'default': {
-        'ENGINE': config('DB_ENGINE'),
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USERNAME'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_IP'),
-        'PORT': config('DB_PORT'),
-        'CONN_MAX_AGE': config('DB_CONN_MAX_AGE', cast=int),
-    }
+    'default': db_url(default_db_url, conn_max_age=conn_max_age)
 }
 
 # Internationalization
@@ -200,12 +195,14 @@ OPBEAT = {
     'SECRET_TOKEN': config('OPBEAT_SECRET_TOKEN', default=''),
 }
 
+default_email_backend = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
+EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)
+EMAIL_HOST = config('EMAIL_HOST', default='example.com')
+EMAIL_PORT = config('EMAIL_PORT', default='0')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='dummy@example.com')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='example')
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER', default='dummy@example.com')
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
