@@ -27,4 +27,5 @@ urlpatterns = patterns(
     url(r'^(?P<slug>[-\w]*)/registrado/$', views.registered, name='registered'),
 
     url(r'^(?P<pk_or_slug>[-\w]*)/$', views.pet_detail_view, name='detail'),
+    url(r'^(?P<pk>[0-9]+)/$', views.pet_detail_view, name='detail_by_pk'),
 )
