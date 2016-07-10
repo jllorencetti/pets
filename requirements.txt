@@ -8,9 +8,9 @@ django-password-reset==0.9
 djangorestframework==3.3.3
 easy-thumbnails==2.3
 facebook-sdk==1.0.0
-Pillow==3.2.0
+Pillow==3.3.0
 python-social-auth==0.2.19
 python3-openid==3.0.10
-opbeat==3.3.2
-psycopg2==2.6.1
+opbeat==3.3.4
+psycopg2==2.6.2
 python-decouple==3.0
