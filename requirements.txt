@@ -6,6 +6,7 @@ django-compressor==2.0
 django-cors-middleware==1.2.0
 django-password-reset==0.9
 djangorestframework==3.3.3
+dj-database-url==0.4.1
 easy-thumbnails==2.3
 facebook-sdk==1.0.0
 Pillow==3.3.0

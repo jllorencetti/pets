@@ -1,12 +1,11 @@
-languages:
-  Ruby: true
-  JavaScript: true
-  PHP: true
-  Python: true
+engines:
+  pep8:
+    enabled: true
+ratings:
+   paths:
+     - "**.py"
 exclude_paths:
-- "pets/functional_tests/*"
-- "pets/meupet/tests/*"
-- "pets/users/tests.py"
-- "pets/common/migrations/*"
-- "pets/meupet/migrations/*"
-- "pets/users/migrations/*"
+- "**/functional_tests/*"
+- "**/migrations/*"
+- "**/test.py"
+- "**/tests/*"

@@ -11,10 +11,8 @@ install:
   - pip install coveralls
 script:
   - cd pets
-  - coverage run --source=common,users,meupet,functional_tests manage.py test
-env:
-  - DJANGO_SETTINGS_MODULE=pets.settings.dev DB_NAME=test DB_USERNAME=test DB_PASSWORD=test DB_IP=127.0.0.1 DB_PORT=5432 DB_ENGINE=django.db.backends.postgresql_psycopg2 DB_CONN_MAX_AGE=0 SECRET_KEY=dummy_key ALLOWED_HOSTS=127.0.0.1, .localhost EMAIL_PORT=0 EMAIL_HOST=example.com EMAIL_HOST_PASSWORD=example EMAIL_HOST_USER=dummy@example.com OPBEAT_DISABLE_SEND=true
+  - coverage run --rcfile=../.coveragerc manage.py test -v 3
 before_script:
-  - psql -U postgres -c "CREATE USER test WITH CREATEDB PASSWORD 'test';"
+  - psql -U postgres -c 'create database pets;'
 after_success:
   - coveralls

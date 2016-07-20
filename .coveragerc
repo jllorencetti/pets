@@ -1,0 +1,13 @@
+[run]
+
+# include everything inside pets/pets/ by default
+source=.
+
+# exclude tests, migrations, settings etc.
+omit=
+  **/test.py
+  */functional_tests/*
+  */migrations/*
+  */tests/*
+  manage.py
+  pets/*
