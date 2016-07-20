@@ -2,4 +2,6 @@
 
 selenium==2.53.6
 django-debug-toolbar==1.4
+# sqlparse 0.2.0 breaks django-debug-toolbar
+sqlparse==0.1.19
 django-test-without-migrations==0.4
