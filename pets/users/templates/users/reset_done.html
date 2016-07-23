@@ -1,9 +1,10 @@
 {% extends '_layouts/base.html' %}
 
+{% block title %}Recuperação de Senha{% endblock %}
+
 {% block content %}
   <div class="row">
     <div class="col-md-11 col-md-offset-1">
-      <h2>Recuperação de senha</h2>
       <p>Sua senha foi alterada com sucesso.</p>
       <p>Acesse a página de <a href="{% url 'users:login' %}">login</a> para entrar na sua conta.</p>
     </div>

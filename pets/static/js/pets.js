@@ -34,3 +34,17 @@ $(document).ready(function () {
         }
     }
 });
+
+(function () {
+    if (matchMedia('only screen and (min-width: 768px)').matches) {
+        $(document).on('scroll', function () {
+            var scrollPos = $(this).scrollTop();
+
+            if (scrollPos > 150) {
+                $('.navbar-fixed-top').removeClass('navbar-home');
+            } else {
+                $('.navbar-fixed-top').addClass('navbar-home');
+            }
+        });
+    }
+})();

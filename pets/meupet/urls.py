@@ -8,7 +8,6 @@ urlpatterns = patterns(
     # I'll keep this here for compatibility with links shared
     # on Facebook.
     url(r'^new/$', views.RegisterPetView.as_view()),
-    url(r'^quick-search/$', views.QuickSearchView.as_view()),
     url(r'^search/$', views.SearchView.as_view()),
     url(r'^lost/(?P<kind>[0-9]+)/$', views.lost_pets),
     url(r'^adoption/(?P<kind>[0-9]+)/$', views.adoption_pets),
@@ -17,7 +16,6 @@ urlpatterns = patterns(
     url(r'^novo/$', views.RegisterPetView.as_view(), name='register'),
     url(r'^desaparecidos/(?P<kind>[-\w]*)/$', views.lost_pets, name='lost'),
     url(r'^para-adocao/(?P<kind>[-\w]*)/$', views.adoption_pets, name='adoption'),
-    url(r'^busca-rapida/$', views.QuickSearchView.as_view(), name='quick_search'),
     url(r'^busca/$', views.SearchView.as_view(), name='search'),
     url(r'^pet/(?P<slug>[-\w]*)/foto/$', views.upload_image, name='upload_image'),
     url(r'^(?P<slug>[-\w]*)/editar/$', views.EditPetView.as_view(), name='edit'),

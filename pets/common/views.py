@@ -6,10 +6,6 @@ class AboutPageView(TemplateView):
     template_name = 'staticpages/about.html'
 
 
-class AssociacoesView(TemplateView):
-    template_name = 'staticpages/associacoes.html'
-
-
 def not_found(request):
     return render(request, 'staticpages/404.html')
 

@@ -6,10 +6,10 @@ from meupet import models
 def _build_choice_field(label, choices=None):
     empty_choice = (('', '------------'),)
     field = forms.ChoiceField(
-            widget=forms.Select(attrs={'class': 'form-control'}),
-            label=label,
-            choices=empty_choice,
-            required=False
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label=label,
+        choices=empty_choice,
+        required=False
     )
     if choices:
         field.choices += choices
@@ -18,7 +18,7 @@ def _build_choice_field(label, choices=None):
 
 class PetForm(forms.ModelForm):
     new_city = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Nome da cidade'}
+        attrs={'class': 'form-control', 'placeholder': 'São Paulo'}
     ))
 
     class Meta:
@@ -26,8 +26,11 @@ class PetForm(forms.ModelForm):
         fields = ('name', 'description', 'city', 'kind',
                   'profile_picture', 'size', 'sex', 'status',)
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descrição'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Costelinha'}),
+            'description': forms.Textarea(attrs={'class': 'form-control',
+                                                 'placeholder': 'É preto e gorduchinho, arisco, desapareceu '
+                                                                'na região da escola do centro. Tem uma '
+                                                                'pequena falha na pelagem do rabo.'}),
             'city': forms.Select(attrs={'class': 'form-control'}),
             'kind': forms.Select(attrs={'class': 'form-control'}),
             'size': forms.Select(attrs={'class': 'form-control'}),
@@ -39,7 +42,7 @@ class PetForm(forms.ModelForm):
         cleaned_data = super(PetForm, self).clean()
         if cleaned_data.get('new_city'):
             new_city, _ = models.City.objects.get_or_create(
-                    city=cleaned_data.get('new_city').title()
+                city=cleaned_data.get('new_city').title()
             )
             self.cleaned_data['city'] = new_city
             self.errors.pop('city', None)

@@ -116,7 +116,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.select_dropdown('city', 1)
 
         profile_picture = self.browser.find_element_by_name('profile_picture')
-        profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
+        profile_picture.send_keys('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
 
         submit = self.browser.find_element_by_name('submit')
         submit.click()
@@ -153,14 +153,14 @@ class SiteTestCases(StaticLiveServerTestCase):
 
         # user select a picture of his cat
         profile_picture = self.browser.find_element_by_name('profile_picture')
-        profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
+        profile_picture.send_keys('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
 
         # click on submit
         self.browser.find_element_by_name('submit').click()
 
         # assert pet was registered
         self.browser.find_element_by_link_text('aqui').click()
-        self.assertInHTML('<h2 class="pull-left">Wrong Boots - Desaparecido</h2>', self.browser.page_source)
+        self.assertIn('Wrong Boots - Desaparecido', self.browser.page_source)
 
         # user is redirected for the page of his pet and see the wrong name
         # then click on 'Edit' and get redirected for the editing page
@@ -182,7 +182,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.assertIn('Grande', self.browser.page_source)
         self.assertIn('Fêmea', self.browser.page_source)
         self.assertIn('Araras', self.browser.page_source)
-        self.assertInHTML('<h2 class="pull-left">Fuzzy Boots - Para Adoção</h2>', self.browser.page_source)
+        self.assertIn('Fuzzy Boots - Para Adoção', self.browser.page_source)
 
     def test_edit_profile_information(self):
         # user login
@@ -207,19 +207,6 @@ class SiteTestCases(StaticLiveServerTestCase):
         # user is back to the profile page and see the correct information
         self.assertIn('Alterações gravadas com sucesso.', self.browser.page_source)
 
-    def test_search_for_a_particular_pet(self):
-        # pre register pet
-        self.create_pet()
-
-        # user goes to the home
-        self.browser.get(self.live_server_url)
-
-        # enter a name in the search form and press enter
-        self.browser.find_element_by_name('q').send_keys('Costela\n')
-
-        # user are redirected to the search result page and see the searched pet
-        self.assertIn('Costela', self.browser.page_source)
-
     def test_upload_second_photo(self):
         # pre register pet
         pet = self.create_pet()
@@ -232,7 +219,7 @@ class SiteTestCases(StaticLiveServerTestCase):
 
         # upload some new photo
         profile_picture = self.browser.find_element_by_name('another_picture')
-        profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
+        profile_picture.send_keys('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
 
         img_before = len(self.browser.find_elements_by_tag_name('img'))
 
@@ -267,7 +254,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         new_city.send_keys('Created City')
 
         profile_picture = self.browser.find_element_by_name('profile_picture')
-        profile_picture.send_keys('{}/img/{}.jpg'.format(settings.STATICFILES_DIRS[0], 'sapa'))
+        profile_picture.send_keys('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
 
         submit = self.browser.find_element_by_name('submit')
         submit.click()
@@ -289,7 +276,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.slug))
 
         # click on delete button
-        self.browser.find_element_by_css_selector('.btn-danger').click()
+        self.browser.find_element_by_css_selector('button.btn.btn-danger').click()
         WebDriverWait(self.browser, 2).until(ec.visibility_of_element_located(
             (By.CSS_SELECTOR, 'input.btn-danger'))
         )

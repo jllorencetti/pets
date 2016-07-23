@@ -1,5 +1,7 @@
 {% extends '_layouts/base.html' %}
 
+{% block title %}{{ kind }} - {{ status }}{% endblock %}
+
 {% block content %}
   {% include '_partials/pets_list.html' %}
 {% endblock %}
