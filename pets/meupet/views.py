@@ -1,9 +1,10 @@
+from django.conf import settings
+from django.contrib import messages
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.conf import settings
-from django.core.urlresolvers import reverse
-from django.contrib import messages
-from django.db.models import Q
 from django.views.generic import ListView, CreateView, \
     UpdateView, View
 
@@ -34,20 +35,50 @@ def pet_detail_view(request, pk_or_slug):
     return render(request, 'meupet/pet_detail.html', context)
 
 
-def lost_pets(request, kind):
+def paginate_pets(queryset, page, paginate_by=12):
+    """Returns the pets for the current requested page and the page number"""
+    paginator = Paginator(queryset, paginate_by)
+
+    try:
+        pets = paginator.page(page)
+        page = int(page)
+    except PageNotAnInteger:
+        pets = paginator.page(1)
+        page = 1
+    except EmptyPage:
+        pets = paginator.page(paginator.num_pages)
+        page = paginator.num_pages
+
+    return pets, page
+
+
+def render_pet_list(request, kind, status, queryset):
+    pets, page = paginate_pets(queryset, request.GET.get('page'))
+
     return render(request, 'meupet/pet_list.html', {
-        'pets': models.Pet.objects.get_lost_or_found(kind),
+        'pets': pets,
         'kind': kind,
-        'status': 'Desaparecidos'
+        'status': status,
+        'current_page': page
     })
+
+
+def lost_pets(request, kind):
+    return render_pet_list(
+        request,
+        kind,
+        'Desaparecidos',
+        models.Pet.objects.get_lost_or_found(kind)
+    )
 
 
 def adoption_pets(request, kind):
-    return render(request, 'meupet/pet_list.html', {
-        'pets': models.Pet.objects.get_for_adoption_adopted(kind),
-        'kind': kind,
-        'status': 'Para Adoção'
-    })
+    return render_pet_list(
+        request,
+        kind,
+        'Para Adoção',
+        models.Pet.objects.get_for_adoption_adopted(kind)
+    )
 
 
 class RegisterPetView(LoginRequiredMixin, CreateView):

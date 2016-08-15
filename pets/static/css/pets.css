@@ -228,6 +228,19 @@ body {
   text-transform: uppercase;
 }
 
+.pagination li a,
+.pagination li a:hover,
+.pagination li a:focus {
+  color: #286B5A;
+}
+
+.pagination .active a,
+.pagination .active a:hover,
+.pagination .active a:focus {
+  background-color: #286B5A;
+  border-color: #286B5A;
+}
+
 /** Card Pet **/
 .card-pet {
   margin-bottom: 15px;

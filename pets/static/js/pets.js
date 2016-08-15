@@ -25,7 +25,7 @@ $(document).ready(function () {
             .after("<span class='spacer'>");
     });
 
-    var links = document.getElementsByTagName('a');
+    var links = $('a').not('.pagination a');
     for (var i = 0; i < links.length; i++) {
         var currentPath = window.location.pathname;
         var link = links[i];

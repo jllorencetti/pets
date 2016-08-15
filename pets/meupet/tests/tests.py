@@ -6,30 +6,23 @@ from django.test import TestCase, override_settings
 
 from meupet import forms
 from meupet.models import Pet, Kind, Photo, City
+from meupet.views import paginate_pets
 from users.models import OwnerProfile
-
 
 MEDIA_ROOT = tempfile.mkdtemp()
 
 
+@override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class MeuPetTestCase(TestCase):
+    def setUp(self):
+        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
+        self.test_city, _ = City.objects.get_or_create(city='Testing City')
+
     @staticmethod
     def get_test_image_file():
         from django.core.files.images import ImageFile
         file = tempfile.NamedTemporaryFile(suffix='.png')
         return ImageFile(file, name=file.name)
-
-
-@override_settings(MEDIA_ROOT=MEDIA_ROOT)
-class MeuPetTest(MeuPetTestCase):
-    def setUp(self):
-        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
-        self.test_city, _ = City.objects.get_or_create(city='Testing City')
-
-    @classmethod
-    def tearDownClass(cls):
-        shutil.rmtree(MEDIA_ROOT, ignore_errors=True)
-        super().tearDownClass()
 
     def create_pet(self, kind, name='Pet', status=Pet.MISSING, **kwargs):
         image = self.get_test_image_file()
@@ -39,6 +32,13 @@ class MeuPetTest(MeuPetTestCase):
                                   profile_picture=image, owner=user, kind=kind,
                                   status=status, **kwargs)
 
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(MEDIA_ROOT, ignore_errors=True)
+        super().tearDownClass()
+
+
+class MeuPetTest(MeuPetTestCase):
     def test_titleize_name(self):
         data = {
             'name': 'TESTING NAME'
@@ -316,3 +316,26 @@ class MeuPetTest(MeuPetTestCase):
 
         self.assertEqual(200, resp.status_code)
         self.assertContains(resp, 'Testing Pet')
+
+
+class PaginationListPetViewTest(MeuPetTestCase):
+    def setUp(self):
+        super(PaginationListPetViewTest, self).setUp()
+        self.pet = self.create_pet('First Kind')
+
+    def test_get_page_query_string(self):
+        resp = self.client.get(reverse('meupet:lost', args=[self.pet.kind_id]), {'page': 1})
+
+        self.assertContains(resp, 'Testing Pet')
+
+    def test_page_not_integer(self):
+        pets, _ = paginate_pets(Pet.objects.all(), 'page')
+
+        self.assertEqual(1, len(pets))
+        self.assertEqual('First Kind', pets[0].kind.kind)
+
+    def test_empty_page(self):
+        pets, _ = paginate_pets(Pet.objects.all(), 42)
+
+        self.assertEqual(1, len(pets))
+        self.assertEqual('First Kind', pets[0].kind.kind)
