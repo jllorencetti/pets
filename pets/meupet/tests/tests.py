@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 
 from meupet import forms
-from meupet.models import Pet, Kind, Photo, City
+from meupet.models import Pet, Kind, City
 from meupet.views import paginate_pets
 from users.models import OwnerProfile
 
@@ -233,16 +233,6 @@ class MeuPetTest(MeuPetTestCase):
         self.assertContains(response, 'Adicionar Foto')
         self.assertContains(response, 'another_picture')
 
-    def test_show_more_photos_in_pet_detail(self):
-        photo = Photo(image=self.get_test_image_file())
-        pet = self.create_pet('Cat')
-        pet.photo_set.add(photo)
-        pet.save()
-
-        response = self.client.get(pet.get_absolute_url())
-
-        self.assertContains(response, 'Outras fotos')
-
     def test_show_city(self):
         pet = self.create_pet('Cat')
         pet.city = self.test_city
@@ -300,22 +290,6 @@ class MeuPetTest(MeuPetTestCase):
         pets = Pet.objects.get_unpublished_pets()
 
         self.assertNotIn(pet, pets)
-
-    def test_get_pet_by_pk(self):
-        pet = self.create_pet('Pet')
-
-        resp = self.client.get(reverse('meupet:detail', kwargs={'pk_or_slug': pet.id}))
-
-        self.assertEqual(200, resp.status_code)
-        self.assertContains(resp, 'Testing Pet')
-
-    def test_get_pet_by_slug(self):
-        pet = self.create_pet('Pet')
-
-        resp = self.client.get(reverse('meupet:detail', kwargs={'pk_or_slug': pet.slug}))
-
-        self.assertEqual(200, resp.status_code)
-        self.assertContains(resp, 'Testing Pet')
 
 
 class PaginationListPetViewTest(MeuPetTestCase):

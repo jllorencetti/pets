@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, CreateView, \
     UpdateView, View
@@ -25,8 +25,12 @@ class PetIndexView(ListView):
 
 def pet_detail_view(request, pk_or_slug):
     pet = models.Pet.objects.filter(slug=pk_or_slug).first()
+
     if not pet:
-        pet = get_object_or_404(models.Pet, pk=pk_or_slug)
+        try:
+            pet = models.Pet.objects.get(pk=pk_or_slug)
+        except ValueError:
+            raise Http404()
 
     context = {
         'pet': pet,
