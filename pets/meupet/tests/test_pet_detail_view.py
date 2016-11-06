@@ -8,21 +8,24 @@ class PetDetailViewTest(MeuPetTestCase):
     def setUp(self):
         super(PetDetailViewTest, self).setUp()
 
-        self.pet = self.create_pet('Pet')
+        self.pet = self.create_pet()
 
     def test_get_pet_by_pk(self):
+        """Show detail page using an id as a value to the 'pk_or_slug' argument"""
         resp = self.client.get(reverse('meupet:detail', kwargs={'pk_or_slug': self.pet.id}))
 
         self.assertEqual(200, resp.status_code)
-        self.assertContains(resp, 'Testing Pet')
+        self.assertContains(resp, self.pet.name)
 
     def test_get_pet_by_slug(self):
+        """Show detail page using a slug as a value to the 'pk_or_slug' argument"""
         resp = self.client.get(reverse('meupet:detail', kwargs={'pk_or_slug': self.pet.slug}))
 
         self.assertEqual(200, resp.status_code)
-        self.assertContains(resp, 'Testing Pet')
+        self.assertContains(resp, self.pet.slug)
 
     def test_show_more_photos_in_pet_detail(self):
+        """Show the 'More Photos' section if more photos are added"""
         photo = Photo(image=self.get_test_image_file())
         self.pet.photo_set.add(photo)
         self.pet.save()
