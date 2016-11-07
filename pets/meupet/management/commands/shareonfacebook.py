@@ -17,19 +17,7 @@ class Command(BaseCommand):
         self.config = Configuration.objects.first()
         super(Command, self).__init__()
 
-    def get_renewed_token(self):
-        """
-        As the long lived token is valid for 60 days only,
-        I choose to store the configuration on the database
-        and always renew it when the command is executed.
-        """
-        api = facebook.GraphAPI(self.config.fb_share_token)
-        long_token = api.extend_access_token(
-            self.config.fb_share_app_id,
-            self.config.fb_share_app_secret
-        )
-        self.config.fb_share_token = long_token['access_token']
-        self.config.save()
+    def get_token(self):
         return self.config.fb_share_token
 
     def get_attachment(self, pet):
@@ -40,7 +28,7 @@ class Command(BaseCommand):
         return attachment
 
     def handle(self, *args, **options):
-        api = facebook.GraphAPI(self.get_renewed_token())
+        api = facebook.GraphAPI(self.get_token())
 
         for pet in Pet.objects.get_unpublished_pets():
             msg = '{}: {}, {}'.format(pet.get_status_display(), pet.name, pet.city)

@@ -30,13 +30,13 @@ class ManagementCommandTest(TestCase):
 
     def call_mocked_command(self, link):
         mock = MagicMock()
-        mock.get_renewed_token.return_value = 'token'
+        mock.get_token.return_value = 'token'
         mock.get_attachment.return_value = link
 
         cmd = Command()
 
         cmd.get_attachment = mock.get_attachment
-        cmd.get_renewed_token = mock.get_renewed_token
+        cmd.get_token = mock.get_token
 
         with patch('facebook.GraphAPI.put_wall_post') as mock:
             cmd.handle()
