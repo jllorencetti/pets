@@ -307,15 +307,6 @@ class MeuPetTest(MeuPetTestCase):
 
         self.assertContains(response, 'Fêmea')
 
-    def test_change_status_and_show_status_label(self):
-        """Updates status of the pet from 'For Adoption' to 'Adopted'"""
-        pet = self.create_pet(status=Pet.FOR_ADOPTION)
-        self.client.post(reverse('meupet:change_status', args=[pet.slug]))
-
-        response = self.client.get(reverse('meupet:index'))
-
-        self.assertContains(response, '<h2 class="text-center"><span>Adotado! :)</span></h2>')
-
     def test_get_pets_unpublished(self):
         """Manager method should return pets not published on Facebook yet"""
         pet = self.create_pet()

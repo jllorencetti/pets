@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView, CreateView, \
     UpdateView, View
 
@@ -132,8 +133,13 @@ def delete_pet(request, slug):
         return HttpResponseRedirect(pet.get_absolute_url())
 
 
+@require_POST
 def change_status(request, slug):
     pet = get_object_or_404(models.Pet, slug=slug)
+
+    if request.user != pet.owner:
+        return HttpResponseRedirect(pet.get_absolute_url())
+
     pet.change_status()
     return HttpResponseRedirect(reverse('meupet:detail', kwargs={'pk_or_slug': pet.slug}))
 
