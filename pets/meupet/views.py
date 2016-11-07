@@ -124,13 +124,15 @@ class EditPetView(UpdateView):
         return super(EditPetView, self).form_valid(form)
 
 
+@require_POST
 def delete_pet(request, slug):
     pet = get_object_or_404(models.Pet, slug=slug)
-    if request.method == 'POST' and request.user == pet.owner:
+
+    if request.user == pet.owner:
         pet.delete()
         return HttpResponseRedirect(reverse('meupet:index'))
-    else:
-        return HttpResponseRedirect(pet.get_absolute_url())
+
+    return HttpResponseRedirect(pet.get_absolute_url())
 
 
 @require_POST

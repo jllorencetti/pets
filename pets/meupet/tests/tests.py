@@ -121,27 +121,6 @@ class MeuPetTest(MeuPetTestCase):
         self.assertContains(response, pet.description)
         self.assertContains(response, 'Salvar Alterações')
 
-    def test_owner_can_delete_pet(self):
-        """Owner can delete it's own pets"""
-        pet = self.create_pet()
-        self.client.login(username='admin', password='admin')
-
-        response = self.client.post(reverse('meupet:delete_pet', args=[pet.slug]), follow=True)
-
-        self.assertTemplateUsed(response, 'meupet/index.html')
-        self.assertNotContains(response, pet.name)
-
-    def test_user_cant_delete_pet_from_other(self):
-        """Assert that an user can't delete pets from other people"""
-        pet = self.create_pet()
-        OwnerProfile.objects.create_user(username='other', password='user')
-        self.client.login(username='other', password='user')
-
-        response = self.client.post(reverse('meupet:delete_pet', args=[pet.slug]), follow=True)
-
-        self.assertTemplateUsed(response, 'meupet/pet_detail.html')
-        self.assertContains(response, pet.name)
-
     def test_can_edit_pet(self):
         """Pet's owner can edit it's own pet"""
         self.client.login(username='admin', password='admin')
