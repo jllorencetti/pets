@@ -17,23 +17,26 @@ class Command(BaseCommand):
         self.config = Configuration.objects.first()
         super(Command, self).__init__()
 
-    def get_token(self):
-        return self.config.fb_share_token
-
-    def get_attachment(self, pet):
-        link = self.config.fb_share_link
+    @staticmethod
+    def get_attachment(pet, url):
         attachment = {
-            'link': link.format(pet.get_absolute_url()),
+            'link': url.format(pet.get_absolute_url()),
         }
         return attachment
 
+    @staticmethod
+    def get_message(pet):
+        return '{0}: {1}, {2}'.format(pet.get_status_display(), pet.name, pet.city)
+
     def handle(self, *args, **options):
-        api = facebook.GraphAPI(self.get_token())
+        api = facebook.GraphAPI(self.config.fb_share_token)
+        url = self.config.fb_share_link
 
         for pet in Pet.objects.get_unpublished_pets():
-            msg = '{}: {}, {}'.format(pet.get_status_display(), pet.name, pet.city)
-
-            api.put_wall_post(msg, attachment=self.get_attachment(pet))
+            api.put_wall_post(
+                self.get_message(pet),
+                attachment=self.get_attachment(pet, url)
+            )
 
             pet.published = True
             pet.save()
