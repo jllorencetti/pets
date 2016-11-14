@@ -112,7 +112,6 @@ class Pet(models.Model):
 
     objects = PetManager()
 
-
     def get_absolute_url(self):
         return reverse('meupet:detail', kwargs={'pk_or_slug': self.slug})
 

@@ -1,5 +1,7 @@
 from django.core.urlresolvers import reverse
 
+from model_mommy import mommy
+
 from meupet.models import Photo
 from meupet.tests.tests import MeuPetTestCase
 
@@ -26,7 +28,7 @@ class PetDetailViewTest(MeuPetTestCase):
 
     def test_show_more_photos_in_pet_detail(self):
         """Show the 'More Photos' section if more photos are added"""
-        photo = Photo(image=self.get_test_image_file())
+        photo = mommy.make(Photo)
         self.pet.photo_set.add(photo)
         self.pet.save()
 

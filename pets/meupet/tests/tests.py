@@ -25,12 +25,6 @@ class MeuPetTestCase(TestCase):
         )
         self.test_city, _ = City.objects.get_or_create(city='Testing City')
 
-    @staticmethod
-    def get_test_image_file():
-        from django.core.files.images import ImageFile
-        file = tempfile.NamedTemporaryFile(suffix='.png')
-        return ImageFile(file, name=file.name)
-
     def create_pet(self, status=Pet.MISSING, kind=None, **kwargs):
         pet = mommy.make(Pet, status=status, owner=self.admin, **kwargs)
 

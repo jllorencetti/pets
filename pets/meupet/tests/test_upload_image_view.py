@@ -2,7 +2,9 @@ import tempfile
 
 from django.shortcuts import resolve_url
 
-from meupet.models import Pet, City
+from model_mommy import mommy
+
+from meupet.models import Pet
 from meupet.tests.tests import MeuPetTestCase
 from users.models import OwnerProfile
 
@@ -19,28 +21,15 @@ class UploadImageTestCase(MeuPetTestCase):
         return open(f.name, mode='rb')
 
     def setUp(self):
-        self.admin = OwnerProfile.objects.create_user(
-            username='admin',
-            password='admin',
-            phone='99 99999-9999'
-        )
-        self.city = City.objects.create(city='Test City')
-        self.pet = Pet.objects.create(
-            name='Testing Pet',
-            city=self.city,
-            status=Pet.MISSING,
-            owner=self.admin,
-            description='Testing Pet',
-            size=Pet.MEDIUM,
-            sex=Pet.MALE,
-            profile_picture=self.get_test_image_file()
-        )
+        super().setUp()
+        self.pet = mommy.make(Pet, owner=self.admin)
         self.image = self._create_image()
 
     def tearDown(self):
         self.image.close()
 
     def test_upload_image(self):
+        """User should be able to upload more images to their pets"""
         self.client.login(username='admin', password='admin')
 
         resp = self.client.post(
@@ -55,6 +44,7 @@ class UploadImageTestCase(MeuPetTestCase):
         self.assertContains(resp, 'Outras fotos')
 
     def test_upload_image_other_user(self):
+        """Only the owner should be able to upload images to the pet"""
         OwnerProfile.objects.create_user(
             username='other',
             password='other',
