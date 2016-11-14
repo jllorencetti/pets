@@ -39,9 +39,10 @@ class UserRegistrationTest(TestCase):
         self.assertContains(response, 'Cadastrar Pet')
 
     def test_render_own_profile(self):
+        """User should be shown it's own profile"""
         self.login_new_user()
 
-        response = self.client.get('/user/profile/')
+        response = self.client.get(reverse('users:profile'))
 
         self.assertContains(response, 'Test First Name')
         self.assertTemplateUsed(response, 'users/profile.html')
@@ -53,29 +54,18 @@ class UserRegistrationTest(TestCase):
 
         self.assertContains(response, 'Seu Perfil')
 
-    def test_show_profile_information_for_logged_user(self):
-        self.login_new_user()
-
-        response = self.client.get('/user/profile/')
-
-        self.assertContains(response, 'Test First Name')
-
     def test_edit_view_show_form_for_update_profile_information(self):
+        """Show correct page for the edit profile view"""
         self.login_new_user()
 
-        response = self.client.get('/user/profile/edit/')
+        response = self.client.get(reverse('users:edit'))
 
         self.assertContains(response, 'Gravar Alterações')
         self.assertContains(response, 'Editando Perfil')
-
-    def test_edit_view_render_correct_template(self):
-        self.login_new_user()
-
-        response = self.client.get('/user/profile/edit/')
-
         self.assertTemplateUsed(response, 'users/edit_profile.html')
 
     def test_render_profile_with_correct_template(self):
+        """Show correct information for other users profile"""
         user = self.create_user()
 
         response = self.client.get(user.get_absolute_url())
