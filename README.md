@@ -13,8 +13,6 @@ or they can use their Twitter and Facebook to login. You can also extend it to u
 
 Images uploaded by users are cropped with [easy-thumbnails](https://pypi.python.org/pypi/easy-thumbnails) to improve the site performance.
 
-**It's still a work in progress**
-
 ## Installing
 
 ### Requirements
