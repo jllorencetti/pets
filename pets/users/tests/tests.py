@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from users.forms import RegisterForm, UpdateUserForm
 from users.validators import validate_facebook_url
-from .models import OwnerProfile
+from users.models import OwnerProfile
 
 
 class UserRegistrationTest(TestCase):
