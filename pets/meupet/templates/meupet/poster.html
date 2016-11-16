@@ -1,6 +1,5 @@
 {% extends '_layouts/base.html' %}
-{% load static %}
-{% load thumbnail %}
+{% load i18n static thumbnail %}
 
 {% block page %}
   <div class="container">
@@ -8,7 +7,7 @@
       <div class="col-md-12">
 
         <div class="text-center hidden-print">
-          <a onclick="window.print()" class="btn btn-primary">Imprimir <i class="fa fa-print"></i></a>
+          <a onclick="window.print()" class="btn btn-primary">{% trans 'Print' %} <i class="fa fa-print"></i></a>
         </div>
 
         <div class="page">
@@ -26,7 +25,7 @@
           <div class="text-center">
             <img class="img-responsive img-rounded img-thumbnail"
                  src="{{ pet.profile_picture|thumbnail_url:'pet_poster' }}"
-                 alt="{{ pet.name }} foto principal">
+                 alt="{{ pet.name }}">
           </div>
 
           <h2 class="text-center poster-headline">
@@ -35,27 +34,27 @@
 
           {% if pet.size and pet.sex %}
             <h2 class="text-center poster-subheadline">
-              Porte {{ pet.get_size_display|lower }}, {{ pet.get_sex_display|lower }}
+              {% trans 'Size' %} {{ pet.get_size_display|lower }}, {{ pet.get_sex_display|lower }}
             </h2>
           {% endif %}
 
           <p class="font-1_8rem">{{ pet.description }}</p>
 
-          <h3>Contato</h3>
+          <h3>{% trans 'Contact' %}</h3>
 
           <ul class="list-unstyled font-1_8rem">
             <li>
-              Email <i class="fa fa-envelope"></i>: {{ pet.owner.email }}
+              {% trans 'Email' %} <i class="fa fa-envelope"></i>: {{ pet.owner.email }}
             </li>
             {% if pet.owner.phone %}
               <li>
-                Telefone <i class="fa fa-phone"></i>: {{ pet.owner.phone }}
+                {% trans 'Phone' %} <i class="fa fa-phone"></i>: {{ pet.owner.phone }}
               </li>
             {% endif %}
           </ul>
 
           <div class="pull-right">
-            <p class="font-1_8rem">Acesse: www.cademeubicho.com</p>
+            <p class="font-1_8rem">{% trans 'Visit:' %} www.cademeubicho.com</p>
           </div>
         </div>
 

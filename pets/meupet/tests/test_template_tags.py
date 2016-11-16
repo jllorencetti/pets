@@ -19,5 +19,5 @@ class TestTemplateTag(TestCase):
 
         self.assertIn('Dog <span class="badge">1</span></a>', content)
         self.assertIn('Cat <span class="badge">1</span></a>', content)
-        self.assertIn('Desaparecidos', content)
-        self.assertIn('Para Adoção', content)
+        self.assertIn('Missing', content)
+        self.assertIn('For Adoption', content)

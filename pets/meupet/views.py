@@ -5,15 +5,15 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
+from django.utils.translation import pgettext, ugettext as _
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView, CreateView, \
     UpdateView, View
 
 from braces.views import LoginRequiredMixin
 
+from meupet import forms, models
 from meupet.forms import SearchForm
-from . import forms
-from . import models
 
 
 class PetIndexView(ListView):
@@ -72,7 +72,7 @@ def lost_pets(request, kind):
     return render_pet_list(
         request,
         kind,
-        'Desaparecidos',
+        pgettext('plural', 'Missing'),
         models.Pet.objects.get_lost_or_found(kind)
     )
 
@@ -81,7 +81,7 @@ def adoption_pets(request, kind):
     return render_pet_list(
         request,
         kind,
-        'Para Adoção',
+        _('For Adoption'),
         models.Pet.objects.get_for_adoption_adopted(kind)
     )
 
@@ -96,7 +96,7 @@ class RegisterPetView(LoginRequiredMixin, CreateView):
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_information_confirmed:
-            messages.warning(request, 'Favor confirmar suas informações antes de cadastrar algum pet.')
+            messages.warning(request, _('Please confirm your informations before registering a new pet.'))
             return HttpResponseRedirect(reverse('users:edit'))
         else:
             return super(RegisterPetView, self).get(request, *args, **kwargs)

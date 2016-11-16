@@ -100,7 +100,7 @@ class MeuPetTest(MeuPetTestCase):
 
         response = self.client.get(pet.get_absolute_url())
 
-        self.assertContains(response, 'Editar')
+        self.assertContains(response, 'Edit')
         self.assertContains(response, reverse('meupet:edit', args=[pet.slug]))
 
     def test_load_data_for_editing_pet(self):
@@ -113,7 +113,7 @@ class MeuPetTest(MeuPetTestCase):
         self.assertTemplateUsed(response, 'meupet/edit.html')
         self.assertContains(response, pet.name)
         self.assertContains(response, pet.description)
-        self.assertContains(response, 'Salvar Alterações')
+        self.assertContains(response, 'Save Changes')
 
     def test_can_edit_pet(self):
         """Pet's owner can edit it's own pet"""
@@ -237,7 +237,7 @@ class MeuPetTest(MeuPetTestCase):
 
         response = self.client.get(pet.get_absolute_url())
 
-        self.assertContains(response, 'Adicionar Foto')
+        self.assertContains(response, 'Submit Image')
         self.assertContains(response, 'another_picture')
 
     def test_show_city(self):
@@ -254,7 +254,7 @@ class MeuPetTest(MeuPetTestCase):
 
         response = self.client.get(pet.get_absolute_url())
 
-        self.assertContains(response, 'Pequeno')
+        self.assertContains(response, 'Small')
 
     def test_search_without_filters(self):
         """Show message informing the user that she needs to use at least
@@ -278,7 +278,7 @@ class MeuPetTest(MeuPetTestCase):
 
         response = self.client.get(pet.get_absolute_url())
 
-        self.assertContains(response, 'Fêmea')
+        self.assertContains(response, 'Female')
 
     def test_get_pets_unpublished(self):
         """Manager method should return pets not published on Facebook yet"""

@@ -1,7 +1,7 @@
 {% extends '_layouts/base.html' %}
-{% load static %}
+{% load i18n static %}
 
-{% block title %}Autenticação{% endblock %}
+{% block title %}{% trans 'Autentication' %}{% endblock %}
 
 {% block body %}
   <div class="col-md-4 col-md-offset-4">
@@ -24,12 +24,12 @@
       </div>
       <div class="form-group">
         <div class="controls">
-          <input class="btn btn-primary btn-block" type="submit" value="Entrar" name="login">
+          <input class="btn btn-primary btn-block" type="submit" value="{% trans 'Login' %}" name="login">
         </div>
       </div>
     </form>
-    <a href="{% url 'users:recover_password' %}">Esqueceu a senha?</a>
-    <h4>Entre com o Facebook ou Twitter</h4>
+    <a href="{% url 'users:recover_password' %}">{% trans 'Forgot you password?' %}</a>
+    <h4>{% trans 'Login with your Facebook or Twitter' %}</h4>
     <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static 'img/facebook.png' %}" alt="Facebook"/></a>
     <a href="{% url 'social:begin' 'twitter' %}"><img src="{% static 'img/twitter.png' %}" alt="Twitter"/></a>
   </div>
