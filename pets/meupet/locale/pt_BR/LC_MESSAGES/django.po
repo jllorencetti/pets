@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 10:22-0200\n"
+"POT-Creation-Date: 2016-11-17 11:47-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,52 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: pets/meupet/forms.py:21
+msgid "São Paulo"
+msgstr ""
+
+#: pets/meupet/forms.py:29
+msgid "Costelinha"
+msgstr ""
+
+#: pets/meupet/forms.py:32
+msgid ""
+"It is black and chubby, very shy, disappeared next to the school in downtown."
+"There's a slight flaw in the tail fur."
+msgstr ""
+
+#: pets/meupet/forms.py:54
+msgid "Image is larger than the maximum size of 8MB"
+msgstr ""
+
+#: pets/meupet/forms.py:62 pets/meupet/templates/meupet/_pet_form.html:44
+#: pets/meupet/templates/meupet/pet_detail.html:83
+msgid "City"
+msgstr "Cidade"
+
+#: pets/meupet/forms.py:63 pets/meupet/templates/meupet/_pet_form.html:62
+msgid "Kind"
+msgstr "Espécie"
+
+#: pets/meupet/forms.py:64 pets/meupet/templates/meupet/_pet_form.html:71
+#: pets/meupet/templates/meupet/pet_detail.html:89
+#: pets/meupet/templates/meupet/poster.html:37
+msgid "Size"
+msgstr "Tamanho"
+
+#: pets/meupet/forms.py:65 pets/meupet/templates/meupet/_pet_form.html:7
+msgid "Status"
+msgstr "Situação"
+
+#: pets/meupet/forms.py:66 pets/meupet/templates/meupet/_pet_form.html:80
+#: pets/meupet/templates/meupet/pet_detail.html:96
+msgid "Sex"
+msgstr "Sexo"
+
+#: pets/meupet/forms.py:78
+msgid "You must select at least one filter"
+msgstr ""
 
 #: pets/meupet/models.py:70
 msgid "Female"
@@ -58,11 +104,6 @@ msgstr "Encontrado"
 msgid "Maximum image size is 8MB"
 msgstr "Tamanho máximo da imagem é 8MB"
 
-#: pets/meupet/templates/meupet/_pet_form.html:7
-#: pets/meupet/templates/meupet/search.html:28
-msgid "Status"
-msgstr "Situação"
-
 #: pets/meupet/templates/meupet/_pet_form.html:16
 msgid "Name"
 msgstr "Nome"
@@ -76,12 +117,6 @@ msgstr "Foto"
 msgid "Description"
 msgstr "Descrição"
 
-#: pets/meupet/templates/meupet/_pet_form.html:44
-#: pets/meupet/templates/meupet/pet_detail.html:83
-#: pets/meupet/templates/meupet/search.html:17
-msgid "City"
-msgstr "Cidade"
-
 #: pets/meupet/templates/meupet/_pet_form.html:50
 msgid "Didn't find your city?"
 msgstr "Não encontrou sua cidade?"
@@ -89,24 +124,6 @@ msgstr "Não encontrou sua cidade?"
 #: pets/meupet/templates/meupet/_pet_form.html:51
 msgid "Click here"
 msgstr "Clique aqui"
-
-#: pets/meupet/templates/meupet/_pet_form.html:62
-#: pets/meupet/templates/meupet/search.html:23
-msgid "Kind"
-msgstr "Espécie"
-
-#: pets/meupet/templates/meupet/_pet_form.html:71
-#: pets/meupet/templates/meupet/pet_detail.html:89
-#: pets/meupet/templates/meupet/poster.html:37
-#: pets/meupet/templates/meupet/search.html:34
-msgid "Size"
-msgstr "Tamanho"
-
-#: pets/meupet/templates/meupet/_pet_form.html:80
-#: pets/meupet/templates/meupet/pet_detail.html:96
-#: pets/meupet/templates/meupet/search.html:40
-msgid "Sex"
-msgstr "Sexo"
 
 #: pets/meupet/templates/meupet/_pet_form.html:91
 msgid "Save Changes"
@@ -217,11 +234,11 @@ msgstr "Pesquisar"
 msgid "Result"
 msgstr "Resultado"
 
-#: pets/meupet/templates/meupet/search.html:64
+#: pets/meupet/templates/meupet/search.html:65
 msgid "Details"
 msgstr "Detalhes"
 
-#: pets/meupet/templates/meupet/search.html:70
+#: pets/meupet/templates/meupet/search.html:71
 msgid "No result"
 msgstr "Nenhum resultado"
 

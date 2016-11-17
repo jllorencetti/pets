@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 10:22-0200\n"
+"POT-Creation-Date: 2016-11-17 11:48-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -190,6 +190,28 @@ msgstr ""
 #: pets/users/templates/users/recover.html:24
 #: pets/users/templates/users/recover.html:25
 msgid "Back to home page"
+msgstr ""
+
+#: pets/users/templates/users/recover_email.txt:1
+#, python-format
+msgid "Dear %(username)s,"
+msgstr ""
+
+#: pets/users/templates/users/recover_email.txt:3
+#, python-format
+msgid ""
+"You -- or someone pretending to be you -- has requested a password reset on "
+"%(domain)s."
+msgstr ""
+
+#: pets/users/templates/users/recover_email.txt:5
+msgid "You can set your new password by following this link:"
+msgstr ""
+
+#: pets/users/templates/users/recover_email.txt:9
+msgid ""
+"If you don't want to reset your password, simply ignore this email and it "
+"will stay unchanged."
 msgstr ""
 
 #: pets/users/templates/users/reset.html:10

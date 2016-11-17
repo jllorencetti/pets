@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext as _
 
 from meupet import models
 
@@ -18,7 +19,7 @@ def _build_choice_field(label, choices=None):
 
 class PetForm(forms.ModelForm):
     new_city = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'São Paulo'}
+        attrs={'class': 'form-control', 'placeholder': _('São Paulo')}
     ))
 
     class Meta:
@@ -26,11 +27,12 @@ class PetForm(forms.ModelForm):
         fields = ('name', 'description', 'city', 'kind',
                   'profile_picture', 'size', 'sex', 'status',)
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Costelinha'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Costelinha')}),
             'description': forms.Textarea(attrs={'class': 'form-control',
-                                                 'placeholder': 'É preto e gorduchinho, arisco, desapareceu '
-                                                                'na região da escola do centro. Tem uma '
-                                                                'pequena falha na pelagem do rabo.'}),
+                                                 'placeholder': _(
+                                                     "It is black and chubby, very shy, "
+                                                     "disappeared next to the school in downtown."
+                                                     "There's a slight flaw in the tail fur.")}),
             'city': forms.Select(attrs={'class': 'form-control'}),
             'kind': forms.Select(attrs={'class': 'form-control'}),
             'size': forms.Select(attrs={'class': 'form-control'}),
@@ -50,7 +52,7 @@ class PetForm(forms.ModelForm):
     def clean_profile_picture(self):
         img = self.cleaned_data.get('profile_picture', False)
         if img and img.size > 8 * 1024 * 1024:
-            raise forms.ValidationError('Imagem é maior que o tamanho máximo de 8MB')
+            raise forms.ValidationError(_('Image is larger than the maximum size of 8MB'))
         return img
 
     def clean_name(self):
@@ -58,11 +60,11 @@ class PetForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    city = _build_choice_field('Cidade')
-    kind = _build_choice_field('Espécie')
-    size = _build_choice_field('Tamanho', models.Pet.PET_SIZE)
-    status = _build_choice_field('Status', models.Pet.PET_STATUS)
-    sex = _build_choice_field('Sexo', models.Pet.PET_SEX)
+    city = _build_choice_field(_('City'))
+    kind = _build_choice_field(_('Kind'))
+    size = _build_choice_field(_('Size'), models.Pet.PET_SIZE)
+    status = _build_choice_field(_('Status'), models.Pet.PET_STATUS)
+    sex = _build_choice_field(_('Sex'), models.Pet.PET_SEX)
 
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
@@ -74,4 +76,4 @@ class SearchForm(forms.Form):
 
         if not any([cleaned_data['size'], cleaned_data['city'], cleaned_data['kind'],
                     cleaned_data['status'], cleaned_data['sex']]):
-            raise forms.ValidationError('É necessário selecionar ao menos um filtro')
+            raise forms.ValidationError(_('You must select at least one filter'))

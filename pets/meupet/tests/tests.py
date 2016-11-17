@@ -261,7 +261,7 @@ class MeuPetTest(MeuPetTestCase):
         one filter to be able to search"""
         response = self.client.post(reverse('meupet:search'), {})
 
-        self.assertContains(response, 'É necessário selecionar ao menos um filtro')
+        self.assertContains(response, 'You must select at least one filter')
 
     def test_search_with_filter(self):
         """Search by city should show the pet"""
