@@ -1,11 +1,12 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from rest_framework.renderers import JSONRenderer
-from meupet.models import Pet
+
 from api.serializers import PetSerializer
+
+from meupet.models import Pet
 
 
 class JsonSerializedResponse(HttpResponse):
-
     def __init__(self, serilaized_data, **kwargs):
         content = JSONRenderer().render(serilaized_data)
         kwargs['content_type'] = 'application/json'
@@ -13,7 +14,7 @@ class JsonSerializedResponse(HttpResponse):
 
 
 def home(request):
-    if (request.method) != 'GET':
+    if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
     pets = Pet.objects.filter()

@@ -1,18 +1,15 @@
 from rest_framework.serializers import (
     CharField,
     ModelSerializer,
-    HyperlinkedModelSerializer,
     HyperlinkedRelatedField,
     StringRelatedField,
-    URLField,
 )
 
-from users.models import OwnerProfile
 from meupet.models import Pet
+from users.models import OwnerProfile
 
 
 class OwnerSerializer(ModelSerializer):
-
     name = CharField(source='get_full_name', read_only=True)
     id = HyperlinkedRelatedField(
         view_name='users:user_profile',
@@ -25,7 +22,6 @@ class OwnerSerializer(ModelSerializer):
 
 
 class PetSerializer(ModelSerializer):
-
     owner = OwnerSerializer()
     city = StringRelatedField()
     kind = StringRelatedField()
