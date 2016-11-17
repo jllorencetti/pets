@@ -34,7 +34,7 @@ class PetDetailViewTest(MeuPetTestCase):
 
         response = self.client.get(self.pet.get_absolute_url())
 
-        self.assertContains(response, 'Outras fotos')
+        self.assertContains(response, 'More photos')
 
     def test_show_404_not_found(self):
         """Show the default 404 page if the pet could not be found"""

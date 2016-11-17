@@ -1,10 +1,11 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.text import slugify
-
-from users.models import OwnerProfile
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from autoslug import AutoSlugField
+
+from users.models import OwnerProfile
 
 
 class PetManager(models.Manager):
@@ -66,26 +67,26 @@ class Pet(models.Model):
     MALE = 'MA'
     FEMALE = 'FE'
     PET_SEX = (
-        (FEMALE, 'Fêmea'),
-        (MALE, 'Macho',),
+        (FEMALE, _('Female')),
+        (MALE, _('Male')),
     )
     SMALL = 'SM'
     MEDIUM = 'MD'
     LARGE = 'LG'
     PET_SIZE = (
-        (SMALL, 'Pequeno'),
-        (MEDIUM, 'Médio'),
-        (LARGE, 'Grande'),
+        (SMALL, _('Small')),
+        (MEDIUM, _('Medium')),
+        (LARGE, _('Large')),
     )
     MISSING = 'MI'
     FOR_ADOPTION = 'FA'
     ADOPTED = 'AD'
     FOUND = 'FO'
     PET_STATUS = (
-        (MISSING, 'Desaparecido'),
-        (FOR_ADOPTION, 'Para Adoção'),
-        (ADOPTED, 'Adotado'),
-        (FOUND, 'Encontrado'),
+        (MISSING, _('Missing')),
+        (FOR_ADOPTION, _('For Adoption')),
+        (ADOPTED, _('Adopted')),
+        (FOUND, _('Found')),
     )
     owner = models.ForeignKey(OwnerProfile)
     name = models.CharField(max_length=50)
@@ -102,7 +103,7 @@ class Pet(models.Model):
                            choices=PET_SEX,
                            blank=True)
     profile_picture = models.ImageField(upload_to='pet_profiles',
-                                        help_text='Tamanho máximo da imagem é 8MB')
+                                        help_text=ugettext('Maximum image size is 8MB'))
     published = models.BooleanField(default=False)  # published on facebook
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

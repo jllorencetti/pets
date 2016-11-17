@@ -1,4 +1,5 @@
-{% load thumbnail %}
+{% load i18n thumbnail %}
+
 <div class="row">
   {% if pets %}
     {% for pet in pets %}
@@ -19,7 +20,7 @@
               <span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{ pet.city|title }}
             </p>
             <a href="{% url 'meupet:detail' pet.slug %}" class="btn btn-info btn-block"
-               role="button">Detalhes</a>
+               role="button">{% trans 'Details' %}</a>
           </div>
         </div>
       </div>
@@ -31,7 +32,7 @@
           <ul class="pagination">
             <li>
               {% if pets.has_previous %}
-                <a href="?page={{ pets.previous_page_number }}">Anterior</a>
+                <a href="?page={{ pets.previous_page_number }}">{% trans 'Previous' %}</a>
               {% endif %}
             </li>
 
@@ -43,7 +44,7 @@
 
             <li>
               {% if pets.has_next %}
-                <a href="?page={{ pets.next_page_number }}">Próxima</a>
+                <a href="?page={{ pets.next_page_number }}">{% trans 'Next' %}</a>
               {% endif %}
             </li>
           </ul>
@@ -52,7 +53,7 @@
     {% endif %}
   {% else %}
     <div class="col-md-12">
-      <h4>Nenhum amiguinho cadastrado nessa categoria ainda. :)</h4>
+      <h4>{% trans 'No friends in this category yet :)' %}</h4>
     </div>
   {% endif %}
 </div>

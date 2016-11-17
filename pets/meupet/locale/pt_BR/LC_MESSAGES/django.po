@@ -1,0 +1,230 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-17 10:22-0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: pets/meupet/models.py:70
+msgid "Female"
+msgstr "Fêmea"
+
+#: pets/meupet/models.py:71
+msgid "Male"
+msgstr "Macho"
+
+#: pets/meupet/models.py:77
+msgid "Small"
+msgstr "Pequeno"
+
+#: pets/meupet/models.py:78
+msgid "Medium"
+msgstr "Médio"
+
+#: pets/meupet/models.py:79
+msgid "Large"
+msgstr "Grande"
+
+#: pets/meupet/models.py:86
+msgid "Missing"
+msgstr "Desaparecido"
+
+#: pets/meupet/models.py:87 pets/meupet/templates/meupet/_sidemenu.html:12
+#: pets/meupet/views.py:84
+msgid "For Adoption"
+msgstr "Para Adoção"
+
+#: pets/meupet/models.py:88
+msgid "Adopted"
+msgstr "Adotado"
+
+#: pets/meupet/models.py:89
+msgid "Found"
+msgstr "Encontrado"
+
+#: pets/meupet/models.py:106 pets/meupet/templates/meupet/pet_detail.html:65
+msgid "Maximum image size is 8MB"
+msgstr "Tamanho máximo da imagem é 8MB"
+
+#: pets/meupet/templates/meupet/_pet_form.html:7
+#: pets/meupet/templates/meupet/search.html:28
+msgid "Status"
+msgstr "Situação"
+
+#: pets/meupet/templates/meupet/_pet_form.html:16
+msgid "Name"
+msgstr "Nome"
+
+#: pets/meupet/templates/meupet/_pet_form.html:25
+msgid "Photo"
+msgstr "Foto"
+
+#: pets/meupet/templates/meupet/_pet_form.html:35
+#: pets/meupet/templates/meupet/pet_detail.html:78
+msgid "Description"
+msgstr "Descrição"
+
+#: pets/meupet/templates/meupet/_pet_form.html:44
+#: pets/meupet/templates/meupet/pet_detail.html:83
+#: pets/meupet/templates/meupet/search.html:17
+msgid "City"
+msgstr "Cidade"
+
+#: pets/meupet/templates/meupet/_pet_form.html:50
+msgid "Didn't find your city?"
+msgstr "Não encontrou sua cidade?"
+
+#: pets/meupet/templates/meupet/_pet_form.html:51
+msgid "Click here"
+msgstr "Clique aqui"
+
+#: pets/meupet/templates/meupet/_pet_form.html:62
+#: pets/meupet/templates/meupet/search.html:23
+msgid "Kind"
+msgstr "Espécie"
+
+#: pets/meupet/templates/meupet/_pet_form.html:71
+#: pets/meupet/templates/meupet/pet_detail.html:89
+#: pets/meupet/templates/meupet/poster.html:37
+#: pets/meupet/templates/meupet/search.html:34
+msgid "Size"
+msgstr "Tamanho"
+
+#: pets/meupet/templates/meupet/_pet_form.html:80
+#: pets/meupet/templates/meupet/pet_detail.html:96
+#: pets/meupet/templates/meupet/search.html:40
+msgid "Sex"
+msgstr "Sexo"
+
+#: pets/meupet/templates/meupet/_pet_form.html:91
+msgid "Save Changes"
+msgstr "Gravar Alterações"
+
+#: pets/meupet/templates/meupet/_pet_form.html:93
+#: pets/meupet/templates/meupet/register_pet.html:4
+msgid "Register Pet"
+msgstr "Registrar Pet"
+
+#: pets/meupet/templates/meupet/_pet_form.html:101
+msgid "Pet Image"
+msgstr "Imagem do Pet"
+
+#: pets/meupet/templates/meupet/_sidemenu.html:4 pets/meupet/views.py:75
+msgctxt "plural"
+msgid "Missing"
+msgstr "Desaparecidos"
+
+#: pets/meupet/templates/meupet/edit.html:4
+msgid "Edit Pet"
+msgstr "Editar Pete"
+
+#: pets/meupet/templates/meupet/index.html:4
+msgid "Most recent entries"
+msgstr "Cadastros mais recentes"
+
+#: pets/meupet/templates/meupet/pet_detail.html:30
+#: pets/meupet/templates/meupet/pet_detail.html:136
+msgid "Delete Pet"
+msgstr "Apagar Pet"
+
+#: pets/meupet/templates/meupet/pet_detail.html:34
+msgid "Do you really want to erase this pet?"
+msgstr "Você quer realmente apagar esse pet?"
+
+#: pets/meupet/templates/meupet/pet_detail.html:38
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: pets/meupet/templates/meupet/pet_detail.html:42
+msgid "Delete"
+msgstr "Apagar"
+
+#: pets/meupet/templates/meupet/pet_detail.html:63
+msgid "Add Photo"
+msgstr "Adicionar Foto"
+
+#: pets/meupet/templates/meupet/pet_detail.html:68
+msgid "Submit Image"
+msgstr "Enviar Imagem"
+
+#: pets/meupet/templates/meupet/pet_detail.html:102
+#: pets/meupet/templates/meupet/poster.html:43
+msgid "Contact"
+msgstr "Contato"
+
+#: pets/meupet/templates/meupet/pet_detail.html:108
+msgid "Share"
+msgstr "Compartilhar"
+
+#: pets/meupet/templates/meupet/pet_detail.html:123
+msgid "Mark as found!"
+msgstr "Marcar como encontrado!"
+
+#: pets/meupet/templates/meupet/pet_detail.html:125
+msgid "Mark as adopted!"
+msgstr "Marcar como adotado!"
+
+#: pets/meupet/templates/meupet/pet_detail.html:131
+msgid "Edit"
+msgstr "Editar"
+
+#: pets/meupet/templates/meupet/pet_detail.html:133
+msgid "Generate Poster"
+msgstr "Gerar Cartaz"
+
+#: pets/meupet/templates/meupet/pet_detail.html:145
+msgid "More photos"
+msgstr "Outras fotos"
+
+#: pets/meupet/templates/meupet/poster.html:10
+msgid "Print"
+msgstr "Imprimir"
+
+#: pets/meupet/templates/meupet/poster.html:47
+msgid "Email"
+msgstr "Email"
+
+#: pets/meupet/templates/meupet/poster.html:51
+msgid "Phone"
+msgstr "Telefone"
+
+#: pets/meupet/templates/meupet/poster.html:57
+msgid "Visit:"
+msgstr "Acesse:"
+
+#: pets/meupet/templates/meupet/registered.html:4
+msgid "Registered Pet"
+msgstr "Pet Cadastrado"
+
+#: pets/meupet/templates/meupet/search.html:4
+#: pets/meupet/templates/meupet/search.html:46
+msgid "Search"
+msgstr "Pesquisar"
+
+#: pets/meupet/templates/meupet/search.html:52
+msgid "Result"
+msgstr "Resultado"
+
+#: pets/meupet/templates/meupet/search.html:64
+msgid "Details"
+msgstr "Detalhes"
+
+#: pets/meupet/templates/meupet/search.html:70
+msgid "No result"
+msgstr "Nenhum resultado"
+
+#: pets/meupet/views.py:99
+msgid "Please confirm your informations before registering a new pet."
+msgstr "Por favor confirme suas informações antes de cadastrar um novo pet."

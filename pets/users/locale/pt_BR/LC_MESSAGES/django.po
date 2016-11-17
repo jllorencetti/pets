@@ -1,0 +1,224 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-17 10:22-0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: pets/users/forms.py:27
+msgid ""
+"Click <a href=\"#\" data-toggle=\"modal\" data-target=\"#ajuda-facebook"
+"\">here</a> to learn how to fill this field."
+msgstr ""
+"Clique <a href=\"#\" data-toggle=\"modal\" data-target=\"#ajuda-facebook"
+"\">aqui</a> para saber como preencher este campo."
+
+#: pets/users/forms.py:33 pets/users/templates/users/create.html:104
+msgid "Password"
+msgstr "Senha"
+
+#: pets/users/forms.py:34 pets/users/templates/users/create.html:112
+msgid "Password confirmation"
+msgstr "Senha confirmada"
+
+#: pets/users/forms.py:46
+msgid "Enter the full address of your Facebook profile."
+msgstr "Informe o endereço completo do seu perfil no Facebook."
+
+#: pets/users/forms.py:48
+msgid "Required. 30 characters or less. Only letters, numbers e @/./+/-/_."
+msgstr ""
+"Obrigatório. 30 caracteres ou menos. Somente letras, números e @/./+/-/_."
+
+#: pets/users/forms.py:60
+msgid "The two password fields didn't match."
+msgstr "As duas senhas são diferentes."
+
+#: pets/users/forms.py:78
+msgid "Save Changes"
+msgstr "Gravar Alterações"
+
+#: pets/users/forms.py:90 pets/users/forms.py:97
+msgid "Recover password"
+msgstr "Recuperar senha"
+
+#: pets/users/templates/users/create.html:4
+#: pets/users/templates/users/create.html:120
+msgid "Create Account"
+msgstr ""
+
+#: pets/users/templates/users/create.html:13
+#: pets/users/templates/users/edit_profile.html:13
+msgid "Find your Facebook profile address"
+msgstr ""
+
+#: pets/users/templates/users/create.html:18
+#: pets/users/templates/users/edit_profile.html:18
+msgid "On Facebook, find your name in the top navigation bar and click on it."
+msgstr ""
+
+#: pets/users/templates/users/create.html:21
+#: pets/users/templates/users/edit_profile.html:21
+msgid "Facebook's navigation bar"
+msgstr ""
+
+#: pets/users/templates/users/create.html:24
+#: pets/users/templates/users/edit_profile.html:24
+msgid ""
+"After the page loads, your profile address will be in the address bar of "
+"your browser."
+msgstr ""
+
+#: pets/users/templates/users/create.html:27
+#: pets/users/templates/users/edit_profile.html:27
+msgid "Address bar of the browser"
+msgstr ""
+
+#: pets/users/templates/users/create.html:30
+#: pets/users/templates/users/edit_profile.html:30
+msgid "Copy and paste the address in the form field"
+msgstr ""
+
+#: pets/users/templates/users/create.html:33
+#: pets/users/templates/users/edit_profile.html:33
+msgid "Filled form"
+msgstr ""
+
+#: pets/users/templates/users/create.html:38
+#: pets/users/templates/users/edit_profile.html:38
+msgid "Close"
+msgstr ""
+
+#: pets/users/templates/users/create.html:45
+msgid "Login with your Facebook or Twitter:"
+msgstr ""
+
+#: pets/users/templates/users/create.html:49
+msgid "Or create a new account:"
+msgstr ""
+
+#: pets/users/templates/users/create.html:54
+msgid "First name"
+msgstr ""
+
+#: pets/users/templates/users/create.html:62
+msgid "Last name"
+msgstr ""
+
+#: pets/users/templates/users/create.html:70
+#: pets/users/templates/users/profile.html:17
+msgid "Email"
+msgstr ""
+
+#: pets/users/templates/users/create.html:78
+msgid "Username"
+msgstr ""
+
+#: pets/users/templates/users/create.html:96
+#: pets/users/templates/users/profile.html:21
+msgid "Phone"
+msgstr ""
+
+#: pets/users/templates/users/edit_profile.html:4
+msgid "Edit Profile"
+msgstr "Seu Perfil"
+
+#: pets/users/templates/users/edit_profile.html:44
+msgid "Your Profile"
+msgstr "Seu Perfil"
+
+#: pets/users/templates/users/login.html:4
+msgid "Autentication"
+msgstr ""
+
+#: pets/users/templates/users/login.html:27
+msgid "Login"
+msgstr ""
+
+#: pets/users/templates/users/login.html:31
+msgid "Forgot you password?"
+msgstr "Recuperar senha"
+
+#: pets/users/templates/users/login.html:32
+msgid "Login with your Facebook or Twitter"
+msgstr ""
+
+#: pets/users/templates/users/profile.html:9
+msgid "Contacts"
+msgstr ""
+
+#: pets/users/templates/users/profile.html:27
+msgid "Edit"
+msgstr ""
+
+#: pets/users/templates/users/profile.html:30
+msgid "Registered pets"
+msgstr ""
+
+#: pets/users/templates/users/recover.html:4
+#: pets/users/templates/users/reset.html:4
+#: pets/users/templates/users/reset_done.html:4
+msgid "Password recovery"
+msgstr "Senha"
+
+#: pets/users/templates/users/recover.html:11
+msgid "To recover your password, enter your email address or username."
+msgstr ""
+
+#: pets/users/templates/users/recover.html:17
+msgid "An email has just been sent to"
+msgstr ""
+
+#: pets/users/templates/users/recover.html:20
+msgid ""
+"Use the link in this email to set up a new password. The link is valid for "
+"two hours."
+msgstr ""
+
+#: pets/users/templates/users/recover.html:24
+#: pets/users/templates/users/recover.html:25
+msgid "Back to home page"
+msgstr ""
+
+#: pets/users/templates/users/reset.html:10
+msgid "Enter a new password."
+msgstr ""
+
+#: pets/users/templates/users/reset.html:13
+#, python-format
+msgid "If you forgot, your username is <strong>%(username)s</strong>."
+msgstr ""
+
+#: pets/users/templates/users/reset_done.html:9
+msgid "Your password has been successfully changed."
+msgstr ""
+
+#: pets/users/templates/users/reset_done.html:12
+#, python-format
+msgid "Click <a href=\"%(page_url)s\">here</a> to login into your account."
+msgstr ""
+
+#: pets/users/views.py:47
+#, python-brace-format
+msgid ""
+"Your account has been successfully created, access <a href=\"{0}\">this "
+"page</a> and register the pet :)"
+msgstr ""
+"Sua conta foi criada com sucesso, acesse <a href=\"{0}\">essa página</a> e "
+"realize o cadastro do pet :)"
+
+#: pets/users/views.py:71
+msgid "Changes saved successfully."
+msgstr "Alterações salvas com sucesso."

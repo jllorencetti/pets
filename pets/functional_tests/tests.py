@@ -83,9 +83,10 @@ class SiteTestCases(StaticLiveServerTestCase):
         password.send_keys('admin')
         submit = self.browser.find_element_by_name('login')
         submit.click()
-        self.assertIn('Cadastrar Pet', self.browser.page_source)
+        self.assertIn('Register Pet', self.browser.page_source)
 
-    def create_pet(self):
+    @staticmethod
+    def create_pet():
         admin = OwnerProfile.objects.first()
         kind = Kind.objects.first()
         pet = Pet(owner=admin, name='Costela', description='Costelinha', kind_id=kind.id,
@@ -95,11 +96,11 @@ class SiteTestCases(StaticLiveServerTestCase):
 
     def test_login(self):
         self.login()
-        self.assertIn('Cadastrar Pet', self.browser.page_source)
+        self.assertIn('Register Pet', self.browser.page_source)
 
     def test_register_pet(self):
         self.login()
-        self.assertIn('Cadastrar Pet', self.browser.page_source)
+        self.assertIn('Register Pet', self.browser.page_source)
 
         self.browser.get(self.live_server_url + '/pets/novo/')
 
@@ -132,7 +133,7 @@ class SiteTestCases(StaticLiveServerTestCase):
     def test_edit_own_pet(self):
         # user log in
         self.login()
-        self.assertIn('Cadastrar Pet', self.browser.page_source)
+        self.assertIn('Register Pet', self.browser.page_source)
 
         # user register a lost cat with wrong name
         self.browser.get(self.live_server_url + '/pets/novo/')
@@ -160,11 +161,11 @@ class SiteTestCases(StaticLiveServerTestCase):
 
         # assert pet was registered
         self.browser.find_element_by_link_text('aqui').click()
-        self.assertIn('Wrong Boots - Desaparecido', self.browser.page_source)
+        self.assertIn('Wrong Boots - Missing', self.browser.page_source)
 
         # user is redirected for the page of his pet and see the wrong name
         # then click on 'Edit' and get redirected for the editing page
-        self.browser.find_element_by_link_text('Editar').click()
+        self.browser.find_element_by_link_text('Edit').click()
 
         # user change the status to 'For Adoption'
         self.select_dropdown('status', 1)
@@ -175,14 +176,14 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.find_element_by_name('submit').click()
 
         # user see that he is back at the pet page
-        self.browser.find_element_by_link_text('Editar')
+        self.browser.find_element_by_link_text('Edit')
 
         # user see the correct name of the cat
         self.assertIn('Fuzzy Boots', self.browser.page_source)
-        self.assertIn('Grande', self.browser.page_source)
-        self.assertIn('Fêmea', self.browser.page_source)
+        self.assertIn('Large', self.browser.page_source)
+        self.assertIn('Female', self.browser.page_source)
         self.assertIn('Araras', self.browser.page_source)
-        self.assertIn('Fuzzy Boots - Para Adoção', self.browser.page_source)
+        self.assertIn('Fuzzy Boots - For Adoption', self.browser.page_source)
 
     def test_edit_profile_information(self):
         # user login
@@ -192,7 +193,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + '/user/profile/')
 
         # see a wrong information and click in the edit button
-        self.browser.find_element_by_link_text('Editar').click()
+        self.browser.find_element_by_link_text('Edit').click()
 
         # user change the first name
         self.browser.find_element_by_name('first_name').clear()
@@ -205,7 +206,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.find_element_by_name('submit').click()
 
         # user is back to the profile page and see the correct information
-        self.assertIn('Alterações gravadas com sucesso.', self.browser.page_source)
+        self.assertIn('Changes saved successfully.', self.browser.page_source)
 
     def test_upload_second_photo(self):
         # pre register pet
@@ -229,7 +230,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         img_after = len(self.browser.find_elements_by_tag_name('img'))
 
         # verify new photo is showing
-        self.assertIn('Outras fotos', self.browser.page_source)
+        self.assertIn('More photos', self.browser.page_source)
         self.assertEquals(img_after, img_before + 1)
 
     def test_create_new_city(self):

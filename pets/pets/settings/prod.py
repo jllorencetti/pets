@@ -4,6 +4,7 @@ from decouple import config, Csv
 from dj_database_url import parse as db_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+ROOT_DIR = os.path.dirname(os.path.dirname(BASE_DIR))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
@@ -122,7 +123,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'pt-BR'
 
 TIME_ZONE = 'America/Sao_Paulo'
 
@@ -143,7 +144,11 @@ STATICFILES_DIRS = (
 )
 
 # static root folder, where static files will be collected to
-STATIC_ROOT = os.path.join(BASE_DIR, '../../static_root')
+STATIC_ROOT = os.path.join(ROOT_DIR, 'static_root')
+
+LOCALE_PATHS = [
+    os.path.join(ROOT_DIR, 'locale')
+]
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",

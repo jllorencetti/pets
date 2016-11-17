@@ -1,6 +1,7 @@
+{% load i18n %}
 <div class="col-md-2">
   <div class="sidebar">
-    <h3 class="title-text">Desaparecidos</h3>
+    <h3 class="title-text">{% trans 'Missing' context 'plural' %}</h3>
     <ul class="nav">
       {% for kind in kind_lost %}
         <li><a href="{% url 'meupet:lost' kind.slug %}">
@@ -8,7 +9,7 @@
         </li>
       {% endfor %}
     </ul>
-    <h3 class="title-text">Para Adoção</h3>
+    <h3 class="title-text">{% trans 'For Adoption' %}</h3>
     <ul class="nav">
       {% for kind in kind_adoption %}
         <li><a href="{% url 'meupet:adoption' kind.slug %}">

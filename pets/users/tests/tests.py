@@ -12,7 +12,8 @@ class UserRegistrationTest(TestCase):
         self.create_user()
         self.client.login(username='tester', password='test123')
 
-    def create_user(self, username='tester'):
+    @staticmethod
+    def create_user(username='tester'):
         user = OwnerProfile(first_name='Test First Name', last_name='Tester', email='te@ste.com',
                             username=username, is_information_confirmed=True)
         user.set_password('test123')
@@ -36,7 +37,7 @@ class UserRegistrationTest(TestCase):
         self.client.login(username='tester', password='test123')
 
         response = self.client.get('/')
-        self.assertContains(response, 'Cadastrar Pet')
+        self.assertContains(response, 'Register Pet')
 
     def test_render_own_profile(self):
         """User should be shown it's own profile"""
@@ -52,7 +53,7 @@ class UserRegistrationTest(TestCase):
 
         response = self.client.get('/')
 
-        self.assertContains(response, 'Seu Perfil')
+        self.assertContains(response, 'Profile')
 
     def test_edit_view_show_form_for_update_profile_information(self):
         """Show correct page for the edit profile view"""
@@ -60,8 +61,8 @@ class UserRegistrationTest(TestCase):
 
         response = self.client.get(reverse('users:edit'))
 
-        self.assertContains(response, 'Gravar Alterações')
-        self.assertContains(response, 'Editando Perfil')
+        self.assertContains(response, 'Save Changes')
+        self.assertContains(response, 'Your Profile')
         self.assertTemplateUsed(response, 'users/edit_profile.html')
 
     def test_render_profile_with_correct_template(self):

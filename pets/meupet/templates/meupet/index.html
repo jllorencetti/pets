@@ -1,6 +1,7 @@
 {% extends '_layouts/base.html' %}
+{% load i18n %}
 
-{% block title %}Cadastros mais recentes{% endblock %}
+{% block title %}{% trans 'Most recent entries' %}{% endblock %}
 
 {% block content %}
   {% include '_partials/pets_list.html' %}

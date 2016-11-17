@@ -8,4 +8,4 @@ class UsersPasswordResetFormTest(TestCase):
         """Submit button should be present in the helper"""
         form = UsersPasswordResetForm(user=None)
 
-        self.assertIn('Recuperar minha senha', form.helper.inputs[0].value)
+        self.assertIn('Recover password', form.helper.inputs[0].value)

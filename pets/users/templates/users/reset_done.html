@@ -1,12 +1,16 @@
 {% extends '_layouts/base.html' %}
+{% load i18n %}
 
-{% block title %}Recuperação de Senha{% endblock %}
+{% block title %}{% trans 'Password recovery' %}{% endblock %}
 
 {% block content %}
   <div class="row">
     <div class="col-md-11 col-md-offset-1">
-      <p>Sua senha foi alterada com sucesso.</p>
-      <p>Acesse a página de <a href="{% url 'users:login' %}">login</a> para entrar na sua conta.</p>
+      <p>{% trans 'Your password has been successfully changed.' %}</p>
+      <p>
+        {% url 'users:login' as page_url %}
+        {% blocktrans %}Click <a href="{{ page_url }}">here</a> to login into your account.{% endblocktrans %}
+      </p>
     </div>
   </div>
 {% endblock %}

@@ -41,7 +41,7 @@ class UploadImageTestCase(MeuPetTestCase):
         )
 
         self.assertTemplateUsed(resp, 'meupet/pet_detail.html')
-        self.assertContains(resp, 'Outras fotos')
+        self.assertContains(resp, 'More photos')
 
     def test_upload_image_other_user(self):
         """Only the owner should be able to upload images to the pet"""
@@ -61,4 +61,4 @@ class UploadImageTestCase(MeuPetTestCase):
         )
 
         self.assertTemplateUsed(resp, 'meupet/pet_detail.html')
-        self.assertNotContains(resp, 'Outras fotos')
+        self.assertNotContains(resp, 'More fotos')

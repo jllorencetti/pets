@@ -14,4 +14,4 @@ class UsersPasswordRecoveryFormTest(TestCase):
         """Submit button should be present in the helper"""
         form = UsersPasswordRecoveryForm()
 
-        self.assertIn('Recuperar minha senha', form.helper.inputs[0].value)
+        self.assertIn('Recover password', form.helper.inputs[0].value)

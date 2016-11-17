@@ -2,12 +2,12 @@ from json import loads
 
 from django.shortcuts import resolve_url
 from django.test import TestCase
+
 from meupet.models import City, Kind, Pet
 from users.models import OwnerProfile
 
 
 class TestGetHome(TestCase):
-
     def setUp(self):
         City.objects.create(city='Araras')
 
@@ -57,13 +57,12 @@ class TestGetHome(TestCase):
             self.assertEqual('Costelinha', pet['description'])
             self.assertEqual('Araras', pet['city'])
             self.assertEqual('Gato', pet['kind'])
-            self.assertEqual('Para Adoção', pet['status'])
-            self.assertEqual('Pequeno', pet['size'])
-            self.assertEqual('Macho', pet['sex'])
+            self.assertEqual('For Adoption', pet['status'])
+            self.assertEqual('Small', pet['size'])
+            self.assertEqual('Male', pet['sex'])
 
 
 class TestPostHome(TestCase):
-
     def setUp(self):
         super().setUp()
         self.resp = self.client.post(resolve_url('api:home'))

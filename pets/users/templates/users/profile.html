@@ -1,11 +1,12 @@
 {% extends '_layouts/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ object.first_name }} {{ object.last_name }}{% endblock %}
 
 {% block content %}
   <div class="row">
     <div class="col-md-12">
-      <h4>Contatos</h4>
+      <h4>{% trans 'Contacts' %}</h4>
       <ul class="list-unstyled">
         {% if object.facebook %}
           <li>
@@ -13,20 +14,20 @@
           </li>
         {% endif %}
         <li>
-          Email <i class="fa fa-envelope"></i>: <a href="mailto:{{ object.email }}">{{ object.email }}</a>
+          {% trans 'Email' %} <i class="fa fa-envelope"></i>: <a href="mailto:{{ object.email }}">{{ object.email }}</a>
         </li>
         {% if object.phone %}
           <li>
-            Telefone <i class="fa fa-phone"></i>: {{ object.phone }}
+            {% trans 'Phone' %} <i class="fa fa-phone"></i>: {{ object.phone }}
           </li>
         {% endif %}
       </ul>
 
       {% if user.is_authenticated and user.id == object.id %}
-        <a href="{% url 'users:edit' %}" class="btn btn-primary">Editar</a>
+        <a href="{% url 'users:edit' %}" class="btn btn-primary">{% trans 'Edit' %}</a>
       {% endif %}
 
-      <h4>Pets Cadastrados</h4>
+      <h4>{% trans 'Registered pets' %}</h4>
       {% include '_partials/pets_list.html' %}
     </div>
   </div>

@@ -1,6 +1,7 @@
 *.log
 *.pyc
 *.sqlite3
+*.mo
 .coverage
 .env
 .idea

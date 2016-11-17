@@ -24,8 +24,8 @@ class UserForm(forms.ModelForm):
         self.fields['last_name'].required = True
         self.fields['email'].required = True
         self.fields['facebook'].help_text = _(
-            'Clique <a href="#" data-toggle="modal" data-target="#ajuda-facebook">'
-            'aqui</a> para saber como preencher esse campo.')
+            'Click <a href="#" data-toggle="modal" data-target="#ajuda-facebook">'
+            'here</a> to learn how to fill this field.')
         self.fields['phone'].widget.attrs.update({'class': 'form-control'})
 
 
@@ -43,10 +43,10 @@ class RegisterForm(UserForm):
         self.fields['password1'].widget.attrs.update({'class': 'form-control'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
         self.fields['facebook'].widget.attrs.update(
-            {'placeholder': 'Insira o endereço completo do seu perfil no Facebook.'})
+            {'placeholder': _('Enter the full address of your Facebook profile.')})
 
-        self.fields['username'].help_text = _('Obrigatório. 30 caracteres ou menos. '
-                                              'Somente letras, números e @/./+/-/_.')
+        self.fields['username'].help_text = _('Required. 30 characters or less. '
+                                              'Only letters, numbers e @/./+/-/_.')
 
     class Meta:
         model = OwnerProfile
@@ -75,7 +75,7 @@ class UpdateUserForm(UserForm):
 
     def __init__(self, *args, **kwargs):
         super(UpdateUserForm, self).__init__(*args, **kwargs)
-        self.helper.add_input(Submit('submit', 'Gravar Alterações'))
+        self.helper.add_input(Submit('submit', _('Save Changes')))
 
     def save(self, commit=True):
         self.instance.is_information_confirmed = True
@@ -87,11 +87,11 @@ class UsersPasswordRecoveryForm(PasswordRecoveryForm):
         super(UsersPasswordRecoveryForm, self).__init__(*args, **kwargs)
         self.fields['username_or_email'].label = ''
         self.helper = FormHelper()
-        self.helper.add_input(Submit('recover', 'Recuperar minha senha'))
+        self.helper.add_input(Submit('recover', _('Recover password')))
 
 
 class UsersPasswordResetForm(PasswordResetForm):
     def __init__(self, *args, **kwargs):
         super(UsersPasswordResetForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('recover', 'Recuperar minha senha'))
+        self.helper.add_input(Submit('recover', _('Recover password')))
