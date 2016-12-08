@@ -193,3 +193,9 @@ def registered(request, slug):
 def poster(request, slug):
     pet = get_object_or_404(models.Pet, slug=slug)
     return render(request, 'meupet/poster.html', {'pet': pet})
+
+
+def update_register(request, request_key):
+    pet = get_object_or_404(models.Pet, request_key=request_key)
+    pet.activate()
+    return HttpResponseRedirect(pet.get_absolute_url())

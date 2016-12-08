@@ -12,7 +12,5 @@ urlpatterns = patterns(
     url(r'^', include('common.urls', namespace='common')),
 )
 
-handler404 = 'common.views.not_found'
-
 if settings.DEBUG:
     urlpatterns += static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
