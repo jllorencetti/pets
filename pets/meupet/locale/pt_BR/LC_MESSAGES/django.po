@@ -29,8 +29,8 @@ msgstr "Costelinha"
 
 #: pets/meupet/forms.py:32
 msgid ""
-"It is black and chubby, very shy, disappeared next to the school in "
-"downtown.There's a slight flaw in the tail fur."
+"It is black and chubby, very shy, has went gone next to the school in "
+"downtown. There's a slight flaw in the tail fur."
 msgstr ""
 "É preto e gorduchinho, bastante arisco, desapareceu perto da escola no centro.\n"
 "Tem uma pequena falha no pelo da calda."
@@ -226,7 +226,7 @@ msgid "Visit:"
 msgstr "Acesse:"
 
 #: pets/meupet/templates/meupet/registered.html:4
-msgid "Registered Pet"
+msgid "Pet Registered "
 msgstr "Pet Registrado"
 
 #: pets/meupet/templates/meupet/search.html:4
@@ -243,7 +243,7 @@ msgid "Details"
 msgstr "Detalhes"
 
 #: pets/meupet/templates/meupet/search.html:71
-msgid "No result"
+msgid "No results"
 msgstr "Nenhum resultado"
 
 #: pets/meupet/views.py:99

@@ -52,7 +52,7 @@ msgstr "Pesquisar"
 msgid "Made with &hearts; in Araras, São Paulo"
 msgstr "Feito com &hearts; em Araras, São Paulo"
 
-msgid "What is it?"
+msgid "About"
 msgstr "O que é?"
 
 msgid ""
