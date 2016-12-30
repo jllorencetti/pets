@@ -30,6 +30,7 @@ DJANGO_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
 )
 
@@ -52,6 +53,8 @@ PROJECT_APPS = (
 )
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTS_APPS
+
+SITE_ID = 1
 
 MIDDLEWARE_CLASSES = (
     'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
@@ -184,6 +187,9 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'users:confirm_information'
 SOCIAL_AUTH_FACEBOOK_SCOPE = [
     'email',
 ]
+
+# Number of days used to consider a register staled
+DAYS_TO_STALE_REGISTER = config('DAYS_TO_STALE_REGISTER', default=90, cast=int)
 
 SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY', default='')
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET', default='')

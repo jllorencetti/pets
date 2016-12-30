@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from . import models
+from meupet import models
 
 
 class PetAdmin(admin.ModelAdmin):
-    list_display = ('name', 'kind', 'description', 'status',
-                    'published', 'created', 'modified', 'slug')
+    list_display = ('name', 'kind', 'description', 'status', 'published',
+                    'created', 'modified', 'request_sent', 'active')
 
 
 admin.site.register(models.Pet, PetAdmin)

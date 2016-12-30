@@ -40,4 +40,4 @@ class PetDetailViewTest(MeuPetTestCase):
         """Show the default 404 page if the pet could not be found"""
         resp = self.client.get(reverse('meupet:detail', kwargs={'pk_or_slug': '404-pet'}))
 
-        self.assertContains(resp, 'Página não encontrada')
+        self.assertContains(resp, 'Página não encontrada', status_code=404)

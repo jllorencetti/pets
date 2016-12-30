@@ -1,10 +1,16 @@
+import hashlib
+
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone, crypto
 from django.utils.text import slugify
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from autoslug import AutoSlugField
+from django_extensions.db.models import TimeStampedModel
 
+from meupet import services
 from users.models import OwnerProfile
 
 
@@ -23,6 +29,19 @@ class PetManager(models.Manager):
 
     def get_unpublished_pets(self):
         return self.filter(published=False)
+
+    def get_staled_pets(self):
+        """
+        Pets considered as staled are not modified after a given
+        number of days and don't have a request_sent date
+        """
+        stale_date = timezone.now() - timezone.timedelta(days=settings.DAYS_TO_STALE_REGISTER)
+        return self.filter(modified__lt=stale_date, request_sent__isnull=True)
+
+    def get_expired_pets(self):
+        """Expired pets have request_sent date older than expected"""
+        expire_date = timezone.now() - timezone.timedelta(days=settings.DAYS_TO_STALE_REGISTER)
+        return self.filter(request_sent__lt=expire_date)
 
 
 class KindManager(models.Manager):
@@ -63,7 +82,7 @@ def get_slug(instance):
     return slugify('{}-{}'.format(instance.name, city))
 
 
-class Pet(models.Model):
+class Pet(TimeStampedModel):
     MALE = 'MA'
     FEMALE = 'FE'
     PET_SEX = (
@@ -105,11 +124,10 @@ class Pet(models.Model):
     profile_picture = models.ImageField(upload_to='pet_profiles',
                                         help_text=ugettext('Maximum image size is 8MB'))
     published = models.BooleanField(default=False)  # published on facebook
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    slug = AutoSlugField(max_length=50,
-                         populate_from=get_slug,
-                         unique=True)
+    request_sent = models.DateTimeField(null=True, blank=True)
+    request_key = models.CharField(blank=True, max_length=40)
+    active = models.BooleanField(default=True)
+    slug = AutoSlugField(max_length=50, populate_from=get_slug, unique=True)
 
     objects = PetManager()
 
@@ -134,6 +152,26 @@ class Pet(models.Model):
 
     def get_size(self):
         return dict(self.PET_SIZE).get(self.size)
+
+    def request_action(self):
+        hash_input = (crypto.get_random_string(5) + self.name).encode('utf-8')
+        self.request_key = hashlib.sha1(hash_input).hexdigest()
+
+        if not services.send_request_action_email(self):
+            return
+
+        self.request_sent = timezone.now()
+        self.save(update_modified=False)
+
+    def activate(self):
+        self.request_sent = None
+        self.request_key = ''
+        self.active = True
+        self.save()
+
+    def deactivate(self):
+        self.active = False
+        self.save(update_modified=False)
 
     def __str__(self):
         return self.name

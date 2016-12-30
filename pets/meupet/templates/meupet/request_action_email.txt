@@ -1,0 +1,15 @@
+{% load i18n %}{% blocktrans %}Hello, {{ username }}.{% endblocktrans %}
+
+{% blocktrans %}To keep the site's registrations always updated, we send an email
+every {{ days }} days for those who have a pet registered.{% endblocktrans%}
+
+{% blocktrans %}So we would like to confirm if {{ pet }} is still {{ status }}.{% endblocktrans %}
+
+{% blocktrans %}Access the link below to keep the registration active for more {{ days }}
+days or update the status of the pet.{% endblocktrans %}
+{{ link }}
+
+{% blocktrans %}If no action is taken the registration will be disabled in {{ days }} days.{% endblocktrans %}
+
+{% trans "Best regards," %}
+{{ site_name }}

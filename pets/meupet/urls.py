@@ -17,6 +17,7 @@ urlpatterns = patterns(
     url(r'^desaparecidos/(?P<kind>[-\w]*)/$', views.lost_pets, name='lost'),
     url(r'^para-adocao/(?P<kind>[-\w]*)/$', views.adoption_pets, name='adoption'),
     url(r'^busca/$', views.SearchView.as_view(), name='search'),
+    url(r'^atualizar-cadastro/(?P<request_key>\w+)/$', views.update_register, name='update_register'),
     url(r'^pet/(?P<slug>[-\w]*)/foto/$', views.upload_image, name='upload_image'),
     url(r'^(?P<slug>[-\w]*)/editar/$', views.EditPetView.as_view(), name='edit'),
     url(r'^(?P<slug>[-\w]*)/poster/$', views.poster, name='poster'),
