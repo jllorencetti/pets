@@ -147,7 +147,7 @@ STATICFILES_DIRS = (
 )
 
 # static root folder, where static files will be collected to
-STATIC_ROOT = os.path.join(ROOT_DIR, 'static_root')
+STATIC_ROOT = os.path.join(BASE_DIR, '../../static_root')
 
 LOCALE_PATHS = [
     os.path.join(ROOT_DIR, 'locale')
