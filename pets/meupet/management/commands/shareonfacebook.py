@@ -12,6 +12,7 @@ class Command(BaseCommand):
     these configurations is not the the best approach, but it
     makes easier to update the values for the configuration
     """
+    leave_locale_alone = True
 
     def __init__(self):
         self.config = Configuration.objects.first()
