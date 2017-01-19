@@ -36,7 +36,11 @@ class PetManager(models.Manager):
         number of days and don't have a request_sent date
         """
         stale_date = timezone.now() - timezone.timedelta(days=settings.DAYS_TO_STALE_REGISTER)
-        return self.filter(modified__lt=stale_date, request_sent__isnull=True)
+        return self.filter(
+            modified__lt=stale_date,
+            request_sent__isnull=True,
+            status__in=[Pet.MISSING, Pet.FOR_ADOPTION]
+        )
 
     def get_expired_pets(self):
         """Expired pets have request_sent date older than expected"""

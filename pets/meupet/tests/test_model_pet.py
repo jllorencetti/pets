@@ -28,16 +28,24 @@ class PetModelTest(TestCase):
         self.assertEqual('lost-pet-testing-city-2', pet_two.slug)
 
     def test_staled_pets(self):
-        """Should return only pets that are staled"""
-        new_pet = mommy.make(Pet)
-        staled_pet = self.create_pet_custom_date(90)
+        """Should return only pets that are staled and are still lost or for adoption"""
+        new_missing_pet = mommy.make(Pet, status=Pet.MISSING)
+        new_adoption_pet = mommy.make(Pet, status=Pet.FOR_ADOPTION)
+        staled_missing_pet = self.create_pet_custom_date(90, status=Pet.MISSING)
+        staled_adoption_pet = self.create_pet_custom_date(90, status=Pet.FOR_ADOPTION)
+        staled_found_pet = self.create_pet_custom_date(90, status=Pet.FOUND)
+        staled_adopted_pet = self.create_pet_custom_date(90, status=Pet.ADOPTED)
         expired_pet = self.create_pet_custom_date(90, 10)
 
         pets = Pet.objects.get_staled_pets()
 
-        self.assertEqual(1, len(pets))
-        self.assertIn(staled_pet, pets)
-        self.assertNotIn(new_pet, pets)
+        self.assertEqual(2, len(pets))
+        self.assertIn(staled_missing_pet, pets)
+        self.assertIn(staled_adoption_pet, pets)
+        self.assertNotIn(staled_found_pet, pets)
+        self.assertNotIn(staled_adopted_pet, pets)
+        self.assertNotIn(new_missing_pet, pets)
+        self.assertNotIn(new_adoption_pet, pets)
         self.assertNotIn(expired_pet, pets)
 
     def test_expired_pets(self):
@@ -117,9 +125,9 @@ class PetModelTest(TestCase):
         self.assertTrue(pet.active)
 
     @staticmethod
-    def create_pet_custom_date(modified_days, request_sent_days=None):
+    def create_pet_custom_date(modified_days, request_sent_days=None, **kwargs):
         now = timezone.now()
-        pet = mommy.make(Pet)
+        pet = mommy.make(Pet, **kwargs)
         pet.modified = now - timezone.timedelta(days=modified_days)
         if request_sent_days:
             pet.request_sent = now - timezone.timedelta(days=request_sent_days)
