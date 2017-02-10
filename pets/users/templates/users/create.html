@@ -4,7 +4,7 @@
 {% block title %}{% trans 'Create Account' %}{% endblock %}
 
 {% block content %}
-  <div id="ajuda-facebook" class="modal fade">
+  <div id="ajuda-facebook" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -41,84 +41,82 @@
     </div>
   </div>
 
-  <div class="col-md-10">
-    <h4>{% trans 'Login with your Facebook or Twitter:' %}</h4>
-    <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static 'img/facebook.png' %}" alt="Facebook"/></a>
-    <a href="{% url 'social:begin' 'twitter' %}"><img src="{% static 'img/twitter.png' %}" alt="Twitter"/></a>
+  <h4>{% trans 'Login with your Facebook or Twitter:' %}</h4>
+  <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static 'img/facebook.png' %}" alt="Facebook"/></a>
+  <a href="{% url 'social:begin' 'twitter' %}"><img src="{% static 'img/twitter.png' %}" alt="Twitter"/></a>
 
-    <h4>{% trans 'Or create a new account:' %}</h4>
+  <h4>{% trans 'Or create a new account:' %}</h4>
 
-    <form method="post">
-      {% csrf_token %}
-      <div class="form-group{% if form.first_name.errors %} has-error{% endif %}">
-        <label for="{{ form.first_name.id_for_label }}" class="control-label">{% trans 'First name' %}</label>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group{% if form.first_name.errors %} has-error{% endif %}">
+      <label for="{{ form.first_name.id_for_label }}" class="control-label">{% trans 'First name' %}</label>
 
-        <div class="controls">
-          {{ form.first_name }}
-          {{ form.first_name.errors }}
-        </div>
+      <div class="controls">
+        {{ form.first_name }}
+        {{ form.first_name.errors }}
       </div>
-      <div class="form-group{% if form.last_name.errors %} has-error{% endif %}">
-        <label for="{{ form.last_name.id_for_label }}" class="control-label">{% trans 'Last name' %}</label>
+    </div>
+    <div class="form-group{% if form.last_name.errors %} has-error{% endif %}">
+      <label for="{{ form.last_name.id_for_label }}" class="control-label">{% trans 'Last name' %}</label>
 
-        <div class="controls">
-          {{ form.last_name }}
-          {{ form.last_name.errors }}
-        </div>
+      <div class="controls">
+        {{ form.last_name }}
+        {{ form.last_name.errors }}
       </div>
-      <div class="form-group{% if form.email.errors %} has-error{% endif %}">
-        <label for="{{ form.email.id_for_label }}" class="control-label">{% trans 'Email' %}</label>
+    </div>
+    <div class="form-group{% if form.email.errors %} has-error{% endif %}">
+      <label for="{{ form.email.id_for_label }}" class="control-label">{% trans 'Email' %}</label>
 
-        <div class="controls">
-          {{ form.email }}
-          {{ form.email.errors }}
-        </div>
+      <div class="controls">
+        {{ form.email }}
+        {{ form.email.errors }}
       </div>
-      <div class="form-group{% if form.username.errors %} has-error{% endif %}">
-        <label for="{{ form.username.id_for_label }}" class="control-label">{% trans 'Username' %}</label>
+    </div>
+    <div class="form-group{% if form.username.errors %} has-error{% endif %}">
+      <label for="{{ form.username.id_for_label }}" class="control-label">{% trans 'Username' %}</label>
 
-        <div class="controls">
-          {{ form.username }}
-          <div class="help-block">{{ form.username.help_text }}</div>
-          {{ form.username.errors }}
-        </div>
+      <div class="controls">
+        {{ form.username }}
+        <div class="help-block">{{ form.username.help_text }}</div>
+        {{ form.username.errors }}
       </div>
-      <div class="form-group{% if form.facebook.errors %} has-error{% endif %}">
-        <label for="{{ form.facebook.id_for_label }}" class="control-label">Facebook</label>
+    </div>
+    <div class="form-group{% if form.facebook.errors %} has-error{% endif %}">
+      <label for="{{ form.facebook.id_for_label }}" class="control-label">Facebook</label>
 
-        <div class="controls">
-          {{ form.facebook }}
-          <div class="help-block">{{ form.facebook.help_text|safe }}</div>
-          {{ form.facebook.errors }}
-        </div>
+      <div class="controls">
+        {{ form.facebook }}
+        <div class="help-block">{{ form.facebook.help_text|safe }}</div>
+        {{ form.facebook.errors }}
       </div>
-      <div class="form-group{% if form.phone.errors %} has-error{% endif %}">
-        <label for="{{ form.phone.id_for_label }}" class="control-label">{% trans 'Phone' %}</label>
+    </div>
+    <div class="form-group{% if form.phone.errors %} has-error{% endif %}">
+      <label for="{{ form.phone.id_for_label }}" class="control-label">{% trans 'Phone' %}</label>
 
-        <div class="controls">
-          {{ form.phone }}
-          {{ form.phone.errors }}
-        </div>
+      <div class="controls">
+        {{ form.phone }}
+        {{ form.phone.errors }}
       </div>
-      <div class="form-group{% if form.password1.errors %} has-error{% endif %}">
-        <label for="{{ form.password1.id_for_label }}" class="control-label">{% trans 'Password' %}</label>
+    </div>
+    <div class="form-group{% if form.password1.errors %} has-error{% endif %}">
+      <label for="{{ form.password1.id_for_label }}" class="control-label">{% trans 'Password' %}</label>
 
-        <div class="controls">
-          {{ form.password1 }}
-          {{ form.password1.errors }}
-        </div>
+      <div class="controls">
+        {{ form.password1 }}
+        {{ form.password1.errors }}
       </div>
-      <div class="form-group{% if form.password2.errors %} has-error{% endif %}">
-        <label for="{{ form.password2.id_for_label }}" class="control-label">{% trans 'Password confirmation' %}</label>
+    </div>
+    <div class="form-group{% if form.password2.errors %} has-error{% endif %}">
+      <label for="{{ form.password2.id_for_label }}" class="control-label">{% trans 'Password confirmation' %}</label>
 
-        <div class="controls">
-          {{ form.password2 }}
-          {{ form.password2.errors }}
-        </div>
+      <div class="controls">
+        {{ form.password2 }}
+        {{ form.password2.errors }}
       </div>
-      <div class="form-group">
-        <input type="submit" name="submit" class="btn btn-primary" value="{% trans 'Create Account' %}">
-      </div>
-    </form>
-  </div>
+    </div>
+    <div class="form-group">
+      <input type="submit" name="submit" class="btn btn-primary" value="{% trans 'Create Account' %}">
+    </div>
+  </form>
 {% endblock content %}

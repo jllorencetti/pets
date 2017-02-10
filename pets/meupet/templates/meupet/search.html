@@ -6,59 +6,63 @@
 {% block body %}
   <div class="col-md-12">
     <div class="row">
-      {% for error in form.non_field_errors %}
-        <div class="alert alert-danger" role="alert">{{ error }}</div>
-      {% endfor %}
-      <form class="form-inline" action="" method="post">
-        {% csrf_token %}
+      <div class="col-md-12">
+        {% for error in form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endfor %}
+        <form class="form-inline" action="" method="post">
+          {% csrf_token %}
 
-        <div class="form-group">
-          <label for="city" class="control-label">{{ form.city.label }}</label>
+          <div class="form-group">
+            <label for="city" class="control-label">{{ form.city.label }}</label>
 
-          {{ form.city }}
-        </div>
+            {{ form.city }}
+          </div>
 
-        <div class="form-group">
-          <label for="kind" class="control-label">{{ form.kind.label }}</label>
+          <div class="form-group">
+            <label for="kind" class="control-label">{{ form.kind.label }}</label>
 
-          {{ form.kind }}
-        </div>
+            {{ form.kind }}
+          </div>
 
-        <div class="form-group">
-          <label for="status" class="control-label">{{ form.status.label }}</label>
+          <div class="form-group">
+            <label for="status" class="control-label">{{ form.status.label }}</label>
 
-          {{ form.status }}
-        </div>
+            {{ form.status }}
+          </div>
 
-        <div class="form-group">
-          <label for="size" class="control-label">{{ form.size.label }}</label>
+          <div class="form-group">
+            <label for="size" class="control-label">{{ form.size.label }}</label>
 
-          {{ form.size }}
-        </div>
+            {{ form.size }}
+          </div>
 
-        <div class="form-group">
-          <label for="sex" class="control-label">{{ form.sex.label }}</label>
+          <div class="form-group">
+            <label for="sex" class="control-label">{{ form.sex.label }}</label>
 
-          {{ form.sex }}
-        </div>
+            {{ form.sex }}
+          </div>
 
-        <div class="form-group">
-          <input class="btn btn-success" type="submit" value="{% trans 'Search' %}"/>
-        </div>
-      </form>
+          <div class="form-group">
+            <input class="btn btn-success" type="submit" value="{% trans 'Search' %}"/>
+          </div>
+        </form>
+      </div>
     </div>
 
     <div class="row">
-      <h3>{% trans 'Result' %}</h3>
-      {% if pets %}
-        {% for pet in pets %}
-          <div class="col-xs-12 col-sm-6 col-md-3 card-pet">
-            {% include '_partials/pet_card.html' with pet=pet only %}
-          </div>
-        {% endfor %}
-      {% else %}
-        <p>{% trans 'No result' %}</p>
-      {% endif %}
+      <div class="col-md-12">
+        <h3>{% trans 'Result' %}</h3>
+      </div>
+      {% for pet in pets %}
+        <div class="col-xs-12 col-sm-6 col-md-3 card-pet">
+          {% include '_partials/pet_card.html' with pet=pet only %}
+        </div>
+      {% empty %}
+        <div class="col-md-12">
+          <p>{% trans 'No result' %}</p>
+        </div>
+      {% endfor %}
     </div>
   </div>
 {% endblock body %}
