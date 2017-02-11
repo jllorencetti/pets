@@ -171,12 +171,13 @@ class SearchView(View):
         pets = models.Pet.objects.filter(query)
         return render(request, 'meupet/search.html', {'form': form, 'pets': pets})
 
-    def _build_query(self, cleaned_data):
+    @staticmethod
+    def _build_query(cleaned_data):
         query = Q()
 
         for key, value in cleaned_data.items():
             if value:
-                query = query & Q(**{key: value})
+                query &= Q(**{key: value})
 
         return query
 
