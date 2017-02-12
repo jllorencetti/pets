@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone, crypto
 from django.utils.text import slugify
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from autoslug import AutoSlugField
 from django_extensions.db.models import TimeStampedModel
@@ -126,7 +126,7 @@ class Pet(TimeStampedModel):
                            choices=PET_SEX,
                            blank=True)
     profile_picture = models.ImageField(upload_to='pet_profiles',
-                                        help_text=ugettext('Maximum image size is 8MB'))
+                                        help_text=_('Maximum image size is 8MB'))
     published = models.BooleanField(default=False)  # published on facebook
     request_sent = models.DateTimeField(null=True, blank=True)
     request_key = models.CharField(blank=True, max_length=40)
