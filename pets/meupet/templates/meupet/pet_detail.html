@@ -58,7 +58,7 @@
         <form class="form-horizontal" method="POST" enctype="multipart/form-data"
               action="{% url 'meupet:upload_image' pet.slug %}">
           {% csrf_token %}
-          <input name="pet_id" value="{{ pet.id }}" hidden="hidden">
+          <input name="pet_id" value="{{ pet.id }}" type="hidden">
 
           <div class="form-group">
             <label for="another_picture" class="control-label">{% trans 'Add Photo' %}</label>
