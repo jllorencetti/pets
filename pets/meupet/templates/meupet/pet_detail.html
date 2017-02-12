@@ -17,6 +17,7 @@
 {% endblock %}
 
 {% block title %}{{ pet.name }} - {{ pet.get_status_display }}{% endblock %}
+{% block page_title %}{{ pet.get_status_display }}: {{ pet.name|title }}, {{ pet.city|title }}{% endblock %}
 
 {% block content %}
   <div class="modal fade" id="delete_pet" tabindex="-1">
