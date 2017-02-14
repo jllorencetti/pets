@@ -42,6 +42,12 @@ class PetManager(models.Manager):
             status__in=[Pet.MISSING, Pet.FOR_ADOPTION]
         )
 
+    def actives(self):
+        """
+        Return only pets with active = True
+        """
+        return self.filter(active=True)
+
     def get_expired_pets(self):
         """Expired pets have request_sent date older than expected"""
         expire_date = timezone.now() - timezone.timedelta(days=settings.DAYS_TO_STALE_REGISTER)

@@ -124,6 +124,18 @@ class PetModelTest(TestCase):
         self.assertEqual('', pet.request_key)
         self.assertTrue(pet.active)
 
+    def test_get_active_pets(self):
+        """Should return only active pets"""
+        inactive_pet = mommy.make(Pet, active=False)
+        missing_active = mommy.make(Pet, status=Pet.MISSING)
+        adoption_active = mommy.make(Pet, status=Pet.FOR_ADOPTION)
+
+        pets = Pet.objects.actives()
+
+        self.assertIn(missing_active, pets)
+        self.assertIn(adoption_active, pets)
+        self.assertNotIn(inactive_pet, pets)
+
     @staticmethod
     def create_pet_custom_date(modified_days, request_sent_days=None, **kwargs):
         now = timezone.now()
