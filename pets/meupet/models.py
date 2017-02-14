@@ -14,7 +14,7 @@ from meupet import services
 from users.models import OwnerProfile
 
 
-class PetManager(models.Manager):
+class PetQuerySet(models.QuerySet):
     def _filter_by_kind(self, kind):
         try:
             return self.filter(kind__id=int(kind)).select_related('city')
@@ -139,7 +139,7 @@ class Pet(TimeStampedModel):
     active = models.BooleanField(default=True)
     slug = AutoSlugField(max_length=50, populate_from=get_slug, unique=True)
 
-    objects = PetManager()
+    objects = PetQuerySet.as_manager()
 
     def get_absolute_url(self):
         return reverse('meupet:detail', kwargs={'pk_or_slug': self.slug})
