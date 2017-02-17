@@ -69,6 +69,16 @@ class PetModelTest(TestCase):
 
         mock_send_email.assert_called_once_with(pet)
 
+    @patch('meupet.services.send_deactivate_email')
+    def test_deactivate_send_email(self, mock_send_email):
+        """
+        Deactivate should call the send_deactivate_email method
+        """
+        pet = mommy.make(Pet)
+        pet.deactivate()
+
+        mock_send_email.assert_called_once_with(pet)
+
     def test_request_sent_saved(self):
         """Should set the request_sent date in the pet and keep modified date"""
         pet = mommy.make(Pet)

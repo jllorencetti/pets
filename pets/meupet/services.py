@@ -34,3 +34,17 @@ def send_request_action_email(pet):
     }
 
     return send_email(subject, to, template_name, context)
+
+
+def send_deactivate_email(pet):
+    subject = _('Deactivation of pet registration')
+    to = pet.owner.email
+    template_name = 'meupet/deactivate_email.txt'
+    current_site = Site.objects.get_current()
+
+    context = {
+        'username': pet.owner.first_name,
+        'site_name': current_site.name,
+    }
+
+    return send_email(subject, to, template_name, context)

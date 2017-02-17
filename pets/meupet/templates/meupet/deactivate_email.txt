@@ -1,0 +1,8 @@
+{% load i18n %}{% blocktrans %}Hello, {{ username }}.{% endblocktrans %}
+
+{% blocktrans %}Your pet registration didn't received any updates in the last few months, so it's been deactivated.{% endblocktrans %}
+
+{% blocktrans %}You can make a new registration if necessary.{% endblocktrans %}
+
+{% trans "Best regards," %}
+{{ site_name }}

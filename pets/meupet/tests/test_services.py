@@ -11,7 +11,9 @@ from meupet.models import Pet
 
 class ServicesTest(TestCase):
     def test_request_action_from_user(self):
-        """Validate the information sent in the email"""
+        """
+        Validate the information sent in the email
+        """
         pet = mommy.make(Pet)
         pet.request_action()
         email = mail.outbox[0]
@@ -26,6 +28,24 @@ class ServicesTest(TestCase):
             str(settings.DAYS_TO_STALE_REGISTER),
             full_url,
             pet.get_status_display().lower(),
+            current_site.name,
+        ]
+
+        for expected in contents:
+            with self.subTest():
+                self.assertIn(expected, email.body)
+
+    def test_pet_deactivated(self):
+        """
+        Validates the information present in the email
+        """
+        pet = mommy.make(Pet)
+        pet.deactivate()
+        email = mail.outbox[0]
+        current_site = Site.objects.get_current()
+
+        contents = [
+            pet.owner.first_name,
             current_site.name,
         ]
 

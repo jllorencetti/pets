@@ -180,6 +180,9 @@ class Pet(TimeStampedModel):
         self.save()
 
     def deactivate(self):
+        if not services.send_deactivate_email(self):
+            return
+
         self.active = False
         self.save(update_modified=False)
 
