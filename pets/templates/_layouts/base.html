@@ -70,19 +70,20 @@
   <div class="container">
     <div class="row">
       {% if messages %}
-        <ul class="messages">
+        <div class="col-md-12">
           {% for message in messages %}
-            <div class="alert {% if message.tags %}
-            {% if 'error' in message.tags %}
-                alert-danger
-            {% else %}
-                alert-{{ message.tags }}
-            {% endif %}
-          {% endif %}" role="alert">
+            <div class="alert
+                {% if message.tags %}
+                  {% if 'error' in message.tags %}
+                      alert-danger
+                  {% else %}
+                      alert-{{ message.tags }}
+                  {% endif %}
+                {% endif %}" role="alert">
               {{ message|safe }}
             </div>
           {% endfor %}
-        </ul>
+        </div>
       {% endif %}
 
       {% block body %}
