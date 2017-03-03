@@ -168,7 +168,7 @@ class SearchView(View):
 
         query = self._build_query(form.cleaned_data)
 
-        pets = models.Pet.objects.filter(query)
+        pets = models.Pet.objects.actives().filter(query)
         return render(request, 'meupet/search.html', {'form': form, 'pets': pets})
 
     @staticmethod

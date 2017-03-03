@@ -17,9 +17,9 @@ from users.models import OwnerProfile
 class PetQuerySet(models.QuerySet):
     def _filter_by_kind(self, kind):
         try:
-            return self.filter(kind__id=int(kind)).select_related('city')
+            return self.actives().filter(kind__id=int(kind)).select_related('city')
         except ValueError:
-            return self.filter(kind__slug=kind).select_related('city')
+            return self.actives().filter(kind__slug=kind).select_related('city')
 
     def get_lost_or_found(self, kind):
         return self._filter_by_kind(kind).filter(status__in=[Pet.MISSING, Pet.FOUND])
@@ -56,7 +56,8 @@ class PetQuerySet(models.QuerySet):
 
 class KindManager(models.Manager):
     def count_pets(self, status):
-        return self.filter(pet__status__in=status).annotate(num_pets=models.Count('pet')).order_by('kind')
+        return self.filter(pet__status__in=status, pet__active=True) \
+            .annotate(num_pets=models.Count('pet')).order_by('kind')
 
     def lost_kinds(self):
         return self.count_pets([Pet.MISSING, Pet.FOUND])

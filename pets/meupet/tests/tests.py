@@ -66,30 +66,34 @@ class MeuPetTest(MeuPetTestCase):
         self.assertContains(home, second_pet.name)
 
     def test_display_kinds_sidebar(self):
-        """The side bar should show only kinds that have pets registered"""
+        """The side bar should show only kinds that have pets registered and active"""
         Kind.objects.get_or_create(kind='0 Pets')
         first_pet = self.create_pet(kind='Cat')
         second_pet = self.create_pet(kind='Dog')
+        inactive_pet = self.create_pet(kind='Inactive', active=False)
 
         home = self.client.get(reverse('meupet:index'))
 
         self.assertContains(home, first_pet.kind.kind)
         self.assertContains(home, second_pet.kind.kind)
         self.assertNotContains(home, '0 Pets')
+        self.assertNotContains(home, inactive_pet.kind.kind)
 
     def test_display_only_pets_from_kind(self):
-        """Only display the pets from the kind being shown"""
+        """Only display the actives pets from the kind being shown"""
         first_cat = self.create_pet(kind='Cat')
         second_cat = self.create_pet(kind='Cat')
+        inactive_cat = self.create_pet(kind='Cat', active=False)
         dog = self.create_pet(kind='Dog')
 
         kind = Kind.objects.get(kind='Cat')
 
         content = self.client.get(reverse('meupet:lost', args=[kind.id]))
-        pets_count = Pet.objects.filter(kind=kind).count()
+        pets_count = Pet.objects.actives().filter(kind=kind).count()
 
         self.assertContains(content, first_cat.name)
         self.assertContains(content, second_cat.name)
+        self.assertNotContains(content, inactive_cat.name)
         self.assertNotContains(content, dog.name)
         self.assertEqual(2, pets_count)
 
@@ -266,10 +270,12 @@ class MeuPetTest(MeuPetTestCase):
     def test_search_with_filter(self):
         """Search by city should show the pet"""
         pet = self.create_pet(city=self.test_city)
+        inactive_pet = self.create_pet(city=self.test_city, active=False)
 
         response = self.client.post(reverse('meupet:search'), {'city': self.test_city.id}, follow=True)
 
         self.assertContains(response, pet.name)
+        self.assertNotContains(response, inactive_pet.name)
         self.assertContains(response, pet.city)
 
     def test_show_pet_sex(self):
