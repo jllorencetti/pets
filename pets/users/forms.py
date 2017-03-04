@@ -25,7 +25,7 @@ class UserForm(forms.ModelForm):
         self.fields['email'].required = True
         self.fields['facebook'].help_text = _(
             'Click <a href="#" data-toggle="modal" data-target="#ajuda-facebook">'
-            'here</a> to learn how to fill this field.')
+            'here</a> to get help filling this field.')
         self.fields['phone'].widget.attrs.update({'class': 'form-control'})
 
 
@@ -43,7 +43,7 @@ class RegisterForm(UserForm):
         self.fields['password1'].widget.attrs.update({'class': 'form-control'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
         self.fields['facebook'].widget.attrs.update(
-            {'placeholder': _('Enter the full address of your Facebook profile.')})
+            {'placeholder': _('Enter the full address for your Facebook profile.')})
 
         self.fields['username'].help_text = _('Required. 30 characters or less. '
                                               'Only letters, numbers e @/./+/-/_.')

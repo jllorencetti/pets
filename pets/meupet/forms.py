@@ -31,7 +31,7 @@ class PetForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control',
                                                  'placeholder': _(
                                                      "It is black and chubby, very shy, "
-                                                     "disappeared next to the school in downtown."
+                                                     "has went gone next to the school in downtown. "
                                                      "There's a slight flaw in the tail fur.")}),
             'city': forms.Select(attrs={'class': 'form-control'}),
             'kind': forms.Select(attrs={'class': 'form-control'}),

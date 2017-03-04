@@ -1,14 +1,14 @@
 {% extends '_layouts/base.html' %}
 {% load i18n crispy_forms_tags %}
 
-{% block title %}{% trans 'Password recovery' %}{% endblock %}
+{% block title %}{% trans 'Recover password' %}{% endblock %}
 
 {% block content %}
   <div class="row">
     <div class="col-md-7 col-md-offset-1">
       {% if form %}
         <p>
-          {% trans 'To recover your password, enter your email address or username.' %}
+          {% trans 'To recover your password enter your email address or username.' %}
         </p>
 
         {% crispy form %}

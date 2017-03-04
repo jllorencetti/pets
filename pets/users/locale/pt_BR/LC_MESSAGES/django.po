@@ -1,42 +1,36 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
-# Translators:
-# João Luiz Lorencetti <me@dirtycoder.net>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 11:48-0200\n"
+"POT-Creation-Date: 2017-03-04 16:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: João Luiz Lorencetti <me@dirtycoder.net>, 2016\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/cade-meu-bicho/teams/69260/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/cade-meu-bicho/"
+"teams/69260/pt_BR/)\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: pets/users/forms.py:27
 msgid ""
-"Click <a href=\"#\" data-toggle=\"modal\" data-target=\"#ajuda-"
-"facebook\">here</a> to learn how to fill this field."
+"Click <a href=\"#\" data-toggle=\"modal\" data-target=\"#ajuda-facebook"
+"\">here</a> to get help filling this field."
 msgstr ""
-"Clique <a href=\"#\" data-toggle=\"modal\" data-target=\"#ajuda-"
-"facebook\">aqui</a> para aprender a preencher esse campo."
+"Clique <a href=\"#\" data-toggle=\"modal\" data-target=\"#ajuda-facebook"
+"\">aqui</a> para aprender a preencher esse campo."
 
-#: pets/users/forms.py:33 pets/users/templates/users/create.html:104
+#: pets/users/forms.py:33 pets/users/templates/users/create.html:103
 msgid "Password"
 msgstr "Senha"
 
-#: pets/users/forms.py:34 pets/users/templates/users/create.html:112
+#: pets/users/forms.py:34 pets/users/templates/users/create.html:111
 msgid "Password confirmation"
 msgstr "Confirmação de senha"
 
 #: pets/users/forms.py:46
-msgid "Enter the full address of your Facebook profile."
+msgid "Enter the full address for your Facebook profile."
 msgstr "Informe o endereço completo de seu perfil no Facebook."
 
 #: pets/users/forms.py:48
@@ -53,11 +47,14 @@ msgid "Save Changes"
 msgstr "Salvar Alterações"
 
 #: pets/users/forms.py:90 pets/users/forms.py:97
+#: pets/users/templates/users/recover.html:4
+#: pets/users/templates/users/reset.html:4
+#: pets/users/templates/users/reset_done.html:4
 msgid "Recover password"
 msgstr "Recuperar senha"
 
 #: pets/users/templates/users/create.html:4
-#: pets/users/templates/users/create.html:120
+#: pets/users/templates/users/create.html:119
 msgid "Create Account"
 msgstr "Criar Conta"
 
@@ -81,15 +78,15 @@ msgstr "Barra de navegação do Facebook"
 #: pets/users/templates/users/create.html:24
 #: pets/users/templates/users/edit_profile.html:24
 msgid ""
-"After the page loads, your profile address will be in the address bar of "
-"your browser."
+"After the page loads your profile address will be in your browser's address "
+"bar."
 msgstr ""
-"Depois que a página carregar, o endereço do seu perfil será exibido na barra"
-" de endereço do seu navegador."
+"Depois que a página carregar, o endereço do seu perfil será exibido na barra "
+"de endereço do seu navegador."
 
 #: pets/users/templates/users/create.html:27
 #: pets/users/templates/users/edit_profile.html:27
-msgid "Address bar of the browser"
+msgid "Browser's address bar"
 msgstr "Barra de endereço do navegador"
 
 #: pets/users/templates/users/create.html:30
@@ -107,32 +104,32 @@ msgstr "Formulário preenchido"
 msgid "Close"
 msgstr "Fechar"
 
-#: pets/users/templates/users/create.html:45
+#: pets/users/templates/users/create.html:44
 msgid "Login with your Facebook or Twitter:"
 msgstr "Faça login com o seu Facebook ou Twitter:"
 
-#: pets/users/templates/users/create.html:49
+#: pets/users/templates/users/create.html:48
 msgid "Or create a new account:"
 msgstr "Ou crie uma nova conta:"
 
-#: pets/users/templates/users/create.html:54
+#: pets/users/templates/users/create.html:53
 msgid "First name"
 msgstr "Nome"
 
-#: pets/users/templates/users/create.html:62
+#: pets/users/templates/users/create.html:61
 msgid "Last name"
 msgstr "Sobrenome"
 
-#: pets/users/templates/users/create.html:70
+#: pets/users/templates/users/create.html:69
 #: pets/users/templates/users/profile.html:17
 msgid "Email"
 msgstr "Email"
 
-#: pets/users/templates/users/create.html:78
+#: pets/users/templates/users/create.html:77
 msgid "Username"
 msgstr "Usuário"
 
-#: pets/users/templates/users/create.html:96
+#: pets/users/templates/users/create.html:95
 #: pets/users/templates/users/profile.html:21
 msgid "Phone"
 msgstr "Telefone"
@@ -146,7 +143,7 @@ msgid "Your Profile"
 msgstr "Seu Perfil"
 
 #: pets/users/templates/users/login.html:4
-msgid "Autentication"
+msgid "Authentication"
 msgstr "Autenticação"
 
 #: pets/users/templates/users/login.html:27
@@ -173,14 +170,8 @@ msgstr "Editar"
 msgid "Registered pets"
 msgstr "Pets Registrados"
 
-#: pets/users/templates/users/recover.html:4
-#: pets/users/templates/users/reset.html:4
-#: pets/users/templates/users/reset_done.html:4
-msgid "Password recovery"
-msgstr "Recuperar senha"
-
 #: pets/users/templates/users/recover.html:11
-msgid "To recover your password, enter your email address or username."
+msgid "To recover your password enter your email address or username."
 msgstr ""
 "Para recuperar sua senha, informe o seu endereço de email ou o usuário."
 
@@ -221,7 +212,7 @@ msgstr "Você pode configurar sua nova senha utilizando esse link:"
 
 #: pets/users/templates/users/recover_email.txt:9
 msgid ""
-"If you don't want to reset your password, simply ignore this email and it "
+"If you don't want to reset your password simply ignore this email and it "
 "will stay unchanged."
 msgstr ""
 "Se você não quer trocar sua senha, apenas ignore esse email e a atual será "
@@ -243,7 +234,8 @@ msgstr "Sua senha foi trocada com sucesso."
 #: pets/users/templates/users/reset_done.html:12
 #, python-format
 msgid "Click <a href=\"%(page_url)s\">here</a> to login into your account."
-msgstr "Clique <a href=\"%(page_url)s\">aqui</a> para efetuar login na sua conta."
+msgstr ""
+"Clique <a href=\"%(page_url)s\">aqui</a> para efetuar login na sua conta."
 
 #: pets/users/views.py:47
 #, python-brace-format
