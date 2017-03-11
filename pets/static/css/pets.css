@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", "Calibri Light", Roboto, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin-bottom: 500px;
