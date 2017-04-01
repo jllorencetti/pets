@@ -37,4 +37,5 @@ class PetSerializer(ModelSerializer):
 
     class Meta:
         model = Pet
-        exclude = ('published', 'slug',)
+        fields = ('id', 'owner', 'name', 'description', 'city', 'kind', 'status',
+                  'size', 'sex', 'profile_picture',)

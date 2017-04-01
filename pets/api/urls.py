@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from api.views import home
+from api.views import ListPets
 
 urlpatterns = [
-    url(r'^$', home, name='home'),
+    url(r'^pets/$', ListPets.as_view(), name='list_pets'),
 ]

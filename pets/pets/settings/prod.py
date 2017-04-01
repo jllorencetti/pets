@@ -224,3 +224,8 @@ DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER', default='dummy@example.com')
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20
+}
