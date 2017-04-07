@@ -50,6 +50,7 @@ PROJECT_APPS = (
     'users',
     'meupet',
     'common',
+    'cities',
 )
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTS_APPS
@@ -187,6 +188,8 @@ LOGIN_URL = 'users:login'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 AUTH_USER_MODEL = 'users.OwnerProfile'
+
+CITIES_DATA_LOCATION = os.path.join(BASE_DIR, '../../data/cities_data')
 
 # Authentication
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'users:confirm_information'
