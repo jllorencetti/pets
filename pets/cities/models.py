@@ -14,7 +14,7 @@ class City(models.Model):
     state = models.ForeignKey(State)
     code = models.IntegerField()
     name = models.CharField(max_length=80)
-    search_name = models.CharField(max_length=80)
+    search_name = models.CharField(db_index=True, max_length=80)
 
     def __str__(self):
         return self.name
