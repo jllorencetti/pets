@@ -5,7 +5,6 @@ import os
 from django.conf import settings
 
 from cities import models
-from common import utils
 
 
 def get_states_filename(country):
@@ -44,6 +43,5 @@ def load_cities_from_file(filename):
             models.City.objects.get_or_create(
                 state=state,
                 code=city.get('code'),
-                name=city.get('name'),
-                search_name=utils.clear_text(city.get('name')).lower(),
+                name=city.get('name')
             )
