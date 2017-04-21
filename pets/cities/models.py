@@ -1,7 +1,7 @@
 from django.db import models
 
+from cities.querysets import CityQuerySet
 from common import utils
-from cities.querysets import CitiesQuerySet
 
 
 class State(models.Model):
@@ -19,7 +19,7 @@ class City(models.Model):
     name = models.CharField(max_length=80)
     search_name = models.CharField(db_index=True, max_length=80)
 
-    objects = CitiesQuerySet.as_manager()
+    objects = CityQuerySet.as_manager()
 
     def __str__(self):
         return self.name

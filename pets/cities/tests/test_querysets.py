@@ -3,7 +3,7 @@ from django.test import TestCase
 from cities import models
 
 
-class CitiesQuerySetTest(TestCase):
+class CityQuerySetTest(TestCase):
     def setUp(self):
         state = models.State.objects.create(code=35, name='São Paulo', abbr='SP')
         models.City.objects.create(code=350330, state=state, name='Araras')
