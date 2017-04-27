@@ -4,7 +4,7 @@ from meupet import models
 
 
 class PetAdmin(admin.ModelAdmin):
-    list_display = ('name', 'kind', 'description', 'status', 'published',
+    list_display = ('name', 'kind', 'city', 'new_city', 'description', 'status', 'published',
                     'created', 'modified', 'request_sent', 'active')
 
 
