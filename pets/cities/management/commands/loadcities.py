@@ -4,7 +4,9 @@ from cities import utils
 
 
 class Command(BaseCommand):
-    """Load cities and states in the correct models"""
+    """
+    Load cities and states in the correct models, only available for Brazil at the moment
+    """
 
     def handle(self, *args, **options):
         country = 'Brazil'
