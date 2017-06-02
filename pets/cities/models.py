@@ -14,7 +14,7 @@ class State(models.Model):
 
 
 class City(models.Model):
-    state = models.ForeignKey(State)
+    state = models.ForeignKey(State, related_name='cities')
     code = models.IntegerField()
     name = models.CharField(max_length=80)
     search_name = models.CharField(db_index=True, max_length=80)
