@@ -5,9 +5,15 @@ from rest_framework.serializers import (
     StringRelatedField,
 )
 
-from cities.models import State
+from cities.models import City, State
 from meupet.models import Pet
 from users.models import OwnerProfile
+
+
+class CitySerializer(ModelSerializer):
+    class Meta:
+        model = City
+        fields = ('name', 'search_name',)
 
 
 class StateSerializer(ModelSerializer):
