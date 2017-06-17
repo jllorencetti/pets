@@ -1,13 +1,16 @@
 from django.shortcuts import resolve_url
 from django.test import TestCase
 
-from meupet.models import City, Kind, Pet
+from model_mommy import mommy
+
+from cities.models import City
+from meupet.models import Kind, Pet
 from users.models import OwnerProfile
 
 
 class ListPetsTest(TestCase):
     def setUp(self):
-        City.objects.create(city='Araras')
+        mommy.make(City, name='Araras', search_name='araras')
 
         OwnerProfile.objects.create_user(
             'johndoe',
