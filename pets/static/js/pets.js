@@ -18,8 +18,8 @@ $(document).ready(function () {
         var stateWidget = $(this);
         var cityWidget = $('#id_city');
 
-        stateWidget.addClass('disabled');
-        cityWidget.addClass('disabled');
+        stateWidget.prop('disabled', true);
+        cityWidget.prop('disabled', true);
         cityWidget.find('option').remove();
         $.get('/api/cities/?limit=1000&state=' + stateWidget.val(), function (data) {
             cityWidget.append(new Option('------------', ''));
@@ -27,8 +27,8 @@ $(document).ready(function () {
                 cityWidget.append(new Option(city.name, city.code));
             });
         }).done(function () {
-            cityWidget.removeClass('disabled');
-            stateWidget.removeClass('disabled');
+            cityWidget.prop('disabled', false);
+            stateWidget.prop('disabled', false);
         });
     });
 
