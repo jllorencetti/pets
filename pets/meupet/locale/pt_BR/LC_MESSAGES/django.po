@@ -14,8 +14,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: pets/meupet/forms.py:22
-msgid "São Paulo"
-msgstr "São Paulo"
+msgid "State"
+msgstr "Estado"
 
 #: pets/meupet/forms.py:30
 msgid "Costelinha"
