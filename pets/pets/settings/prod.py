@@ -50,6 +50,7 @@ PROJECT_APPS = (
     'users',
     'meupet',
     'common',
+    'cities',
 )
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTS_APPS
@@ -188,6 +189,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 AUTH_USER_MODEL = 'users.OwnerProfile'
 
+CITIES_DATA_LOCATION = os.path.join(BASE_DIR, '../../data/cities_data')
+
 # Authentication
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'users:confirm_information'
 
@@ -224,3 +227,8 @@ DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER', default='dummy@example.com')
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20
+}

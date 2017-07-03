@@ -14,9 +14,22 @@ $(document).ready(function () {
         this.setCustomValidity('');
     });
 
-    $('#new-city').on('click', function (e) {
-        e.preventDefault();
-        $('.new-city').show(250);
+    $('#id_state').on('change', function () {
+        var stateWidget = $(this);
+        var cityWidget = $('#id_city');
+
+        stateWidget.addClass('disabled');
+        cityWidget.addClass('disabled');
+        cityWidget.find('option').remove();
+        $.get('/api/cities/?limit=1000&state=' + stateWidget.val(), function (data) {
+            cityWidget.append(new Option('------------', ''));
+            $.each(data['results'], function (idx, city) {
+                cityWidget.append(new Option(city.name, city.code));
+            });
+        }).done(function () {
+            cityWidget.removeClass('disabled');
+            stateWidget.removeClass('disabled');
+        });
     });
 
     $(function () {

@@ -1,22 +1,29 @@
-from django.http import HttpResponse, HttpResponseNotAllowed
-from rest_framework.renderers import JSONRenderer
+from rest_framework import generics
 
-from api.serializers import PetSerializer
-
+from api import serializers
+from cities.models import City, State
 from meupet.models import Pet
 
 
-class JsonSerializedResponse(HttpResponse):
-    def __init__(self, serilaized_data, **kwargs):
-        content = JSONRenderer().render(serilaized_data)
-        kwargs['content_type'] = 'application/json'
-        super(JsonSerializedResponse, self).__init__(content, **kwargs)
+class CityList(generics.ListAPIView):
+    serializer_class = serializers.CitySerializer
+
+    def get_queryset(self):
+        queryset = City.objects.all()
+        state = self.request.query_params.get('state', None)
+        city = self.request.query_params.get('city', None)
+        if state:
+            queryset = queryset.filter(state__code=state)
+        if city:
+            queryset = queryset.filter(search_name__startswith=city)
+        return queryset
 
 
-def home(request):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET'])
+class ListPets(generics.ListAPIView):
+    queryset = Pet.objects.all()
+    serializer_class = serializers.PetSerializer
 
-    pets = Pet.objects.filter()
-    serializer = PetSerializer(pets, many=True, context={'request': request})
-    return JsonSerializedResponse(serializer.data)
+
+class StateList(generics.ListAPIView):
+    queryset = State.objects.all()
+    serializer_class = serializers.StateSerializer

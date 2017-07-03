@@ -1,7 +1,9 @@
 from django.core.urlresolvers import reverse
 from django.test import override_settings
 
-from meupet.models import Kind, Pet
+from model_mommy import mommy
+
+from meupet.models import Pet
 from meupet.tests.tests import MEDIA_ROOT, MeuPetTestCase
 from users.models import OwnerProfile
 
@@ -9,10 +11,9 @@ from users.models import OwnerProfile
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class RegisteredViewTest(MeuPetTestCase):
     def setUp(self):
-        self.kind = Kind.objects.create(kind='Test Kind')
         self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
         self.client.login(username='admin', password='admin')
-        self.pet = Pet.objects.create(name='Test pet', owner=self.admin, kind=self.kind)
+        self.pet = mommy.make(Pet, owner=self.admin)
 
     def test_html_registered_page(self):
         """Validate information shown after registering the pet"""

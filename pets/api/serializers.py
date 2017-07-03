@@ -5,8 +5,21 @@ from rest_framework.serializers import (
     StringRelatedField,
 )
 
+from cities.models import City, State
 from meupet.models import Pet
 from users.models import OwnerProfile
+
+
+class CitySerializer(ModelSerializer):
+    class Meta:
+        model = City
+        fields = ('code', 'name', 'search_name',)
+
+
+class StateSerializer(ModelSerializer):
+    class Meta:
+        model = State
+        fields = ('name', 'abbr',)
 
 
 class OwnerSerializer(ModelSerializer):
@@ -37,4 +50,5 @@ class PetSerializer(ModelSerializer):
 
     class Meta:
         model = Pet
-        exclude = ('published', 'slug',)
+        fields = ('id', 'owner', 'name', 'description', 'city', 'kind', 'status',
+                  'size', 'sex', 'profile_picture',)

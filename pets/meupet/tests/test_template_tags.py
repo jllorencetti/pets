@@ -1,17 +1,17 @@
 from django.template import Template, Context
 from django.test import TestCase
 
+from model_mommy import mommy
+
 from meupet.models import Pet, Kind
-from users.models import OwnerProfile
 
 
 class TestTemplateTag(TestCase):
     def setUp(self):
-        user = OwnerProfile.objects.create(username='user', password='user')
         dog = Kind.objects.create(kind='Dog')
         cat = Kind.objects.create(kind='Cat')
-        Pet.objects.create(name='Testing', owner=user, kind=dog, status=Pet.MISSING)
-        Pet.objects.create(name='Testing', owner=user, kind=cat, status=Pet.FOR_ADOPTION)
+        mommy.make(Pet, kind=dog, status=Pet.MISSING)
+        mommy.make(Pet, kind=cat, status=Pet.FOR_ADOPTION)
 
     def test_render_menu(self):
         template = Template('{% load meupet_tags %}{% sidemenu %}')

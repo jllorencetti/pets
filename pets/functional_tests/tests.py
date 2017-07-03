@@ -10,7 +10,10 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
-from meupet.models import Kind, Pet, City
+from model_mommy import mommy
+
+from cities.models import City, State
+from meupet.models import Kind, Pet
 from users.models import OwnerProfile
 
 
@@ -34,8 +37,9 @@ class SiteTestCases(StaticLiveServerTestCase):
         user = OwnerProfile.objects.create_user('admin', 'ad@min.com', 'admin')
         user.is_information_confirmed = True
         user.save()
-        self.test_city, _ = City.objects.get_or_create(city='Araras')
-        Kind.objects.create(kind='Cats')
+        self.test_state = State.objects.create(code=1, name='São Paulo')
+        self.test_city = City.objects.get_or_create(code=1, name='Araras', state=self.test_state)
+        mommy.make(Kind)
         self.browser = webdriver.PhantomJS()
         self.browser.implicitly_wait(1)
         self.browser.maximize_window()
@@ -88,10 +92,8 @@ class SiteTestCases(StaticLiveServerTestCase):
     @staticmethod
     def create_pet():
         admin = OwnerProfile.objects.first()
-        kind = Kind.objects.first()
-        pet = Pet(owner=admin, name='Costela', description='Costelinha', kind_id=kind.id,
-                  profile_picture=get_test_image_file())
-        pet.save()
+        pet = mommy.make(Pet, owner=admin, name='Costela', description='Costelinha',
+                         profile_picture=get_test_image_file())
         return pet
 
     def test_login(self):
@@ -114,6 +116,7 @@ class SiteTestCases(StaticLiveServerTestCase):
 
         self.select_dropdown('kind', 1)
 
+        self.select_dropdown('state', 1)
         self.select_dropdown('city', 1)
 
         profile_picture = self.browser.find_element_by_name('profile_picture')
@@ -141,6 +144,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.find_element_by_name('description').send_keys('My dear lovely cat')
 
         # select the city
+        self.select_dropdown('state', 1)
         self.select_dropdown('city', 1)
 
         # selects the kind as a Cat
@@ -232,39 +236,6 @@ class SiteTestCases(StaticLiveServerTestCase):
         # verify new photo is showing
         self.assertIn('More photos', self.browser.page_source)
         self.assertEquals(img_after, img_before + 1)
-
-    def test_create_new_city(self):
-        self.login()
-
-        self.browser.get(self.live_server_url + '/pets/novo/')
-
-        name = self.browser.find_element_by_name('name')
-        name.send_keys('Test New City')
-
-        description = self.browser.find_element_by_name('description')
-        description.send_keys('Testing Adoption')
-
-        self.select_dropdown('status', 1)
-
-        self.select_dropdown('kind', 1)
-
-        show_new_city = self.browser.find_element_by_id('new-city')
-        show_new_city.click()
-
-        new_city = self.browser.find_element_by_id('id_new_city')
-        new_city.send_keys('Created City')
-
-        profile_picture = self.browser.find_element_by_name('profile_picture')
-        profile_picture.send_keys('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
-
-        submit = self.browser.find_element_by_name('submit')
-        submit.click()
-
-        self.assertIn('Obrigado', self.browser.page_source)
-
-        self.browser.get(self.live_server_url + '/pets/')
-
-        self.assertIn('Created City', self.browser.page_source)
 
     def test_delete_pet(self):
         # pre register pet

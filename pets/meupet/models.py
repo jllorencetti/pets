@@ -76,20 +76,10 @@ class Kind(models.Model):
         return self.kind
 
 
-class City(models.Model):
-    city = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.city
-
-    class Meta:
-        ordering = ['city']
-
-
 def get_slug(instance):
     city = ''
     if instance.city:
-        city = instance.city.city
+        city = instance.city.name
     return slugify('{}-{}'.format(instance.name, city))
 
 
@@ -121,7 +111,7 @@ class Pet(TimeStampedModel):
     owner = models.ForeignKey(OwnerProfile)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
-    city = models.ForeignKey(City, null=True)
+    city = models.ForeignKey('cities.City')
     kind = models.ForeignKey(Kind, null=True)
     status = models.CharField(max_length=2,
                               choices=PET_STATUS,
