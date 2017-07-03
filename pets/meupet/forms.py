@@ -78,7 +78,9 @@ class SearchForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
-        self.fields['city'].choices += tuple(City.objects.values_list('id', 'name'))
+        self.fields['city'].choices += tuple(
+            City.objects.filter(pet__active=True).order_by('name').values_list('id', 'name').distinct()
+        )
         self.fields['kind'].choices += tuple(models.Kind.objects.values_list('id', 'kind'))
 
     def clean(self):
