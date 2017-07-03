@@ -7,8 +7,9 @@ from django.utils.text import slugify
 
 from model_mommy import mommy
 
+from cities.models import City
 from meupet import forms
-from meupet.models import Pet, Kind, City
+from meupet.models import Pet, Kind
 from meupet.views import paginate_pets
 from users.models import OwnerProfile
 
@@ -23,7 +24,7 @@ class MeuPetTestCase(TestCase):
             password='admin',
             facebook='http://www.facebook.com/owner_profile'
         )
-        self.test_city, _ = City.objects.get_or_create(city='Testing City')
+        self.test_city = mommy.make(City, name='Testing City')
 
     def create_pet(self, status=Pet.MISSING, kind=None, **kwargs):
         pet = mommy.make(Pet, status=status, owner=self.admin, **kwargs)
@@ -127,7 +128,8 @@ class MeuPetTest(MeuPetTestCase):
         response_post = self.client.post(reverse('meupet:edit', args=[pet.slug]),
                                          data={'name': 'Testing Fuzzy Boots',
                                                'description': 'My lovely cat',
-                                               'city': self.test_city.id,
+                                               'state': self.test_city.state.code,
+                                               'city': self.test_city.code,
                                                'kind': pet.kind.id,
                                                'status': pet.status,
                                                'profile_picture': pet.profile_picture.url})

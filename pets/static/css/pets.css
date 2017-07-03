@@ -321,10 +321,6 @@ li.active {
   color: #fff;
 }
 
-.new-city {
-  display: none;
-}
-
 /** Status indicator **/
 .found-or-adopted {
   position: relative;

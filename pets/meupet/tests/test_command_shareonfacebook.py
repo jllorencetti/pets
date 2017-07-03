@@ -4,15 +4,16 @@ from django.test import TestCase
 
 from model_mommy import mommy
 
+from cities.models import City
 from meupet.management.commands.shareonfacebook import Command
-from meupet.models import Pet, City
+from meupet.models import Pet
 from users.models import OwnerProfile
 
 
 class ManagementCommandTest(TestCase):
     def setUp(self):
         self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
-        self.city = City.objects.create(city='Araras')
+        self.city = mommy.make(City, name='Araras')
         self.pet = mommy.make(Pet, city=self.city)
         self.url = 'http://www.test.com{}'
 

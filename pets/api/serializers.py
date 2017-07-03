@@ -13,7 +13,7 @@ from users.models import OwnerProfile
 class CitySerializer(ModelSerializer):
     class Meta:
         model = City
-        fields = ('name', 'search_name',)
+        fields = ('code', 'name', 'search_name',)
 
 
 class StateSerializer(ModelSerializer):

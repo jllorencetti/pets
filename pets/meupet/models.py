@@ -111,7 +111,7 @@ class Pet(TimeStampedModel):
     owner = models.ForeignKey(OwnerProfile)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
-    city = models.ForeignKey('cities.City', null=True)
+    city = models.ForeignKey('cities.City')
     kind = models.ForeignKey(Kind, null=True)
     status = models.CharField(max_length=2,
                               choices=PET_STATUS,

@@ -19,6 +19,7 @@ class CityViewTestCase(APITestCase):
         response_json = json.loads(response.content.decode('utf-8'))
         expected = [
             {
+                'code': 1,
                 'name': 'City',
                 'search_name': 'city',
             },
@@ -34,6 +35,7 @@ class CityViewTestCase(APITestCase):
         response_json = json.loads(response.content.decode('utf-8'))
         expected = [
             {
+                'code': 2,
                 'name': 'New City',
                 'search_name': 'new city',
             }

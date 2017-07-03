@@ -5,13 +5,14 @@ from django.utils import timezone
 
 from model_mommy import mommy
 
-from meupet.models import Pet, City
+from cities.models import City
+from meupet.models import Pet
 from users.models import OwnerProfile
 
 
 class PetModelTest(TestCase):
     def setUp(self):
-        self.city = City.objects.create(city='Testing City')
+        self.city = mommy.make(City, name='Testing City')
         self.owner = OwnerProfile.objects.create_user(username='admin', password='admin')
 
     def test_slug(self):
