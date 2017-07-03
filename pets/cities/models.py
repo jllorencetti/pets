@@ -9,6 +9,9 @@ class State(models.Model):
     name = models.CharField(max_length=50)
     abbr = models.CharField(max_length=2)
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
@@ -20,6 +23,9 @@ class City(models.Model):
     search_name = models.CharField(db_index=True, max_length=80)
 
     objects = CityQuerySet.as_manager()
+
+    class Meta:
+        ordering = ['search_name']
 
     def __str__(self):
         return self.name
