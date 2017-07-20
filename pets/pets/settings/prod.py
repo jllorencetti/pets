@@ -1,5 +1,6 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 from decouple import config, Csv
 from dj_database_url import parse as db_url
 
@@ -12,12 +13,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-INTERNAL_IPS = (
-    '0.0.0.0',
-    '127.0.0.1',
-)
+INTERNAL_IPS = config('INTERNAL_IPS', default='', cast=Csv())
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
 
@@ -35,22 +33,22 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTS_APPS = (
-    'easy_thumbnails',
     'braces',
-    'crispy_forms',
-    'social.apps.django_app.default',
-    'opbeat.contrib.django',
     'compressor',
+    'corsheaders',
+    'crispy_forms',
+    'easy_thumbnails',
+    'opbeat.contrib.django',
     'password_reset',
     'rest_framework',
-    'corsheaders',
+    'social.apps.django_app.default',
 )
 
 PROJECT_APPS = (
-    'users',
-    'meupet',
-    'common',
     'cities',
+    'common',
+    'meupet',
+    'users',
 )
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTS_APPS
