@@ -11,7 +11,7 @@ dj-database-url==0.4.2
 easy-thumbnails==2.4.1
 facebook-sdk==2.0.0
 Pillow==4.2.1
-python-social-auth==0.2.21
+social-auth-app-django==1.2.0
 opbeat==3.5.2
 psycopg2==2.7.2
 python-decouple==3.0
