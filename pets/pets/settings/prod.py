@@ -41,7 +41,7 @@ THIRD_PARTS_APPS = (
     'opbeat.contrib.django',
     'password_reset',
     'rest_framework',
-    'social.apps.django_app.default',
+    'social_django',
 )
 
 PROJECT_APPS = (
@@ -87,8 +87,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
             'loaders': [
                 ('django.template.loaders.cached.Loader', PROJECT_TEMPLATE_LOADERS),
@@ -98,22 +98,22 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.facebook.Facebook2OAuth2',
-    'social.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
-    'social.pipeline.user.create_user',
+    'social_django.pipeline.social_auth.social_details',
+    'social_django.pipeline.social_auth.social_uid',
+    'social_django.pipeline.social_auth.auth_allowed',
+    'social_django.pipeline.social_auth.social_user',
+    'social_django.pipeline.user.get_username',
+    'social_django.pipeline.user.create_user',
     'users.pipeline.add_facebook_link',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details',
+    'social_django.pipeline.social_auth.associate_user',
+    'social_django.pipeline.social_auth.load_extra_data',
+    'social_django.pipeline.user.user_details',
 )
 
 ROOT_URLCONF = 'pets.urls'
