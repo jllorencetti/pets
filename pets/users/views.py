@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template.context import RequestContext
 from django.utils.http import is_safe_url
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
@@ -94,7 +94,7 @@ def user_login(request):
                 return HttpResponseRedirect(reverse('meupet:index'))
     else:
         form = LoginForm()
-    return render_to_response('users/login.html', {'form': form}, context)
+    return render(request, 'users/login.html', {'form': form}, context)
 
 
 def user_logout(request):

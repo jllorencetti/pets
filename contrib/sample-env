@@ -1,11 +1,13 @@
-SECRET_KEY=secret_dummy_key
 ALLOWED_HOSTS=127.0.0.1,.localhost
-DJANGO_SETTINGS_MODULE=pets.settings.dev
 DATABASE_URL=sqlite:///db.sqlite3
 DB_CONN_MAX_AGE=0
+DEBUG=False
+DJANGO_SETTINGS_MODULE=pets.settings.dev
+INTERNAL_IPS=127.0.0.1,localhost
+SECRET_KEY=secret_dummy_key
 
 EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
-EMAIL_PORT=0
 EMAIL_HOST=example.com
 EMAIL_HOST_PASSWORD=example
 EMAIL_HOST_USER=dummy@example.com
+EMAIL_PORT=0

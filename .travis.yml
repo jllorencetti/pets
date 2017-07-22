@@ -1,6 +1,7 @@
 language: python
+dist: trusty
 addons:
-  postgresql: "9.4"
+  postgresql: "9.5"
 services:
   - postgresql
 python:
@@ -9,9 +10,10 @@ python:
 install:
   - pip install -r dev-requirements.txt
   - pip install coveralls
+  - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
 script:
   - cd pets
-  - coverage run --rcfile=../.coveragerc manage.py test -v 3
+  - coverage run --rcfile=../.coveragerc manage.py test -v 2
 before_script:
   - psql -U postgres -c 'create database pets;'
 after_success:

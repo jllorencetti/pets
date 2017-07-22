@@ -1,10 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from . import views
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     # I'll keep this here for compatibility with links shared
     # on Facebook.
     url(r'^new/$', views.RegisterPetView.as_view()),
@@ -27,4 +26,4 @@ urlpatterns = patterns(
 
     url(r'^(?P<pk_or_slug>[-\w]*)/$', views.pet_detail_view, name='detail'),
     url(r'^(?P<pk>[0-9]+)/$', views.pet_detail_view, name='detail_by_pk'),
-)
+]
