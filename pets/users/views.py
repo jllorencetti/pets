@@ -1,14 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, resolve_url
 from django.template.context import RequestContext
 from django.utils.http import is_safe_url
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
 from django.utils.translation import ugettext as _
 
-from braces.views import LoginRequiredMixin, AnonymousRequiredMixin
 from password_reset.views import Recover, RecoverDone, Reset, ResetDone
 
 from users.forms import LoginForm, RegisterForm, UpdateUserForm, UsersPasswordRecoveryForm, UsersPasswordResetForm
@@ -38,7 +38,7 @@ class RecoverResetDoneView(ResetDone):
     template_name = 'users/reset_done.html'
 
 
-class CreateUserView(AnonymousRequiredMixin, CreateView):
+class CreateUserView(CreateView):
     model = OwnerProfile
     form_class = RegisterForm
     template_name = 'users/create.html'
@@ -46,6 +46,11 @@ class CreateUserView(AnonymousRequiredMixin, CreateView):
 
     msg = _('Your account has been successfully created, access <a href="{0}">'
             'this page</a> and register the pet :)')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(resolve_url(self.authenticated_redirect_url))
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.is_information_confirmed = True

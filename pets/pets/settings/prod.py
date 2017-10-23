@@ -33,7 +33,6 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTS_APPS = (
-    'braces',
     'compressor',
     'corsheaders',
     'crispy_forms',

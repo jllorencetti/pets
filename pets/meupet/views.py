@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -9,8 +10,6 @@ from django.utils.translation import pgettext, ugettext as _
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView, CreateView, \
     UpdateView, View
-
-from braces.views import LoginRequiredMixin
 
 from meupet import forms, models
 from meupet.forms import SearchForm
