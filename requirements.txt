@@ -1,4 +1,4 @@
-Django==1.11.7
+django==1.11.7
 django-autoslug==1.9.3
 django-crispy-forms==1.7.0
 django-compressor==2.2
@@ -9,7 +9,7 @@ djangorestframework==3.7.3
 dj-database-url==0.4.2
 easy-thumbnails==2.5
 facebook-sdk==2.0.0
-Pillow==4.3.0
+pillow==4.3.0
 social-auth-app-django==2.0.0
 opbeat==3.5.3
 psycopg2==2.7.3.2
