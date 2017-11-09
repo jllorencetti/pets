@@ -1,6 +1,7 @@
+from unittest import mock
+
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -15,40 +16,45 @@ class ServicesTest(TestCase):
         Validate the information sent in the email
         """
         pet = mommy.make(Pet)
-        pet.request_action()
-        email = mail.outbox[0]
+
+        with mock.patch('meupet.services.send_email') as mock_send_email:
+            pet.request_action()
+
         current_site = Site.objects.get_current()
-
         pet_update_url = reverse('meupet:update_register', args=[pet.request_key])
-        full_url = '%s%s' % (current_site.domain, pet_update_url)
+        context = {
+            'username': pet.owner.first_name,
+            'pet': pet.name,
+            'days': settings.DAYS_TO_STALE_REGISTER,
+            'status': pet.get_status_display().lower(),
+            'link': 'https://%s%s' % (current_site.domain, pet_update_url),
+            'site_name': current_site.name,
+        }
 
-        contents = [
-            pet.name,
-            pet.owner.first_name,
-            str(settings.DAYS_TO_STALE_REGISTER),
-            full_url,
-            pet.get_status_display().lower(),
-            current_site.name,
-        ]
-
-        for expected in contents:
-            with self.subTest():
-                self.assertIn(expected, email.body)
+        mock_send_email.assert_called_once_with(
+            'Update pet registration',
+            pet.owner.email,
+            'meupet/request_action_email.txt',
+            context
+        )
 
     def test_pet_deactivated(self):
         """
         Validates the information present in the email
         """
         pet = mommy.make(Pet)
-        pet.deactivate()
-        email = mail.outbox[0]
-        current_site = Site.objects.get_current()
 
-        contents = [
-            pet.owner.first_name,
-            current_site.name,
-        ]
+        with mock.patch('meupet.services.send_email') as mock_send_email:
+            pet.deactivate()
 
-        for expected in contents:
-            with self.subTest():
-                self.assertIn(expected, email.body)
+        context = {
+            'username': pet.owner.first_name,
+            'site_name': Site.objects.get_current().name,
+        }
+
+        mock_send_email.assert_called_once_with(
+            'Deactivation of pet registration',
+            pet.owner.email,
+            'meupet/deactivate_email.txt',
+            context
+        )

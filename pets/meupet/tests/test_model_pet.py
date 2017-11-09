@@ -80,8 +80,10 @@ class PetModelTest(TestCase):
 
         mock_send_email.assert_called_once_with(pet)
 
-    def test_request_sent_saved(self):
+    @patch('meupet.services.send_request_action_email')
+    def test_request_sent_saved(self, mock_send_email):
         """Should set the request_sent date in the pet and keep modified date"""
+        mock_send_email.return_value = True
         pet = mommy.make(Pet)
         modified = pet.modified
 
@@ -92,8 +94,10 @@ class PetModelTest(TestCase):
         self.assertEqual(modified, pet.modified)
         self.assertAlmostEqual(pet.request_sent, timezone.now(), delta=timezone.timedelta(seconds=1))
 
-    def test_request_action_email_set_activation_success(self):
+    @patch('meupet.services.send_request_action_email')
+    def test_request_action_email_set_activation_success(self, mock_send_email):
         """Should set the request_key if the send_request_action_email succeed"""
+        mock_send_email.return_value = True
         pet = mommy.make(Pet, request_key='')
 
         pet.request_action()
@@ -113,8 +117,10 @@ class PetModelTest(TestCase):
 
         self.assertEqual('', pet.request_key)
 
-    def test_deactivate(self):
+    @patch('meupet.services.send_deactivate_email')
+    def test_deactivate(self, mock_send_email):
         """Should set the registration as inactive and keep modified date"""
+        mock_send_email.return_value = True
         pet = mommy.make(Pet)
         modified = pet.modified
 
