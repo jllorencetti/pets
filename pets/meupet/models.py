@@ -51,7 +51,7 @@ class PetQuerySet(models.QuerySet):
     def get_expired_pets(self):
         """Expired pets have request_sent date older than expected"""
         expire_date = timezone.now() - timezone.timedelta(days=settings.DAYS_TO_STALE_REGISTER)
-        return self.filter(request_sent__lt=expire_date)
+        return self.filter(active=True, request_sent__lt=expire_date)
 
 
 class KindManager(models.Manager):

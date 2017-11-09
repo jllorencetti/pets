@@ -50,10 +50,11 @@ class PetModelTest(TestCase):
         self.assertNotIn(expired_pet, pets)
 
     def test_expired_pets(self):
-        """Should return pets with request_sent date older than expected"""
+        """Should return active pets with request_sent date older than expected"""
         new_pet = mommy.make(Pet)
         staled_pet = self.create_pet_custom_date(90)
-        expired_pet = self.create_pet_custom_date(90, 90)
+        expired_pet = self.create_pet_custom_date(90, 90, active=True)
+        inactive_expired_pet = self.create_pet_custom_date(90, 90, active=False)
 
         pets = Pet.objects.get_expired_pets()
 
@@ -61,6 +62,7 @@ class PetModelTest(TestCase):
         self.assertIn(expired_pet, pets)
         self.assertNotIn(new_pet, pets)
         self.assertNotIn(staled_pet, pets)
+        self.assertNotIn(inactive_expired_pet, pets)
 
     @patch('meupet.services.send_request_action_email')
     def test_request_action_from_user(self, mock_send_email):
