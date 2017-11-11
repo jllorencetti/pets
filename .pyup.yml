@@ -1,1 +1,7 @@
-schedule: every week
+schedule: "every day"
+
+requirements:
+  - requirements/local.txt:
+      update: False
+  - requirements/production.txt:
+      update: insecure
