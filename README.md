@@ -3,7 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/dirtycoder/pets/badges/gpa.svg)](https://codeclimate.com/github/dirtycoder/pets)
 [![Build Status](https://travis-ci.org/dirtycoder/pets.svg?branch=master)](https://travis-ci.org/dirtycoder/pets)
 [![Coverage Status](https://coveralls.io/repos/github/dirtycoder/pets/badge.svg?branch=master)](https://coveralls.io/github/dirtycoder/pets?branch=master)
-[![Requirements Status](https://requires.io/github/dirtycoder/pets/requirements.svg?branch=master)](https://requires.io/github/dirtycoder/pets/requirements/?branch=master)
+[![Updates](https://pyup.io/repos/github/dirtycoder/pets/shield.svg)](https://pyup.io/repos/github/dirtycoder/pets/)
 
 Pets is a website where people can publish lost pets
 and pets available for adoption.
