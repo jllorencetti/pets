@@ -8,7 +8,7 @@ python:
   - "3.4"
   - "3.5"
 install:
-  - pip install -r dev-requirements.txt
+  - pip install -r requirements/local.txt
   - pip install coveralls
   - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
 script:

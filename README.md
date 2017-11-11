@@ -53,10 +53,10 @@ Then you have to set following variables:
 * **`DATABASE_URL`**: (e.g. `postgres://username:password@server:port/database_name`) [Database URL](https://github.com/kennethreitz/dj-database-url#url-schema)
 * **`DB_CONN_MAX_AGE`**: (e.g. `0`) [Django's database `CONN_MAX_AGE`](https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-CONN_MAX_AGE`)
 
-#### Mail server for sending e-mails
+#### Email configuration
 
-* **`EMAIL_PORT`**, **`EMAIL_HOST`**, **`EMAIL_HOST_PASSWORD`** and **`EMAIL_HOST_USER`**: SMTP credentials to a mail server.
-* **`EMAIL_BACKEND`**: (e.g. `django.core.mail.backends.console.EmailBackend`) [Django's email backend](https://docs.djangoproject.com/en/1.8/topics/email/#topic-email-backends)
+* **`SENDGRID_API_KEY`**: API key of you SendGrid account.
+* **`DEFAULT_FROM_EMAIL`**: The email address that will be used as the `from` email field.
 
 #### OAuth
 
@@ -90,7 +90,7 @@ brew install phantomjs
 ### Install Python packages
 
 ```console
-pip install -r dev-requirements.txt
+pip install -r requirements/local.txt
 ```
 
 ### Test
