@@ -88,6 +88,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'meupet.context_processors.pets_count',
+                'users.context_processors.users_count',
             ],
             'loaders': [
                 ('django.template.loaders.cached.Loader', PROJECT_TEMPLATE_LOADERS),
