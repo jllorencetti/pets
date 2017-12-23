@@ -191,6 +191,9 @@ AUTH_USER_MODEL = 'users.OwnerProfile'
 CITIES_DATA_LOCATION = os.path.join(BASE_DIR, '../../data/cities_data')
 
 # Authentication
+LOGIN_REDIRECT_URL = 'meupet:index'
+LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
+
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'users:confirm_information'
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = [

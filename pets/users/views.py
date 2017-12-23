@@ -1,14 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render, resolve_url
-from django.template.context import RequestContext
-from django.utils.http import is_safe_url
-from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
+from django.shortcuts import resolve_url
 from django.utils.translation import ugettext as _
-
+from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
 from password_reset.views import Recover, RecoverDone, Reset, ResetDone
 
 from users.forms import LoginForm, RegisterForm, UpdateUserForm, UsersPasswordRecoveryForm, UsersPasswordResetForm
@@ -80,31 +78,9 @@ class EditUserProfileView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-def user_login(request):
-    context = RequestContext(request)
-
-    redirect_to = request.POST.get('next', request.GET.get('next', ''))
-
-    if request.method == 'POST':
-        form = LoginForm(data=request.POST)
-        if form.is_valid():
-            user = authenticate(username=form.data.get('username'),
-                                password=form.data.get('password'))
-            if user and user.is_active:
-                login(request, user)
-
-                if is_safe_url(redirect_to):
-                    return HttpResponseRedirect(redirect_to)
-
-                return HttpResponseRedirect(reverse('meupet:index'))
-    else:
-        form = LoginForm()
-    return render(request, 'users/login.html', {'form': form}, context)
-
-
-def user_logout(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('meupet:index'))
+class UserLogin(LoginView):
+    form_class = LoginForm
+    template_name = 'users/login.html'
 
 
 class UserProfileView(LoginRequiredMixin, TemplateView):
