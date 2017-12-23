@@ -116,6 +116,11 @@ body {
   background-color: #286B5A;
 }
 
+.navbar-nav .open .dropdown-menu .dropdown-header {
+  font-size: 1.5rem;
+  padding-left: 15px;
+}
+
 @media (min-width: 768px) {
   .nav > li {
     margin-top: 35px;
