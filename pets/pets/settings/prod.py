@@ -89,6 +89,7 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'meupet.context_processors.pets_count',
+                'meupet.context_processors.kinds_count',
                 'users.context_processors.users_count',
             ],
             'loaders': [
