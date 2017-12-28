@@ -334,6 +334,26 @@ li.active {
   color: #fff;
 }
 
+/* Apoia-se button */
+a.apoia-link {
+  padding: 4px 8px;
+  color: #fff;
+  font-size: 1.4rem;
+  background: #eb4a3b;
+  border-radius: 5px;
+}
+
+a.apoia-link:hover {
+  background: #cb4839;
+  text-decoration: none;
+}
+
+img.apoia-img {
+  height: 9px;
+  position: relative;
+  top: -1px;
+}
+
 /** Status indicator **/
 .found-or-adopted {
   position: relative;
