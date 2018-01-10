@@ -1,0 +1,35 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+dj-database-url = "*"
+django-autoslug = "*"
+django_compressor = "*"
+django-cors-middleware = "*"
+django-crispy-forms = "*"
+django-extensions = "*"
+django-password-reset = "*"
+Django = "<2"
+djangorestframework = "*"
+easy-thumbnails = "*"
+facebook-sdk = "*"
+opbeat = "*"
+Pillow = "*"
+"psycopg2" = "*"
+python-decouple = "*"
+social-auth-app-django = "*"
+sendgrid = "*"
+
+
+[dev-packages]
+
+Django = "<2" # Workaround for https://github.com/pypa/pipenv/issues/1220
+selenium = "==3.8.0"
+django-debug-toolbar = "*"
+django-test-without-migrations = "*"
+model_mommy = "==1.3.0"
