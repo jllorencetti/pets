@@ -256,6 +256,10 @@ body {
   margin-top: 20px;
 }
 
+.row.sponsors {
+  margin-bottom: 2.5rem;
+}
+
 /** Card Pet **/
 .card-pet {
   margin-bottom: 15px;
