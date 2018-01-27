@@ -1,7 +1,6 @@
 schedule: "every day"
+update: False
 
 requirements:
-  - requirements/local.txt:
-      update: False
-  - requirements/production.txt:
-      update: insecure
+  - Pipfile
+  - Pipfile.lock
