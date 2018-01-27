@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
@@ -99,6 +100,14 @@ class RegisterPetView(LoginRequiredMixin, CreateView):
             return HttpResponseRedirect(reverse('users:edit'))
         else:
             return super(RegisterPetView, self).get(request, *args, **kwargs)
+
+    @transaction.atomic()
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().post(request, *args, **kwargs)
+        except IntegrityError:
+            messages.info(request, _('You already have a pet registered with this name.'))
+            return HttpResponseRedirect(reverse('users:profile'))
 
     def form_valid(self, form):
         form.instance.owner = self.request.user

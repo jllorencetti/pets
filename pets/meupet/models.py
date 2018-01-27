@@ -182,6 +182,7 @@ class Pet(TimeStampedModel):
 
     class Meta:
         ordering = ['-id']
+        unique_together = ('name', 'owner')
 
 
 class Photo(models.Model):

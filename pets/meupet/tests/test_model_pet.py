@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from django.db import IntegrityError
 from django.test import TestCase
 from django.utils import timezone
 
@@ -154,6 +155,12 @@ class PetModelTest(TestCase):
         self.assertIn(missing_active, pets)
         self.assertIn(adoption_active, pets)
         self.assertNotIn(inactive_pet, pets)
+
+    def test_owner_cant_create_pets_same_name(self):
+        first = mommy.make(Pet, name='Costelinha')
+
+        with self.assertRaises(IntegrityError):
+            mommy.make(Pet, name='Costelinha', owner=first.owner)
 
     @staticmethod
     def create_pet_custom_date(modified_days, request_sent_days=None, **kwargs):

@@ -45,11 +45,13 @@ class PetForm(forms.ModelForm):
                   'profile_picture', 'size', 'sex', 'status',)
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Costelinha')}),
-            'description': forms.Textarea(attrs={'class': 'form-control',
-                                                 'placeholder': _(
-                                                     "It is black and chubby, very shy, "
-                                                     "has went gone next to the school in downtown. "
-                                                     "There's a slight flaw in the tail fur.")}),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': _(
+                    "It is black and chubby, very shy, "
+                    "has went gone next to the school in downtown. "
+                    "There's a slight flaw in the tail fur.")
+            }),
             'kind': forms.Select(attrs={'class': 'form-control'}),
             'size': forms.Select(attrs={'class': 'form-control'}),
             'sex': forms.Select(attrs={'class': 'form-control'}),
