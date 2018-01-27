@@ -29,7 +29,7 @@ sendgrid = "*"
 [dev-packages]
 
 Django = "<2" # Workaround for https://github.com/pypa/pipenv/issues/1220
-selenium = "==3.8.0"
+selenium = "==3.8.1"
 django-debug-toolbar = "*"
 django-test-without-migrations = "*"
 model_mommy = "==1.3.0"
