@@ -40,9 +40,11 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.test_state = State.objects.create(code=1, name='São Paulo')
         self.test_city = City.objects.get_or_create(code=1, name='Araras', state=self.test_state)
         mommy.make(Kind)
-        self.browser = webdriver.PhantomJS()
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('headless')
+        chrome_options.add_argument('window-size=1920x1080')
+        self.browser = webdriver.Chrome(options=chrome_options)
         self.browser.implicitly_wait(1)
-        self.browser.maximize_window()
 
     def tearDown(self):
         if self._test_has_failed():
@@ -119,8 +121,9 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.select_dropdown('state', 1)
         self.select_dropdown('city', 1)
 
+        img_path = os.path.abspath('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
         profile_picture = self.browser.find_element_by_name('profile_picture')
-        profile_picture.send_keys('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
+        profile_picture.send_keys(img_path)
 
         submit = self.browser.find_element_by_name('submit')
         submit.click()
@@ -157,8 +160,9 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.select_dropdown('sex', 1)
 
         # user select a picture of his cat
+        img_path = os.path.abspath('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
         profile_picture = self.browser.find_element_by_name('profile_picture')
-        profile_picture.send_keys('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
+        profile_picture.send_keys(img_path)
 
         # click on submit
         self.browser.find_element_by_name('submit').click()
@@ -223,8 +227,9 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + '/pets/{}/'.format(pet.slug))
 
         # upload some new photo
+        img_path = os.path.abspath('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
         profile_picture = self.browser.find_element_by_name('another_picture')
-        profile_picture.send_keys('{}/img/{}.png'.format(settings.STATICFILES_DIRS[0], 'logo'))
+        profile_picture.send_keys(img_path)
 
         img_before = len(self.browser.find_elements_by_tag_name('img'))
 
