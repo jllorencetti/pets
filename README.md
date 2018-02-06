@@ -77,15 +77,9 @@ As Pets uses [Pillow](https://pypi.python.org/pypi/Pillow), some extra packages 
 sudo apt-get install python-dev python3.x-dev libjpeg8-dev 
 ```
 
-#### Install PhantomJS
+#### Download ChromeDriver
 
-To install [PhantomJS](http://phantomjs.org) in a Debian based Linux you migh follow [Julio Napurí's tutorial](https://gist.github.com/julionc/7476620).
-
-In a Mac with [Homebrew](http://brew.sh), this does the trick:
-
-```console
-brew install phantomjs
-```
+You just need to download and unzip the latest [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) and place it somewhere in your search path.
 
 ### Install Python packages
 

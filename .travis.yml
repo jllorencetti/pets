@@ -11,7 +11,8 @@ install:
   - pip install pipenv
   - pip install coveralls
   - pipenv install --dev
-  - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+  - sudo curl --output /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
+  - sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
 script:
   - cd pets
   - coverage run --rcfile=../.coveragerc manage.py test
