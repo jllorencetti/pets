@@ -83,8 +83,10 @@ You just need to download and unzip the latest [ChromeDriver](https://sites.goog
 
 ### Install Python packages
 
+You can install the required packages with [pipenv](https://github.com/pypa/pipenv).
+
 ```console
-pip install -r requirements/local.txt
+pipenv install --dev
 ```
 
 ### Test
