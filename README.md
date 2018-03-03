@@ -1,4 +1,4 @@
-# Pets
+# Pets [![Donate](https://img.shields.io/badge/patreon-donate-ff69b4.svg)](https://www.patreon.com/jllorencetti)
 
 [![Code Climate](https://codeclimate.com/github/jllorencetti/pets/badges/gpa.svg)](https://codeclimate.com/github/jllorencetti/pets)
 [![Build Status](https://travis-ci.org/jllorencetti/pets.svg?branch=master)](https://travis-ci.org/jllorencetti/pets)
