@@ -2,9 +2,7 @@ from model_mommy import generators
 
 from .prod import *
 
-INSTALLED_APPS += ('debug_toolbar', 'test_without_migrations')
-
-MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE_CLASSES
+INSTALLED_APPS += ('test_without_migrations',)
 
 TEMPLATES[0]['OPTIONS']['loaders'] = PROJECT_TEMPLATE_LOADERS
 
