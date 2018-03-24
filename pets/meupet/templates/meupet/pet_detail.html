@@ -2,6 +2,8 @@
 {% load i18n static thumbnail %}
 
 {% block metatags %}
+  <meta name="description" content="{{ pet.description }}">
+
   <meta property="og:title" content="{{ pet.name }} | Cadê meu Bicho?">
   <meta property="og:description" content="{{ pet.description }}">
   <meta property="og:url" content="{{ current_url }}">
