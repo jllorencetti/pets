@@ -8,6 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin-bottom: 500px;
+  font-size: 1.6rem;
 }
 
 /** Home Page Banner **/
@@ -32,7 +33,6 @@ body {
 .features {
   background: url('../img/featuredbg.jpg') no-repeat center;
   background-size: cover;
-  font-size: 1.6rem;
   text-align: center;
 }
 
@@ -73,7 +73,6 @@ body {
 
 .navbar li a {
   color: inherit;
-  font-size: 1.5rem;
   transition: all .3s;
 }
 
@@ -188,7 +187,6 @@ body {
 
 .sidebar .nav li a {
   color: #11777A;
-  font-size: 1.5rem;
   position: relative;
 }
 
@@ -299,6 +297,7 @@ li.active {
 
 /** Footer **/
 .footer {
+  font-size: 1.4rem;
   position: absolute;
   bottom: 0;
   background-color: #286B5A;
