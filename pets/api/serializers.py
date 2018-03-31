@@ -9,17 +9,49 @@ from cities.models import City, State
 from meupet.models import Pet
 from users.models import OwnerProfile
 
+city_fields = (
+    'code',
+    'lat',
+    'lon',
+    'name',
+    'search_name',
+)
+
+state_fields = (
+    'abbr',
+    'name',
+)
+
+owner_fields = (
+    'id',
+    'facebook',
+    'name',
+)
+
+pet_fields = (
+    'id',
+    'city',
+    'description',
+    'kind',
+    'name',
+    'owner',
+    'profile_picture',
+    'sex',
+    'size',
+    'status',
+)
+
 
 class CitySerializer(ModelSerializer):
     class Meta:
         model = City
-        fields = ('code', 'name', 'search_name',)
+        fields = city_fields
 
 
 class StateSerializer(ModelSerializer):
     class Meta:
         model = State
-        fields = ('name', 'abbr',)
+        fields = state_fields
 
 
 class OwnerSerializer(ModelSerializer):
@@ -31,12 +63,12 @@ class OwnerSerializer(ModelSerializer):
 
     class Meta:
         model = OwnerProfile
-        fields = ('name', 'id', 'facebook',)
+        fields = owner_fields
 
 
 class PetSerializer(ModelSerializer):
     owner = OwnerSerializer()
-    city = StringRelatedField()
+    city = CitySerializer()
     kind = StringRelatedField()
 
     status = CharField(source='get_status', read_only=True)
@@ -50,5 +82,4 @@ class PetSerializer(ModelSerializer):
 
     class Meta:
         model = Pet
-        fields = ('id', 'owner', 'name', 'description', 'city', 'kind', 'status',
-                  'size', 'sex', 'profile_picture',)
+        fields = pet_fields

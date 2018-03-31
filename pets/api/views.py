@@ -20,8 +20,10 @@ class CityList(generics.ListAPIView):
 
 
 class ListPets(generics.ListAPIView):
-    queryset = Pet.objects.all()
     serializer_class = serializers.PetSerializer
+
+    def get_queryset(self):
+        return Pet.objects.select_related('city', 'owner', 'kind').all()
 
 
 class StateList(generics.ListAPIView):
