@@ -21,6 +21,8 @@ class City(models.Model):
     code = models.IntegerField()
     name = models.CharField(max_length=80)
     search_name = models.CharField(db_index=True, max_length=80)
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
 
     objects = CityQuerySet.as_manager()
 
