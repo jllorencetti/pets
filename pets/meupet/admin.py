@@ -21,6 +21,7 @@ class PetAdmin(admin.ModelAdmin):
         'kind',
         'created',
         'active',
+        'city__state',
     )
 
 
