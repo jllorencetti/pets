@@ -35,7 +35,7 @@ def pet_detail_view(request, pk_or_slug):
 
     context = {
         'pet': pet,
-        'current_url': request.build_absolute_uri(request.get_full_path()),
+        'pet_url': request.build_absolute_uri(reverse('meupet:detail', args=[pet.slug])),
     }
     return render(request, 'meupet/pet_detail.html', context)
 

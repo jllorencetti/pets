@@ -2,11 +2,12 @@
 {% load i18n static thumbnail %}
 
 {% block metatags %}
+  <link rel="canonical" href="{{ pet_url }}"/>
   <meta name="description" content="{{ pet.description }}">
 
   <meta property="og:title" content="{{ pet.name }} | Cadê meu Bicho?">
   <meta property="og:description" content="{{ pet.description }}">
-  <meta property="og:url" content="{{ current_url }}">
+  <meta property="og:url" content="{{ pet_url }}">
   <meta property="og:image"
         content="http://www.cademeubicho.com{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}">
   <meta property="og:site_name" content="Cadê meu Bicho?">
@@ -109,10 +110,10 @@
 
           <p>
             <strong>{% trans 'Share' %}:</strong><br/>
-            <a href="http://www.facebook.com/sharer.php?u={{ current_url }}" target="_blank" rel="noreferrer noopener">
+            <a href="http://www.facebook.com/sharer.php?u={{ pet_url }}" target="_blank" rel="noreferrer noopener">
               <img src="{% static 'img/facebook.png' %}" alt="Facebook"/>
             </a>
-            <a href="http://twitter.com/share?url={{ current_url }}" target="_blank" rel="noreferrer noopener">
+            <a href="http://twitter.com/share?url={{ pet_url }}" target="_blank" rel="noreferrer noopener">
               <img src="{% static 'img/twitter.png' %}" alt="Twitter"/>
             </a>
           </p>
