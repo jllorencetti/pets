@@ -33,7 +33,7 @@ class LostKindView(TestCase):
         self.assertTemplateUsed(resp, 'meupet/pet_list.html')
 
     def test_get_fallback(self):
-        resp = self.client.get('/pets/lost/{}/'.format(self.kind.id))
+        resp = self.client.get('/pets/lost/{}/'.format(self.kind.id), follow=True)
 
         self.assertEqual(200, resp.status_code)
         self.assertTemplateUsed(resp, 'meupet/pet_list.html')
@@ -50,7 +50,7 @@ class AdoptionKindView(TestCase):
         self.assertTemplateUsed(resp, 'meupet/pet_list.html')
 
     def test_get_fallback(self):
-        resp = self.client.get('/pets/adoption/{}/'.format(self.kind.id))
+        resp = self.client.get('/pets/adoption/{}/'.format(self.kind.id), follow=True)
 
         self.assertEqual(200, resp.status_code)
         self.assertTemplateUsed(resp, 'meupet/pet_list.html')

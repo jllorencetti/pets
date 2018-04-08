@@ -9,8 +9,12 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import pgettext, ugettext as _
 from django.views.decorators.http import require_POST
-from django.views.generic import ListView, CreateView, \
-    UpdateView, View
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+    View,
+)
 
 from meupet import forms, models
 from meupet.forms import SearchForm

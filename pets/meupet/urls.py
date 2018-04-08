@@ -1,15 +1,15 @@
 from django.conf.urls import url
+from django.views.generic import RedirectView
 
 from . import views
-
 
 urlpatterns = [
     # I'll keep this here for compatibility with links shared
     # on Facebook.
-    url(r'^new/$', views.RegisterPetView.as_view()),
-    url(r'^search/$', views.SearchView.as_view()),
-    url(r'^lost/(?P<kind>[0-9]+)/$', views.lost_pets),
-    url(r'^adoption/(?P<kind>[0-9]+)/$', views.adoption_pets),
+    url(r'^new/$', RedirectView.as_view(pattern_name='meupet:register', permanent=True)),
+    url(r'^search/$', RedirectView.as_view(pattern_name='meupet:search', permanent=True)),
+    url(r'^lost/(?P<kind>[0-9]+)/$', RedirectView.as_view(pattern_name='meupet:lost', permanent=True)),
+    url(r'^adoption/(?P<kind>[0-9]+)/$', RedirectView.as_view(pattern_name='meupet:adoption', permanent=True)),
 
     url(r'^$', views.PetIndexView.as_view(), name='index'),
     url(r'^novo/$', views.RegisterPetView.as_view(), name='register'),
