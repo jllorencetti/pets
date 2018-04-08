@@ -21,7 +21,7 @@ class ListPetsTest(TestCase):
             facebook='https://fb.com/4',
         )
 
-        Pet.objects.create(
+        self.pet = Pet.objects.create(
             owner=OwnerProfile.objects.first(),
             name='Dorinha',
             description='Doralice',
@@ -46,8 +46,8 @@ class ListPetsTest(TestCase):
     def test_content(self):
         """Should return the most important data, like name, description and city"""
         result = self.resp.content.decode()
-        pet_profile = resolve_url('meupet:detail', 1)
-        user_profile = resolve_url('users:user_profile', 1)
+        pet_profile = resolve_url('meupet:detail', self.pet.slug)
+        user_profile = resolve_url('users:user_profile', self.pet.owner.id)
 
         contents = (
             'Araras',

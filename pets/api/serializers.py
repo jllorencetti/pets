@@ -1,7 +1,8 @@
 from rest_framework.serializers import (
     CharField,
-    ModelSerializer,
+    HyperlinkedIdentityField,
     HyperlinkedRelatedField,
+    ModelSerializer,
     StringRelatedField,
 )
 
@@ -75,9 +76,11 @@ class PetSerializer(ModelSerializer):
     sex = CharField(source='get_sex', read_only=True)
     size = CharField(source='get_size', read_only=True)
 
-    id = HyperlinkedRelatedField(
-        view_name='meupet:detail_by_pk',
-        read_only=True
+    id = HyperlinkedIdentityField(
+        lookup_field='slug',
+        lookup_url_kwarg='pk_or_slug',
+        read_only=True,
+        view_name='meupet:detail',
     )
 
     class Meta:
