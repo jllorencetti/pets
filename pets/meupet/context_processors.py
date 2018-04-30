@@ -1,4 +1,4 @@
-from .models import Kind, Pet
+from .models import Kind, Pet, StatusGroup
 
 
 def pets_count(request):
@@ -7,8 +7,18 @@ def pets_count(request):
     }
 
 
-def kinds_count(request):
+def sidemenu(request):
+    groups = list(StatusGroup.objects.order_by('name').all())
+
+    menu_data = []
+
+    for group in groups:
+        menu_data.append({
+            'name': group.name,
+            'slug': group.slug,
+            'menu_items': Kind.objects.count_pets((group.statuses.all())),
+        })
+
     return {
-        'kind_lost': Kind.objects.lost_kinds(),
-        'kind_adoption': Kind.objects.adoption_kinds(),
+        'sidemenu': menu_data
     }

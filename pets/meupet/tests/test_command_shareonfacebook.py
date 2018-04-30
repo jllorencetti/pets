@@ -6,7 +6,7 @@ from model_mommy import mommy
 
 from cities.models import City
 from meupet.management.commands.shareonfacebook import Command
-from meupet.models import Pet
+from meupet.models import Pet, PetStatus
 from users.models import OwnerProfile
 
 
@@ -14,7 +14,8 @@ class ManagementCommandTest(TestCase):
     def setUp(self):
         self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
         self.city = mommy.make(City, name='Araras')
-        self.pet = mommy.make(Pet, city=self.city)
+        pet_status = mommy.make(PetStatus, final=False)
+        self.pet = mommy.make(Pet, city=self.city, status=pet_status)
         self.url = 'http://www.test.com{}'
 
     def test_get_attachment(self):
@@ -31,7 +32,11 @@ class ManagementCommandTest(TestCase):
         display status, the name of the pet, and the name of the city"""
         msg = Command.get_message(self.pet)
 
-        expected = '{0}: {1}, {2}'.format(self.pet.get_status_display(), self.pet.name, self.pet.city)
+        expected = '{0}: {1}, {2}'.format(
+            self.pet.status.description,
+            self.pet.name,
+            self.pet.city
+        )
 
         self.assertEqual(expected, msg)
 

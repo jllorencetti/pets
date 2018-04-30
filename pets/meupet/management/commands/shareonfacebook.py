@@ -27,7 +27,11 @@ class Command(BaseCommand):
 
     @staticmethod
     def get_message(pet):
-        return '{0}: {1}, {2}'.format(pet.get_status_display(), pet.name, pet.city)
+        return '{0}: {1}, {2}'.format(
+            pet.status.description,
+            pet.name,
+            pet.city
+        )
 
     def handle(self, *args, **options):
         api = facebook.GraphAPI(self.config.fb_share_token)

@@ -7,7 +7,7 @@ from django.test import TestCase
 
 from model_mommy import mommy
 
-from meupet.models import Pet
+from meupet.models import Pet, PetStatus
 
 
 class ServicesTest(TestCase):
@@ -15,7 +15,10 @@ class ServicesTest(TestCase):
         """
         Validate the information sent in the email
         """
-        pet = mommy.make(Pet)
+        pet = mommy.make(
+            Pet,
+            status=mommy.make(PetStatus)
+        )
 
         with mock.patch('meupet.services.send_email') as mock_send_email:
             pet.request_action()
@@ -26,7 +29,7 @@ class ServicesTest(TestCase):
             'username': pet.owner.first_name,
             'pet': pet.name,
             'days': settings.DAYS_TO_STALE_REGISTER,
-            'status': pet.get_status_display().lower(),
+            'status': pet.status.description.lower(),
             'link': 'https://%s%s' % (current_site.domain, pet_update_url),
             'site_name': current_site.name,
         }

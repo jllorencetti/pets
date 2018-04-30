@@ -2,8 +2,9 @@ import tempfile
 
 from django.core.urlresolvers import reverse
 from django.test import override_settings
+from model_mommy import mommy
 
-from meupet.models import Kind
+from meupet.models import Kind, PetStatus
 from meupet.models import Pet
 from meupet.tests.tests import MEDIA_ROOT, MeuPetTestCase
 
@@ -22,6 +23,7 @@ class PetRegisterTest(MeuPetTestCase):
 
     def setUp(self):
         super(PetRegisterTest, self).setUp()
+        status = mommy.make(PetStatus)
         self.kind = Kind.objects.create(kind='Test Kind')
         self.client.login(username='admin', password='admin')
         self.image = self._create_image()
@@ -31,7 +33,7 @@ class PetRegisterTest(MeuPetTestCase):
             'state': self.test_city.state.code,
             'city': self.test_city.code,
             'kind': self.kind.id,
-            'status': Pet.MISSING,
+            'status': status.id,
             'profile_picture': self.image
         }
 

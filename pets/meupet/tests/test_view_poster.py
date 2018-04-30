@@ -3,7 +3,7 @@ from django.test import override_settings
 
 from model_mommy import mommy
 
-from meupet.models import Pet
+from meupet.models import Pet, PetStatus
 from meupet.tests.tests import MeuPetTestCase, MEDIA_ROOT
 
 
@@ -11,9 +11,10 @@ from meupet.tests.tests import MeuPetTestCase, MEDIA_ROOT
 class PosterTest(MeuPetTestCase):
     def setUp(self):
         super().setUp()
+        status = mommy.make(PetStatus, description='status')
         self.admin.phone = '99 99999-9999'
         self.admin.save()
-        self.pet = mommy.make(Pet, owner=self.admin)
+        self.pet = mommy.make(Pet, owner=self.admin, status=status)
         self.resp = self.client.get(reverse('meupet:poster', kwargs={'slug': self.pet.slug}))
 
     def test_template_used(self):
@@ -28,7 +29,7 @@ class PosterTest(MeuPetTestCase):
     def test_poster_info(self):
         """Pet information should be presented in the poster"""
         contents = [
-            self.pet.get_status_display(),
+            self.pet.status.description,
             self.pet.name,
             self.pet.description,
             self.pet.get_sex_display().lower(),

@@ -3,7 +3,7 @@
   <img class="img-rounded" src="{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}" alt="{{ pet }}">
 
   {% if show_badge and pet.is_found_or_adopted %}
-    <h2 class="text-center"><span>{{ pet.get_status_display }}! :)</span></h2>
+    <h2 class="text-center"><span>{{ pet.status.description }}! :)</span></h2>
   {% endif %}
 
   <div class="caption">

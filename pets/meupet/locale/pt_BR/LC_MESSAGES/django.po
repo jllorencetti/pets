@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-27 15:54-0200\n"
+"POT-Creation-Date: 2018-05-06 22:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: João Luiz Lorencetti <me@dirtycoder.net>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/cade-meu-bicho/"
@@ -13,21 +13,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: meupet/forms.py:22 meupet/templates/meupet/_pet_form.html:44
-msgid "State"
-msgstr "Estado"
-
-#: meupet/forms.py:23 meupet/forms.py:75
+#: meupet/forms.py:24 meupet/forms.py:90
 #: meupet/templates/meupet/_pet_form.html:53
-#: meupet/templates/meupet/pet_detail.html:84
+#: meupet/templates/meupet/pet_detail.html:87
 msgid "City"
 msgstr "Cidade"
 
-#: meupet/forms.py:47
+#: meupet/forms.py:25 meupet/templates/meupet/_pet_form.html:44
+msgid "State"
+msgstr "Estado"
+
+#: meupet/forms.py:26 meupet/forms.py:93
+#: meupet/templates/meupet/_pet_form.html:7
+msgid "Status"
+msgstr "Situação"
+
+#: meupet/forms.py:33
 msgid "Costelinha"
 msgstr "Costelinha"
 
-#: meupet/forms.py:51
+#: meupet/forms.py:37
 msgid ""
 "It is black and chubby, very shy, has went gone next to the school in "
 "downtown. There's a slight flaw in the tail fur."
@@ -36,71 +41,50 @@ msgstr ""
 "centro.\n"
 "Tem uma pequena falha no pelo da calda."
 
-#: meupet/forms.py:64
+#: meupet/forms.py:76
 msgid "Image is larger than the maximum size of 8MB"
 msgstr "Imagem é maior do que o tamanho máximo de 8MB"
 
-#: meupet/forms.py:76 meupet/templates/meupet/_pet_form.html:62
+#: meupet/forms.py:91 meupet/templates/meupet/_pet_form.html:62
 msgid "Kind"
 msgstr "Espécie"
 
-#: meupet/forms.py:77 meupet/templates/meupet/_pet_form.html:71
-#: meupet/templates/meupet/pet_detail.html:90
+#: meupet/forms.py:92 meupet/templates/meupet/_pet_form.html:71
+#: meupet/templates/meupet/pet_detail.html:93
 #: meupet/templates/meupet/poster.html:37
 msgid "Size"
 msgstr "Tamanho"
 
-#: meupet/forms.py:78 meupet/templates/meupet/_pet_form.html:7
-msgid "Status"
-msgstr "Situação"
-
-#: meupet/forms.py:79 meupet/templates/meupet/_pet_form.html:80
-#: meupet/templates/meupet/pet_detail.html:97
+#: meupet/forms.py:94 meupet/templates/meupet/_pet_form.html:80
+#: meupet/templates/meupet/pet_detail.html:100
 msgid "Sex"
 msgstr "Sexo"
 
-#: meupet/forms.py:93
+#: meupet/forms.py:118
 msgid "You must select at least one filter"
 msgstr "Você precisa selecionar pelo menos um filtro"
 
-#: meupet/models.py:90
+#: meupet/models.py:104
 msgid "Female"
 msgstr "Fêmea"
 
-#: meupet/models.py:91
+#: meupet/models.py:105
 msgid "Male"
 msgstr "Macho"
 
-#: meupet/models.py:97
+#: meupet/models.py:111
 msgid "Small"
 msgstr "Pequeno"
 
-#: meupet/models.py:98
+#: meupet/models.py:112
 msgid "Medium"
 msgstr "Médio"
 
-#: meupet/models.py:99
+#: meupet/models.py:113
 msgid "Large"
 msgstr "Grande"
 
-#: meupet/models.py:106
-msgid "Missing"
-msgstr "Desaparecido"
-
-#: meupet/models.py:107 meupet/templates/meupet/_sidemenu.html:12
-#: meupet/views.py:84
-msgid "For Adoption"
-msgstr "Para Adoção"
-
-#: meupet/models.py:108
-msgid "Adopted"
-msgstr "Adotado"
-
-#: meupet/models.py:109
-msgid "Found"
-msgstr "Encontrado"
-
-#: meupet/models.py:126 meupet/templates/meupet/pet_detail.html:66
+#: meupet/models.py:128 meupet/templates/meupet/pet_detail.html:69
 msgid "Maximum image size is 8MB"
 msgstr "Tamanho máximo da imagem é 8MB"
 
@@ -121,7 +105,7 @@ msgid "Photo"
 msgstr "Foto"
 
 #: meupet/templates/meupet/_pet_form.html:35
-#: meupet/templates/meupet/pet_detail.html:79
+#: meupet/templates/meupet/pet_detail.html:82
 msgid "Description"
 msgstr "Descrição"
 
@@ -137,11 +121,6 @@ msgstr "Registrar Pet"
 #: meupet/templates/meupet/_pet_form.html:101
 msgid "Pet Image"
 msgstr "Imagem do Pet"
-
-#: meupet/templates/meupet/_sidemenu.html:4 meupet/views.py:75
-msgctxt "plural"
-msgid "Missing"
-msgstr "Desaparecidos"
 
 #: meupet/templates/meupet/deactivate_email.txt:1
 #: meupet/templates/meupet/request_action_email.txt:1
@@ -174,57 +153,53 @@ msgstr "Editar Pet"
 msgid "Most recent entries"
 msgstr "Cadastros mais recentes"
 
-#: meupet/templates/meupet/pet_detail.html:31
-#: meupet/templates/meupet/pet_detail.html:137
+#: meupet/templates/meupet/pet_detail.html:34
+#: meupet/templates/meupet/pet_detail.html:134
 msgid "Delete Pet"
 msgstr "Apagar Pet"
 
-#: meupet/templates/meupet/pet_detail.html:35
+#: meupet/templates/meupet/pet_detail.html:38
 msgid "Do you really want to erase this pet?"
 msgstr "Deseja realmente apagar esse pet?"
 
-#: meupet/templates/meupet/pet_detail.html:39
+#: meupet/templates/meupet/pet_detail.html:42
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: meupet/templates/meupet/pet_detail.html:43
+#: meupet/templates/meupet/pet_detail.html:46
 msgid "Delete"
 msgstr "Apagar"
 
-#: meupet/templates/meupet/pet_detail.html:64
+#: meupet/templates/meupet/pet_detail.html:67
 msgid "Add Photo"
 msgstr "Adicionar Foto"
 
-#: meupet/templates/meupet/pet_detail.html:69
+#: meupet/templates/meupet/pet_detail.html:72
 msgid "Submit Image"
 msgstr "Enviar Imagem"
 
-#: meupet/templates/meupet/pet_detail.html:103
+#: meupet/templates/meupet/pet_detail.html:106
 #: meupet/templates/meupet/poster.html:43
 msgid "Contact"
 msgstr "Contato"
 
-#: meupet/templates/meupet/pet_detail.html:109
+#: meupet/templates/meupet/pet_detail.html:112
 msgid "Share"
 msgstr "Compartilhar"
 
-#: meupet/templates/meupet/pet_detail.html:124
-msgid "Mark as found!"
-msgstr "Marcar como encontrado!"
+#: meupet/templates/meupet/pet_detail.html:125
+msgid "Mark as solved!"
+msgstr "Marcar como resolvido!"
 
-#: meupet/templates/meupet/pet_detail.html:126
-msgid "Mark as adopted!"
-msgstr "Marcar como adotado!"
-
-#: meupet/templates/meupet/pet_detail.html:132
+#: meupet/templates/meupet/pet_detail.html:129
 msgid "Edit"
 msgstr "Editar"
 
-#: meupet/templates/meupet/pet_detail.html:134
+#: meupet/templates/meupet/pet_detail.html:131
 msgid "Generate Poster"
 msgstr "Gerar Cartaz"
 
-#: meupet/templates/meupet/pet_detail.html:146
+#: meupet/templates/meupet/pet_detail.html:143
 msgid "More photos"
 msgstr "Mais fotos"
 
@@ -290,10 +265,10 @@ msgstr "Resultado"
 msgid "No results"
 msgstr "Nenhum resultado"
 
-#: meupet/views.py:99
+#: meupet/views.py:102
 msgid "Please confirm your informations before registering a new pet."
 msgstr "Por favor confirme suas informações antes de cadastrar um novo pet."
 
-#: meupet/views.py:109
+#: meupet/views.py:112
 msgid "You already have a pet registered with this name."
 msgstr "Você já possui um pet registrado com esse nome."

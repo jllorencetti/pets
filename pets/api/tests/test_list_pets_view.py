@@ -4,7 +4,7 @@ from django.test import TestCase
 from model_mommy import mommy
 
 from cities.models import City
-from meupet.models import Kind, Pet
+from meupet.models import Kind, Pet, PetStatus
 from users.models import OwnerProfile
 
 
@@ -21,13 +21,15 @@ class ListPetsTest(TestCase):
             facebook='https://fb.com/4',
         )
 
+        self.pet_status = mommy.make(PetStatus)
+
         self.pet = Pet.objects.create(
             owner=OwnerProfile.objects.first(),
             name='Dorinha',
             description='Doralice',
             city=City.objects.first(),
             kind=Kind.objects.first(),
-            status=Pet.ADOPTED,
+            status=self.pet_status,
             size=Pet.SMALL,
             sex=Pet.FEMALE,
             published=True,
@@ -55,7 +57,7 @@ class ListPetsTest(TestCase):
             'Gato',
             'Dorinha',
             'Female',
-            'Adopted',
+            self.pet_status.description,
             'Small',
             pet_profile,
             user_profile,

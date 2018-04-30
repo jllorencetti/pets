@@ -18,6 +18,7 @@ from django.views.generic import (
 
 from meupet import forms, models
 from meupet.forms import SearchForm
+from meupet.models import StatusGroup
 
 
 class PetIndexView(ListView):
@@ -72,22 +73,20 @@ def render_pet_list(request, kind, status, queryset):
     })
 
 
-def lost_pets(request, kind):
-    return render_pet_list(
-        request,
-        kind,
-        pgettext('plural', 'Missing'),
-        models.Pet.objects.get_lost_or_found(kind)
-    )
+def pet_list(request, group, kind):
+    group = StatusGroup.objects.get(slug=group)
+    queryset = models.Pet.objects.select_related('city')
+    queryset = queryset.filter(active=True)
+    queryset = queryset.filter(status__in=group.statuses.all(), kind__slug=kind)
 
+    pets, page = paginate_pets(queryset, request.GET.get('page'))
 
-def adoption_pets(request, kind):
-    return render_pet_list(
-        request,
-        kind,
-        _('For Adoption'),
-        models.Pet.objects.get_for_adoption_adopted(kind)
-    )
+    return render(request, 'meupet/pet_list.html', {
+        'pets': pets,
+        'kind': kind,
+        'status': group.name,
+        'current_page': page
+    })
 
 
 class RegisterPetView(LoginRequiredMixin, CreateView):

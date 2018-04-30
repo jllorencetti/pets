@@ -19,8 +19,8 @@
         content="http://www.cademeubicho.com{{ pet.profile_picture|thumbnail_url:'pet_thumb' }}">
 {% endblock %}
 
-{% block title %}{{ pet.name }} - {{ pet.get_status_display }}{% endblock %}
-{% block page_title %}{{ pet.get_status_display }}: {{ pet.name|title }}, {{ pet.city|title }}{% endblock %}
+{% block title %}{{ pet.name }} - {{ pet.status.description }}{% endblock %}
+{% block page_title %}{{ pet.status.description }}: {{ pet.name|title }}, {{ pet.city|title }}{% endblock %}
 
 {% block content %}
   <div class="modal fade" id="delete_pet" tabindex="-1">
@@ -119,16 +119,10 @@
           </p>
           {% if user == pet.owner %}
             <div class="pull-right">
-              {% if not pet.found_or_adopted %}
+              {% if not pet.status.final %}
                 <form action="{% url 'meupet:change_status' pet.slug %}" method="post" class="form-inline">
                   {% csrf_token %}
-                  <input type="submit" class="btn btn-success" value="
-                    {% if pet.status == pet.MISSING %}
-                      {% trans 'Mark as found!' %}
-                    {% else %}
-                      {% trans 'Mark as adopted!' %}
-                    {% endif %}
-                  "/>
+                  <input type="submit" class="btn btn-success" value="{% trans 'Mark as solved!' %}"/>
                 </form>
               {% endif %}
 

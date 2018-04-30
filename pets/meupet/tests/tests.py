@@ -9,7 +9,7 @@ from model_mommy import mommy
 
 from cities.models import City
 from meupet import forms
-from meupet.models import Pet, Kind
+from meupet.models import Pet, Kind, PetStatus, StatusGroup
 from meupet.views import paginate_pets
 from users.models import OwnerProfile
 
@@ -26,7 +26,11 @@ class MeuPetTestCase(TestCase):
         )
         self.test_city = mommy.make(City, name='Testing City')
 
-    def create_pet(self, status=Pet.MISSING, kind=None, **kwargs):
+    def create_pet(self, status=None, kind=None, **kwargs):
+        if not status:
+            group = mommy.make(StatusGroup, )
+            status = mommy.make(PetStatus, final=False, group=group)
+
         pet = mommy.make(Pet, status=status, owner=self.admin, **kwargs)
 
         if kind:
@@ -83,13 +87,13 @@ class MeuPetTest(MeuPetTestCase):
     def test_display_only_pets_from_kind(self):
         """Only display the actives pets from the kind being shown"""
         first_cat = self.create_pet(kind='Cat')
-        second_cat = self.create_pet(kind='Cat')
+        second_cat = self.create_pet(kind='Cat', status=first_cat.status)
         inactive_cat = self.create_pet(kind='Cat', active=False)
         dog = self.create_pet(kind='Dog')
 
         kind = Kind.objects.get(kind='Cat')
 
-        content = self.client.get(reverse('meupet:lost', args=[kind.id]))
+        content = self.client.get(reverse('meupet:pet_list', args=[first_cat.status.group.slug, kind.slug]))
         pets_count = Pet.objects.actives().filter(kind=kind).count()
 
         self.assertContains(content, first_cat.name)
@@ -125,14 +129,18 @@ class MeuPetTest(MeuPetTestCase):
         self.client.login(username='admin', password='admin')
         pet = self.create_pet(kind='Cat')
 
-        response_post = self.client.post(reverse('meupet:edit', args=[pet.slug]),
-                                         data={'name': 'Testing Fuzzy Boots',
-                                               'description': 'My lovely cat',
-                                               'state': self.test_city.state.code,
-                                               'city': self.test_city.code,
-                                               'kind': pet.kind.id,
-                                               'status': pet.status,
-                                               'profile_picture': pet.profile_picture.url})
+        response_post = self.client.post(
+            reverse('meupet:edit', args=[pet.slug]),
+            data={
+                'name': 'Testing Fuzzy Boots',
+                'description': 'My lovely cat',
+                'state': self.test_city.state.code,
+                'city': self.test_city.code,
+                'kind': pet.kind.id,
+                'status': pet.status.id,
+                'profile_picture': pet.profile_picture.url
+            }
+        )
         response_get = self.client.get(pet.get_absolute_url())
 
         self.assertRedirects(response_post, pet.get_absolute_url())
@@ -185,45 +193,13 @@ class MeuPetTest(MeuPetTestCase):
     def test_display_status_on_pet_page(self):
         """Show the name of the pet and the readable status name"""
         missing_pet = self.create_pet()
-        adoption_pet = self.create_pet(status=Pet.FOR_ADOPTION)
 
         response_missing = self.client.get(missing_pet.get_absolute_url())
-        response_adoption = self.client.get(adoption_pet.get_absolute_url())
 
         self.assertContains(response_missing, '{0} - {1}'.format(
             missing_pet.name,
-            missing_pet.get_status_display()
+            missing_pet.status.description,
         ))
-
-        self.assertContains(response_adoption, '{0} - {1}'.format(
-            adoption_pet.name,
-            adoption_pet.get_status_display()
-        ))
-
-    def test_manager_lost_found(self):
-        """Manager should return lost and found pets of the correct kind"""
-        self.create_pet(kind='Dog', _quantity=2)
-        self.create_pet(kind='Dog', status=Pet.FOUND)
-        self.create_pet(kind='Dog', status=Pet.FOR_ADOPTION)
-
-        dog_kind = Kind.objects.get(kind='Dog')
-
-        pets = Pet.objects.get_lost_or_found(dog_kind.id)
-
-        self.assertEquals(len(pets), 3)
-
-    def test_manager_adoption_adopted(self):
-        """Manager should return adopted and for adoption pets of the correct kind"""
-        self.create_pet(kind='Test')
-        self.create_pet(kind='Test', status=Pet.FOUND)
-        self.create_pet(kind='Test', status=Pet.ADOPTED)
-        self.create_pet(kind='Test', status=Pet.FOR_ADOPTION)
-
-        kind = Kind.objects.get(kind='Test')
-
-        pets = Pet.objects.get_for_adoption_adopted(kind.id)
-
-        self.assertEquals(len(pets), 2)
 
     def test_incorrect_form_submission_reload_page_with_values(self):
         """Incomplete form submission should reload the page
@@ -302,11 +278,16 @@ class MeuPetTest(MeuPetTestCase):
 class PaginationListPetViewTest(MeuPetTestCase):
     def setUp(self):
         super(PaginationListPetViewTest, self).setUp()
-        self.pet = self.create_pet(kind='First Kind')
+        self.status_group = mommy.make(StatusGroup)
+        self.status = mommy.make(PetStatus, group=self.status_group)
+        self.pet = self.create_pet(kind='First Kind', status=self.status)
 
     def test_get_page_query_string(self):
         """Should return the page informed in the query string"""
-        resp = self.client.get(reverse('meupet:lost', args=[self.pet.kind_id]), {'page': 1})
+        resp = self.client.get(
+            reverse('meupet:pet_list', args=[self.status_group.slug, self.pet.kind.slug]),
+            {'page': 1},
+        )
 
         self.assertContains(resp, self.pet.name)
 

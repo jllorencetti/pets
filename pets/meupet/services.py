@@ -34,7 +34,7 @@ def send_request_action_email(pet):
         'username': pet.owner.first_name,
         'pet': pet.name,
         'days': settings.DAYS_TO_STALE_REGISTER,
-        'status': pet.get_status_display().lower(),
+        'status': pet.status.description.lower(),
         'link': full_url,
         'site_name': current_site.name,
     }

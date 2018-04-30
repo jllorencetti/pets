@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from model_mommy import mommy
 
 from cities.models import City, State
-from meupet.models import Kind, Pet
+from meupet.models import Kind, Pet, PetStatus, StatusGroup
 from users.models import OwnerProfile
 
 
@@ -40,6 +40,8 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.test_state = State.objects.create(code=1, name='São Paulo')
         self.test_city = City.objects.get_or_create(code=1, name='Araras', state=self.test_state)
         mommy.make(Kind)
+        mommy.make(PetStatus, final=False, description='For Adoption')
+        mommy.make(PetStatus, final=False, description='Missing')
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('headless')
         chrome_options.add_argument('window-size=1920x1080')
@@ -150,6 +152,9 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.select_dropdown('state', 1)
         self.select_dropdown('city', 1)
 
+        # select status
+        self.select_dropdown('status', 1)
+
         # selects the kind as a Cat
         self.select_dropdown('kind', 1)
 
@@ -169,14 +174,14 @@ class SiteTestCases(StaticLiveServerTestCase):
 
         # assert pet was registered
         self.browser.find_element_by_link_text('aqui').click()
-        self.assertIn('Wrong Boots - Missing', self.browser.page_source)
+        self.assertIn('Wrong Boots - For Adoption', self.browser.page_source)
 
         # user is redirected for the page of his pet and see the wrong name
         # then click on 'Edit' and get redirected for the editing page
         self.browser.find_element_by_link_text('Edit').click()
 
-        # user change the status to 'For Adoption'
-        self.select_dropdown('status', 1)
+        # user change the status to 'Missing'
+        self.select_dropdown('status', 2)
 
         # user inform the correct name for the pet then save
         self.browser.find_element_by_name('name').clear()
@@ -191,7 +196,7 @@ class SiteTestCases(StaticLiveServerTestCase):
         self.assertIn('Large', self.browser.page_source)
         self.assertIn('Female', self.browser.page_source)
         self.assertIn('Araras', self.browser.page_source)
-        self.assertIn('Fuzzy Boots - For Adoption', self.browser.page_source)
+        self.assertIn('Fuzzy Boots - Missing', self.browser.page_source)
 
     def test_edit_profile_information(self):
         # user login

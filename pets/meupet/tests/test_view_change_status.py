@@ -3,7 +3,7 @@ from django.test import TestCase
 
 from model_mommy import mommy
 
-from meupet.models import Pet
+from meupet.models import Pet, PetStatus
 from users.models import OwnerProfile
 
 
@@ -15,17 +15,19 @@ class ChangeStatusViewTest(TestCase):
             username='admin',
             password='admin',
         )
-        self.pet = mommy.make(Pet, status=Pet.FOR_ADOPTION, owner=self.admin)
+        pet_status_next = mommy.make(PetStatus, final=True)
+        pet_status = mommy.make(PetStatus, final=False, next_status=pet_status_next)
+        self.pet = mommy.make(Pet, status=pet_status, owner=self.admin)
 
     def test_change_status(self):
-        """Updates status of the pet from 'For Adoption' to 'Adopted'"""
+        """Updates status of the pet from initial to a final status"""
         self.client.login(username='admin', password='admin')
 
         self.client.post(reverse('meupet:change_status', args=[self.pet.slug]))
 
         self.pet.refresh_from_db()
 
-        self.assertEqual(Pet.ADOPTED, self.pet.status)
+        self.assertTrue(self.pet.status.final)
 
     def test_only_owner_can_update_pet(self):
         """Only the ownser should be able to change the pet's status"""
@@ -33,7 +35,7 @@ class ChangeStatusViewTest(TestCase):
 
         self.pet.refresh_from_db()
 
-        self.assertEqual(Pet.FOR_ADOPTION, self.pet.status)
+        self.assertFalse(self.pet.status.final)
         self.assertRedirects(response, self.pet.get_absolute_url())
 
     def test_only_accept_post_method(self):

@@ -3,7 +3,7 @@ from django.test import TestCase
 
 from model_mommy import mommy
 
-from meupet.models import Pet
+from meupet.models import Pet, PetStatus
 from users.models import OwnerProfile
 
 
@@ -15,7 +15,8 @@ class DeleteViewTest(TestCase):
             username='admin',
             password='admin',
         )
-        self.pet = mommy.make(Pet, status=Pet.FOR_ADOPTION, owner=self.admin)
+        pet_status = mommy.make(PetStatus)
+        self.pet = mommy.make(Pet, status=pet_status, owner=self.admin)
 
     def test_owner_can_delete_pet(self):
         """Only the owner should be able to delete its own pet"""

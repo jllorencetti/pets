@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-04 16:57-0300\n"
+"POT-Creation-Date: 2018-05-06 22:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: João Luiz Lorencetti <me@dirtycoder.net>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/cade-meu-bicho/"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: pets/users/forms.py:27
+#: users/forms.py:27
 msgid ""
 "Click <a href=\"#\" data-toggle=\"modal\" data-target=\"#ajuda-facebook"
 "\">here</a> to get help filling this field."
@@ -21,62 +21,59 @@ msgstr ""
 "Clique <a href=\"#\" data-toggle=\"modal\" data-target=\"#ajuda-facebook"
 "\">aqui</a> para aprender a preencher esse campo."
 
-#: pets/users/forms.py:33 pets/users/templates/users/create.html:103
+#: users/forms.py:33 users/templates/users/create.html:103
 msgid "Password"
 msgstr "Senha"
 
-#: pets/users/forms.py:34 pets/users/templates/users/create.html:111
+#: users/forms.py:34 users/templates/users/create.html:111
 msgid "Password confirmation"
 msgstr "Confirmação de senha"
 
-#: pets/users/forms.py:46
+#: users/forms.py:46
 msgid "Enter the full address for your Facebook profile."
 msgstr "Informe o endereço completo de seu perfil no Facebook."
 
-#: pets/users/forms.py:48
+#: users/forms.py:48
 msgid "Required. 30 characters or less. Only letters, numbers e @/./+/-/_."
 msgstr ""
 "Obrigatório. 30 caracteres ou menos. Somente letras, números e @/./+/-/_."
 
-#: pets/users/forms.py:60
+#: users/forms.py:60
 msgid "The two password fields didn't match."
 msgstr "As duas senhas não combinam."
 
-#: pets/users/forms.py:78
+#: users/forms.py:78
 msgid "Save Changes"
 msgstr "Salvar Alterações"
 
-#: pets/users/forms.py:90 pets/users/forms.py:97
-#: pets/users/templates/users/recover.html:4
-#: pets/users/templates/users/reset.html:4
-#: pets/users/templates/users/reset_done.html:4
+#: users/forms.py:90 users/forms.py:97 users/templates/users/recover.html:4
+#: users/templates/users/reset.html:4 users/templates/users/reset_done.html:4
 msgid "Recover password"
 msgstr "Recuperar senha"
 
-#: pets/users/templates/users/create.html:4
-#: pets/users/templates/users/create.html:119
+#: users/templates/users/create.html:4 users/templates/users/create.html:119
 msgid "Create Account"
 msgstr "Criar Conta"
 
-#: pets/users/templates/users/create.html:13
-#: pets/users/templates/users/edit_profile.html:13
+#: users/templates/users/create.html:13
+#: users/templates/users/edit_profile.html:13
 msgid "Find your Facebook profile address"
 msgstr "Encontre o endereço do seu perfil no Facebook"
 
-#: pets/users/templates/users/create.html:18
-#: pets/users/templates/users/edit_profile.html:18
+#: users/templates/users/create.html:18
+#: users/templates/users/edit_profile.html:18
 msgid "On Facebook, find your name in the top navigation bar and click on it."
 msgstr ""
 "No Facebook, encontre o seu nome na barra superior de navegação e clique "
 "nele."
 
-#: pets/users/templates/users/create.html:21
-#: pets/users/templates/users/edit_profile.html:21
+#: users/templates/users/create.html:21
+#: users/templates/users/edit_profile.html:21
 msgid "Facebook's navigation bar"
 msgstr "Barra de navegação do Facebook"
 
-#: pets/users/templates/users/create.html:24
-#: pets/users/templates/users/edit_profile.html:24
+#: users/templates/users/create.html:24
+#: users/templates/users/edit_profile.html:24
 msgid ""
 "After the page loads your profile address will be in your browser's address "
 "bar."
@@ -84,102 +81,100 @@ msgstr ""
 "Depois que a página carregar, o endereço do seu perfil será exibido na barra "
 "de endereço do seu navegador."
 
-#: pets/users/templates/users/create.html:27
-#: pets/users/templates/users/edit_profile.html:27
+#: users/templates/users/create.html:27
+#: users/templates/users/edit_profile.html:27
 msgid "Browser's address bar"
 msgstr "Barra de endereço do navegador"
 
-#: pets/users/templates/users/create.html:30
-#: pets/users/templates/users/edit_profile.html:30
+#: users/templates/users/create.html:30
+#: users/templates/users/edit_profile.html:30
 msgid "Copy and paste the address in the form field"
 msgstr "Copie e cole o endereço no campo do formulário"
 
-#: pets/users/templates/users/create.html:33
-#: pets/users/templates/users/edit_profile.html:33
+#: users/templates/users/create.html:33
+#: users/templates/users/edit_profile.html:33
 msgid "Filled form"
 msgstr "Formulário preenchido"
 
-#: pets/users/templates/users/create.html:38
-#: pets/users/templates/users/edit_profile.html:38
+#: users/templates/users/create.html:38
+#: users/templates/users/edit_profile.html:38
 msgid "Close"
 msgstr "Fechar"
 
-#: pets/users/templates/users/create.html:44
+#: users/templates/users/create.html:44
 msgid "Login with your Facebook or Twitter:"
 msgstr "Faça login com o seu Facebook ou Twitter:"
 
-#: pets/users/templates/users/create.html:48
+#: users/templates/users/create.html:48
 msgid "Or create a new account:"
 msgstr "Ou crie uma nova conta:"
 
-#: pets/users/templates/users/create.html:53
+#: users/templates/users/create.html:53
 msgid "First name"
 msgstr "Nome"
 
-#: pets/users/templates/users/create.html:61
+#: users/templates/users/create.html:61
 msgid "Last name"
 msgstr "Sobrenome"
 
-#: pets/users/templates/users/create.html:69
-#: pets/users/templates/users/profile.html:17
+#: users/templates/users/create.html:69 users/templates/users/profile.html:17
 msgid "Email"
 msgstr "Email"
 
-#: pets/users/templates/users/create.html:77
+#: users/templates/users/create.html:77
 msgid "Username"
 msgstr "Usuário"
 
-#: pets/users/templates/users/create.html:95
-#: pets/users/templates/users/profile.html:21
+#: users/templates/users/create.html:95 users/templates/users/profile.html:21
 msgid "Phone"
 msgstr "Telefone"
 
-#: pets/users/templates/users/edit_profile.html:4
+#: users/templates/users/edit_profile.html:4
 msgid "Edit Profile"
 msgstr "Editar Perfil"
 
-#: pets/users/templates/users/edit_profile.html:44
+#: users/templates/users/edit_profile.html:44
 msgid "Your Profile"
 msgstr "Seu Perfil"
 
-#: pets/users/templates/users/login.html:4
+#: users/templates/users/login.html:4
 msgid "Authentication"
 msgstr "Autenticação"
 
-#: pets/users/templates/users/login.html:27
+#: users/templates/users/login.html:27
 msgid "Login"
 msgstr "Login"
 
-#: pets/users/templates/users/login.html:31
+#: users/templates/users/login.html:31
 msgid "Forgot you password?"
 msgstr "Esqueceu sua senha?"
 
-#: pets/users/templates/users/login.html:32
+#: users/templates/users/login.html:32
 msgid "Login with your Facebook or Twitter"
 msgstr "Faça login com o seu Facebook ou Twitter"
 
-#: pets/users/templates/users/profile.html:9
+#: users/templates/users/profile.html:9
 msgid "Contacts"
 msgstr "Contatos"
 
-#: pets/users/templates/users/profile.html:27
+#: users/templates/users/profile.html:27
 msgid "Edit"
 msgstr "Editar"
 
-#: pets/users/templates/users/profile.html:30
+#: users/templates/users/profile.html:30
 msgid "Registered pets"
 msgstr "Pets Registrados"
 
-#: pets/users/templates/users/recover.html:11
+#: users/templates/users/recover.html:11
 msgid "To recover your password enter your email address or username."
 msgstr ""
 "Para recuperar sua senha, informe o seu endereço de email ou o usuário."
 
-#: pets/users/templates/users/recover.html:17
+#: users/templates/users/recover.html:17
 msgid "An email has just been sent to"
 msgstr "Um email acaba de ser enviado para"
 
-#: pets/users/templates/users/recover.html:20
+#: users/templates/users/recover.html:20
 msgid ""
 "Use the link in this email to set up a new password. The link is valid for "
 "two hours."
@@ -187,17 +182,16 @@ msgstr ""
 "Use o link nesse email para configurar uma nova senha. O link é válido por "
 "duas horas."
 
-#: pets/users/templates/users/recover.html:24
-#: pets/users/templates/users/recover.html:25
+#: users/templates/users/recover.html:24 users/templates/users/recover.html:25
 msgid "Back to home page"
 msgstr "Voltar para a página inicial"
 
-#: pets/users/templates/users/recover_email.txt:1
+#: users/templates/users/recover_email.txt:1
 #, python-format
 msgid "Dear %(username)s,"
 msgstr "Olá %(username)s,"
 
-#: pets/users/templates/users/recover_email.txt:3
+#: users/templates/users/recover_email.txt:3
 #, python-format
 msgid ""
 "You -- or someone pretending to be you -- has requested a password reset on "
@@ -206,11 +200,11 @@ msgstr ""
 "Você - ou alguém se passando por você - requisitou uma nova senha no "
 "%(domain)s."
 
-#: pets/users/templates/users/recover_email.txt:5
+#: users/templates/users/recover_email.txt:5
 msgid "You can set your new password by following this link:"
 msgstr "Você pode configurar sua nova senha utilizando esse link:"
 
-#: pets/users/templates/users/recover_email.txt:9
+#: users/templates/users/recover_email.txt:9
 msgid ""
 "If you don't want to reset your password simply ignore this email and it "
 "will stay unchanged."
@@ -218,26 +212,26 @@ msgstr ""
 "Se você não quer trocar sua senha, apenas ignore esse email e a atual será "
 "mantida."
 
-#: pets/users/templates/users/reset.html:10
+#: users/templates/users/reset.html:10
 msgid "Enter a new password."
 msgstr "Informe sua nova senha."
 
-#: pets/users/templates/users/reset.html:13
+#: users/templates/users/reset.html:13
 #, python-format
 msgid "If you forgot, your username is <strong>%(username)s</strong>."
 msgstr "Se esqueceu, seu usuário é <strong>%(username)s</strong>."
 
-#: pets/users/templates/users/reset_done.html:9
+#: users/templates/users/reset_done.html:9
 msgid "Your password has been successfully changed."
 msgstr "Sua senha foi trocada com sucesso."
 
-#: pets/users/templates/users/reset_done.html:12
+#: users/templates/users/reset_done.html:12
 #, python-format
 msgid "Click <a href=\"%(page_url)s\">here</a> to login into your account."
 msgstr ""
 "Clique <a href=\"%(page_url)s\">aqui</a> para efetuar login na sua conta."
 
-#: pets/users/views.py:47
+#: users/views.py:45
 #, python-brace-format
 msgid ""
 "Your account has been successfully created, access <a href=\"{0}\">this "
@@ -246,6 +240,6 @@ msgstr ""
 "Sua conta foi criada com sucesso, acesse <a href=\"{0}\">essa página</a> e "
 "cadastre o pet :)"
 
-#: pets/users/views.py:71
+#: users/views.py:74
 msgid "Changes saved successfully."
 msgstr "Alterações salvas com sucesso."

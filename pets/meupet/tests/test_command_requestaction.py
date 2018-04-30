@@ -7,14 +7,15 @@ from django.utils import timezone
 
 from model_mommy import mommy
 
-from meupet.models import Pet
+from meupet.models import Pet, PetStatus
 
 
 class RequestActionTest(TestCase):
     @staticmethod
     def test_requestaction():
         """Command should call request_action in staled pets"""
-        pet = mommy.make(Pet)
+        pet_status = mommy.make(PetStatus, final=False)
+        pet = mommy.make(Pet, status=pet_status)
         pet.modified = timezone.now() - timezone.timedelta(days=settings.DAYS_TO_STALE_REGISTER)
         pet.save(update_modified=False)
 

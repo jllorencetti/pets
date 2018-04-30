@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-04 16:57-0300\n"
+"POT-Creation-Date: 2018-05-06 22:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: João Luiz Lorencetti <me@dirtycoder.net>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/cade-meu-bicho/"
@@ -13,51 +13,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: pets/templates/_layouts/base.html:8
+#: templates/_layouts/base.html:8
 msgid "Missing and for adoption pets"
 msgstr "Pets desaparecidos e para adoção"
 
-#: pets/templates/_layouts/base.html:36
+#: templates/_layouts/base.html:43
 msgid "Toggle navigation"
 msgstr "Alternar navegação"
 
-#: pets/templates/_layouts/base.html:47
+#: templates/_layouts/base.html:54
 msgid "Pets"
 msgstr "Pets"
 
-#: pets/templates/_layouts/base.html:48
+#: templates/_layouts/base.html:76
 msgid "Register Pet"
 msgstr "Cadastrar Pet"
 
-#: pets/templates/_layouts/base.html:50
+#: templates/_layouts/base.html:78
 msgid "Profile"
 msgstr "Perfil"
 
-#: pets/templates/_layouts/base.html:51
+#: templates/_layouts/base.html:79
 msgid "Logout"
 msgstr "Logout"
 
-#: pets/templates/_layouts/base.html:53
+#: templates/_layouts/base.html:81
 msgid "Create Account"
 msgstr "Criar Conta"
 
-#: pets/templates/_layouts/base.html:54
+#: templates/_layouts/base.html:82
 msgid "Login"
 msgstr "Login"
 
-#: pets/templates/_layouts/base.html:56 pets/templates/_layouts/base.html:119
+#: templates/_layouts/base.html:84 templates/_layouts/base.html:162
 msgid "About"
 msgstr "Sobre"
 
-#: pets/templates/_layouts/base.html:57
+#: templates/_layouts/base.html:85
 msgid "Search"
 msgstr "Pesquisar"
 
-#: pets/templates/_layouts/base.html:109
+#: templates/_layouts/base.html:152
 msgid "Made with &hearts; in Araras, São Paulo"
 msgstr "Feito com &hearts; em Araras, São Paulo"
 
-#: pets/templates/_layouts/base.html:121
+#: templates/_layouts/base.html:164
 msgid ""
 "The purpose of Cadê meu Bicho is to provide the encounter between the best "
 "or future best friends. :)"
@@ -65,22 +65,22 @@ msgstr ""
 "O objetivo do Cadê meu Bicho é proporcionar o encontro entre os melhores ou "
 "futuro melhores amigos. :)"
 
-#: pets/templates/_layouts/base.html:124
+#: templates/_layouts/base.html:167
 msgid "Contact"
 msgstr "Contato"
 
-#: pets/templates/_partials/pet_card.html:18
+#: templates/_partials/pet_card.html:18
 msgid "Details"
 msgstr "Detalhes"
 
-#: pets/templates/_partials/pets_list.html:17
+#: templates/_partials/pets_list.html:17
 msgid "Previous"
 msgstr "Anterior"
 
-#: pets/templates/_partials/pets_list.html:29
+#: templates/_partials/pets_list.html:29
 msgid "Next"
 msgstr "Próxima"
 
-#: pets/templates/_partials/pets_list.html:38
+#: templates/_partials/pets_list.html:38
 msgid "No friends in this category yet :)"
 msgstr "Nenhum amiguinho nessa categoria ainda. :)"

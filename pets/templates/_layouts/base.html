@@ -56,21 +56,19 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
              aria-expanded="false">Pets <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <h6 class="dropdown-header">{% trans 'Missing' context 'plural' %}</h6>
-            {% for kind in kind_lost %}
-              <li>
-                <a href="{% url 'meupet:lost' kind.slug %}">
-                  {{ kind }} <span class="badge">{{ kind.num_pets }}</span>
-                </a>
-              </li>
-            {% endfor %}
-            <h6 class="dropdown-header">{% trans 'For Adoption' %}</h6>
-            {% for kind in kind_adoption %}
-              <li>
-                <a href="{% url 'meupet:adoption' kind.slug %}">
-                  {{ kind }} <span class="badge">{{ kind.num_pets }}</span>
-                </a>
-              </li>
+            {% for group in sidemenu %}
+              {% if group.menu_items %}
+                <h6 class="dropdown-header">{{ group.name }}</h6>
+                <ul class="nav">
+                  {% for menu_item in group.menu_items %}
+                    <li>
+                      <a href="{% url 'meupet:pet_list' group.slug menu_item.slug %}">
+                        {{ menu_item }} <span class="badge">{{ menu_item.num_pets }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             {% endfor %}
             <li role="separator" class="divider visible-xs"></li>
           </ul>
@@ -119,22 +117,18 @@
       {% block body %}
         <div class="col-md-2 hidden-xs hidden-sm">
           <div class="sidebar">
-            <h3 class="title-text">{% trans 'Missing' context 'plural' %}</h3>
-            <ul class="nav">
-              {% for kind in kind_lost %}
-                <li><a href="{% url 'meupet:lost' kind.slug %}">
-                  {{ kind }} <span class="badge">{{ kind.num_pets }}</span></a>
-                </li>
-              {% endfor %}
-            </ul>
-            <h3 class="title-text">{% trans 'For Adoption' %}</h3>
-            <ul class="nav">
-              {% for kind in kind_adoption %}
-                <li><a href="{% url 'meupet:adoption' kind.slug %}">
-                  {{ kind }} <span class="badge">{{ kind.num_pets }}</span></a>
-                </li>
-              {% endfor %}
-            </ul>
+            {% for group in sidemenu %}
+              {% if group.menu_items %}
+                <h3 class="title-text">{{ group.name }}</h3>
+                <ul class="nav">
+                  {% for menu_item in group.menu_items %}
+                    <li><a href="{% url 'meupet:pet_list' group.slug menu_item.slug %}">
+                      {{ menu_item }} <span class="badge">{{ menu_item.num_pets }}</span></a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            {% endfor %}
           </div>
         </div>
 

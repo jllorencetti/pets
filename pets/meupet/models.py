@@ -21,12 +21,6 @@ class PetQuerySet(models.QuerySet):
         except ValueError:
             return self.actives().filter(kind__slug=kind).select_related('city')
 
-    def get_lost_or_found(self, kind):
-        return self._filter_by_kind(kind).filter(status__in=[Pet.MISSING, Pet.FOUND])
-
-    def get_for_adoption_adopted(self, kind):
-        return self._filter_by_kind(kind).filter(status__in=[Pet.FOR_ADOPTION, Pet.ADOPTED])
-
     def get_unpublished_pets(self):
         return self.filter(published=False)
 
@@ -39,7 +33,7 @@ class PetQuerySet(models.QuerySet):
         return self.filter(
             modified__lt=stale_date,
             request_sent__isnull=True,
-            status__in=[Pet.MISSING, Pet.FOR_ADOPTION]
+            status__in=PetStatus.objects.filter(final=False)
         )
 
     def actives(self):
@@ -59,12 +53,6 @@ class KindManager(models.Manager):
         return self.filter(pet__status__in=status, pet__active=True) \
             .annotate(num_pets=models.Count('pet')).order_by('kind')
 
-    def lost_kinds(self):
-        return self.count_pets([Pet.MISSING, Pet.FOUND])
-
-    def adoption_kinds(self):
-        return self.count_pets([Pet.FOR_ADOPTION, Pet.ADOPTED])
-
 
 class Kind(models.Model):
     kind = models.TextField(max_length=100, unique=True)
@@ -83,6 +71,32 @@ def get_slug(instance):
     return slugify('{}-{}'.format(instance.name, city))
 
 
+class StatusGroup(models.Model):
+    slug = AutoSlugField(max_length=64, unique=True, populate_from='name')
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
+
+
+class PetStatus(models.Model):
+    group = models.ForeignKey(StatusGroup, related_name='statuses', blank=True, null=True)
+    code = models.CharField(max_length=32, unique=True)
+    description = models.CharField(max_length=64)
+    next_status = models.OneToOneField('self', blank=True, null=True)
+    final = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('description',)
+
+    def __str__(self):
+        return self.description
+
+    @property
+    def next(self):
+        return self.next_status
+
+
 class Pet(TimeStampedModel):
     MALE = 'MA'
     FEMALE = 'FE'
@@ -98,24 +112,12 @@ class Pet(TimeStampedModel):
         (MEDIUM, _('Medium')),
         (LARGE, _('Large')),
     )
-    MISSING = 'MI'
-    FOR_ADOPTION = 'FA'
-    ADOPTED = 'AD'
-    FOUND = 'FO'
-    PET_STATUS = (
-        (MISSING, _('Missing')),
-        (FOR_ADOPTION, _('For Adoption')),
-        (ADOPTED, _('Adopted')),
-        (FOUND, _('Found')),
-    )
     owner = models.ForeignKey(OwnerProfile)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
     city = models.ForeignKey('cities.City')
     kind = models.ForeignKey(Kind, null=True)
-    status = models.CharField(max_length=2,
-                              choices=PET_STATUS,
-                              default=MISSING)
+    status = models.ForeignKey(PetStatus, related_name='pets', blank=True, null=True)
     size = models.CharField(max_length=2,
                             choices=PET_SIZE,
                             blank=True)
@@ -135,18 +137,15 @@ class Pet(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('meupet:detail', kwargs={'pk_or_slug': self.slug})
 
-    def found_or_adopted(self):
-        return self.status == self.ADOPTED or self.status == self.FOUND
-
     def change_status(self):
-        self.status = self.FOUND if self.status == self.MISSING else self.ADOPTED
+        self.status = self.status.next
         self.save()
 
     def is_found_or_adopted(self):
-        return self.status in (self.ADOPTED, self.FOUND)
+        return self.status.final
 
     def get_status(self):
-        return dict(self.PET_STATUS).get(self.status)
+        return self.status.description
 
     def get_sex(self):
         return dict(self.PET_SEX).get(self.sex)
