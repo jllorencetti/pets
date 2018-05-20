@@ -23,7 +23,6 @@ sendgrid = "*"
 raven = "*"
 
 [dev-packages]
-Django = "<2" # Workaround for https://github.com/pypa/pipenv/issues/1220
 selenium = "*"
 django-test-without-migrations = "*"
 model_mommy = "==1.3.0"
