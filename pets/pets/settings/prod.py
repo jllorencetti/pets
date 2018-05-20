@@ -217,7 +217,7 @@ TWITTER_SHARE_URL = 'https://twitter.com/share?url=http://cademeubicho.com/pets/
 
 RAVEN_CONFIG = {
     'dsn': config('RAVEN_DSN', default=''),
-    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+    'release': raven.fetch_git_sha(os.path.dirname(os.path.dirname(BASE_DIR))),
 }
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='')
