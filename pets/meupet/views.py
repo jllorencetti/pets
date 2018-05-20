@@ -9,12 +9,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
-from django.views.generic import (
-    CreateView,
-    ListView,
-    UpdateView,
-    View,
-)
+from django.views.generic import (CreateView, FormView, ListView, UpdateView)
 
 from meupet import forms, models
 from meupet.forms import SearchForm
@@ -167,20 +162,15 @@ def upload_image(request, slug):
     return HttpResponseRedirect(reverse('meupet:detail', kwargs={'pk_or_slug': pet.slug}))
 
 
-class SearchView(View):
-    def get(self, request):
-        return render(request, 'meupet/search.html', {'form': SearchForm()})
+class SearchView(FormView):
+    template_name = 'meupet/search.html'
+    form_class = SearchForm
 
-    def post(self, request):
-        form = SearchForm(request.POST)
-
-        if not form.is_valid():
-            return render(request, 'meupet/search.html', {'form': form})
-
+    def form_valid(self, form):
         query = self._build_query(form.cleaned_data)
 
         pets = models.Pet.objects.actives().filter(query)
-        return render(request, 'meupet/search.html', {'form': form, 'pets': pets})
+        return render(self.request, 'meupet/search.html', {'form': form, 'pets': pets})
 
     @staticmethod
     def _build_query(cleaned_data):
