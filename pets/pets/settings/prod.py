@@ -1,7 +1,8 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-from decouple import config, Csv
+import raven
+from decouple import Csv, config
 from dj_database_url import parse as db_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -37,7 +38,7 @@ THIRD_PARTS_APPS = (
     'corsheaders',
     'crispy_forms',
     'easy_thumbnails',
-    'opbeat.contrib.django',
+    'raven.contrib.django.raven_compat',
     'password_reset',
     'rest_framework',
     'social_django',
@@ -55,7 +56,6 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTS_APPS
 SITE_ID = 1
 
 MIDDLEWARE_CLASSES = (
-    'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -215,10 +215,9 @@ SOCIAL_AUTH_TWITTER_SECRET = config('SOCIAL_AUTH_TWITTER_SECRET', default='')
 FACEBOOK_SHARE_URL = 'https://www.facebook.com/sharer.php?u=http://cademeubicho.com/pets/{}/'
 TWITTER_SHARE_URL = 'https://twitter.com/share?url=http://cademeubicho.com/pets/{}/'
 
-OPBEAT = {
-    'ORGANIZATION_ID': config('OPBEAT_ORGANIZATION_ID', default=''),
-    'APP_ID': config('OPBEAT_APP_ID', default=''),
-    'SECRET_TOKEN': config('OPBEAT_SECRET_TOKEN', default=''),
+RAVEN_CONFIG = {
+    'dsn': config('RAVEN_DSN', default=''),
+    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='')

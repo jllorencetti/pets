@@ -1,12 +1,9 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 dj-database-url = "*"
 django-autoslug = "*"
 django_compressor = "*"
@@ -18,16 +15,14 @@ Django = "<2"
 djangorestframework = "*"
 easy-thumbnails = "*"
 facebook-sdk = "*"
-opbeat = "*"
 Pillow = "*"
 psycopg2-binary = "*"
 python-decouple = "*"
 social-auth-app-django = "*"
 sendgrid = "*"
-
+raven = "*"
 
 [dev-packages]
-
 Django = "<2" # Workaround for https://github.com/pypa/pipenv/issues/1220
 selenium = "*"
 django-test-without-migrations = "*"
