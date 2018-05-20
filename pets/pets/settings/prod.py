@@ -215,9 +215,10 @@ SOCIAL_AUTH_TWITTER_SECRET = config('SOCIAL_AUTH_TWITTER_SECRET', default='')
 FACEBOOK_SHARE_URL = 'https://www.facebook.com/sharer.php?u=http://cademeubicho.com/pets/{}/'
 TWITTER_SHARE_URL = 'https://twitter.com/share?url=http://cademeubicho.com/pets/{}/'
 
+REPO_ROOT = config('REPO_ROOT', default=os.path.abspath(os.pardir))
 RAVEN_CONFIG = {
     'dsn': config('RAVEN_DSN', default=''),
-    'release': raven.fetch_git_sha(os.path.dirname(os.path.dirname(BASE_DIR))),
+    'release': raven.fetch_git_sha(REPO_ROOT),
 }
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='')
