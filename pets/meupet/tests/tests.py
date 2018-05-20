@@ -4,12 +4,12 @@ import tempfile
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 from django.utils.text import slugify
-
 from model_mommy import mommy
+from rest_framework import status
 
 from cities.models import City
 from meupet import forms
-from meupet.models import Pet, Kind, PetStatus, StatusGroup
+from meupet.models import Kind, Pet, PetStatus, StatusGroup
 from meupet.views import paginate_pets
 from users.models import OwnerProfile
 
@@ -101,6 +101,11 @@ class MeuPetTest(MeuPetTestCase):
         self.assertNotContains(content, inactive_cat.name)
         self.assertNotContains(content, dog.name)
         self.assertEqual(2, pets_count)
+
+    def test_pet_list_should_return_404_on_group_not_exists(self):
+        response = self.client.get(reverse('meupet:pet_list', args=['invalid', 'group']))
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_show_edit_button_for_own_if_logged_pet(self):
         """Show the edit button only if the owner is logged in"""
