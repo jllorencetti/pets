@@ -9,7 +9,7 @@
   <div class="caption">
     <h4 class="title-text">{{ pet }}</h4>
     <p>
-      <span class="fa fa-search" aria-hidden="true"></span> {{ pet.get_status_display|title }}
+      <span class="fa fa-search" aria-hidden="true"></span> {{ pet.status.description|title }}
     </p>
     <p>
       <span class="fa fa-home" aria-hidden="true"></span> {{ pet.city|title }}
