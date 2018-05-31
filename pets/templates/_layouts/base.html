@@ -52,7 +52,7 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{% url 'meupet:index' %}">{% trans 'Pets' %}</a></li>
-        <li class="hidden-md hidden-lg">
+        <li class="hidden-sm hidden-md hidden-lg">
           <ul class="nav">
           {% for group in sidemenu %}
             {% if group.menu_items %}
