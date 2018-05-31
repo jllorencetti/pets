@@ -49,22 +49,30 @@
 
   <form method="post">
     {% csrf_token %}
-    <div class="form-group{% if form.first_name.errors %} has-error{% endif %}">
-      <label for="{{ form.first_name.id_for_label }}" class="control-label">{% trans 'First name' %}</label>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group{% if form.first_name.errors %} has-error{% endif %}">
+          <label for="{{ form.first_name.id_for_label }}" class="control-label">{% trans 'First name' %}</label>
 
-      <div class="controls">
-        {{ form.first_name }}
-        {{ form.first_name.errors }}
+          <div class="controls">
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group{% if form.last_name.errors %} has-error{% endif %}">
+          <label for="{{ form.last_name.id_for_label }}" class="control-label">{% trans 'Last name' %}</label>
+
+          <div class="controls">
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+          </div>
+        </div>
       </div>
     </div>
-    <div class="form-group{% if form.last_name.errors %} has-error{% endif %}">
-      <label for="{{ form.last_name.id_for_label }}" class="control-label">{% trans 'Last name' %}</label>
 
-      <div class="controls">
-        {{ form.last_name }}
-        {{ form.last_name.errors }}
-      </div>
-    </div>
     <div class="form-group{% if form.email.errors %} has-error{% endif %}">
       <label for="{{ form.email.id_for_label }}" class="control-label">{% trans 'Email' %}</label>
 
@@ -82,40 +90,61 @@
         {{ form.username.errors }}
       </div>
     </div>
-    <div class="form-group{% if form.facebook.errors %} has-error{% endif %}">
-      <label for="{{ form.facebook.id_for_label }}" class="control-label">Facebook</label>
 
-      <div class="controls">
-        {{ form.facebook }}
-        <div class="help-block">{{ form.facebook.help_text|safe }}</div>
-        {{ form.facebook.errors }}
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group{% if form.password1.errors %} has-error{% endif %}">
+          <label for="{{ form.password1.id_for_label }}" class="control-label">{% trans 'Password' %}</label>
+
+          <div class="controls">
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group{% if form.password2.errors %} has-error{% endif %}">
+          <label for="{{ form.password2.id_for_label }}"
+                 class="control-label">{% trans 'Password confirmation' %}</label>
+
+          <div class="controls">
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+          </div>
+        </div>
       </div>
     </div>
-    <div class="form-group{% if form.phone.errors %} has-error{% endif %}">
-      <label for="{{ form.phone.id_for_label }}" class="control-label">{% trans 'Phone' %}</label>
 
-      <div class="controls">
-        {{ form.phone }}
-        {{ form.phone.errors }}
-      </div>
-    </div>
-    <div class="form-group{% if form.password1.errors %} has-error{% endif %}">
-      <label for="{{ form.password1.id_for_label }}" class="control-label">{% trans 'Password' %}</label>
+    <fieldset>
+      <legend>{% trans 'Optional information' %}</legend>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group{% if form.phone.errors %} has-error{% endif %}">
+            <label for="{{ form.phone.id_for_label }}" class="control-label">{% trans 'Phone' %}</label>
 
-      <div class="controls">
-        {{ form.password1 }}
-        {{ form.password1.errors }}
-      </div>
-    </div>
-    <div class="form-group{% if form.password2.errors %} has-error{% endif %}">
-      <label for="{{ form.password2.id_for_label }}" class="control-label">{% trans 'Password confirmation' %}</label>
+            <div class="controls">
+              {{ form.phone }}
+              {{ form.phone.errors }}
+            </div>
+          </div>
+        </div>
 
-      <div class="controls">
-        {{ form.password2 }}
-        {{ form.password2.errors }}
+        <div class="col-md-6">
+          <div class="form-group{% if form.facebook.errors %} has-error{% endif %}">
+            <label for="{{ form.facebook.id_for_label }}" class="control-label">Facebook</label>
+
+            <div class="controls">
+              {{ form.facebook }}
+              <div class="help-block">{{ form.facebook.help_text|safe }}</div>
+              {{ form.facebook.errors }}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
+    </fieldset>
+
+    <div class="form-group text-right">
       <input type="submit" name="submit" class="btn btn-primary" value="{% trans 'Create Account' %}">
     </div>
   </form>
