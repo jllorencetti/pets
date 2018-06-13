@@ -1,15 +1,17 @@
 import hashlib
 
 from autoslug import AutoSlugField
+from django_extensions.db.models import TimeStampedModel
+from easy_thumbnails.exceptions import InvalidImageFormatError
+from easy_thumbnails.files import get_thumbnailer
+from raven.contrib.django.raven_compat.models import client as raven_client
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import crypto, timezone
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from django_extensions.db.models import TimeStampedModel
-from easy_thumbnails.exceptions import InvalidImageFormatError
-from easy_thumbnails.files import get_thumbnailer
 
 from meupet import services
 from users.models import OwnerProfile
@@ -151,6 +153,7 @@ class Pet(TimeStampedModel):
         try:
             return get_thumbnailer(self.profile_picture)['pet_thumb']
         except InvalidImageFormatError:
+            raven_client.captureException()
             return self.profile_picture
 
     def request_action(self):
