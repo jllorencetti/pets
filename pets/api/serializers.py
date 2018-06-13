@@ -1,3 +1,4 @@
+from rest_framework.fields import ImageField
 from rest_framework.serializers import (
     CharField,
     HyperlinkedIdentityField,
@@ -37,6 +38,7 @@ pet_fields = (
     'name',
     'owner',
     'profile_picture',
+    'thumb_picture',
     'sex',
     'size',
     'status',
@@ -72,9 +74,10 @@ class PetSerializer(ModelSerializer):
     city = CitySerializer()
     kind = StringRelatedField()
 
-    status = CharField(source='get_status', read_only=True)
+    status = CharField(source='status.description', read_only=True)
     sex = CharField(source='get_sex', read_only=True)
     size = CharField(source='get_size', read_only=True)
+    thumb_picture = ImageField(read_only=True)
 
     id = HyperlinkedIdentityField(
         lookup_field='slug',

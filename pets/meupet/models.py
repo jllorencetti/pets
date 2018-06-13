@@ -1,14 +1,15 @@
 import hashlib
 
+from autoslug import AutoSlugField
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils import timezone, crypto
+from django.utils import crypto, timezone
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-
-from autoslug import AutoSlugField
 from django_extensions.db.models import TimeStampedModel
+from easy_thumbnails.exceptions import InvalidImageFormatError
+from easy_thumbnails.files import get_thumbnailer
 
 from meupet import services
 from users.models import OwnerProfile
@@ -118,14 +119,9 @@ class Pet(TimeStampedModel):
     city = models.ForeignKey('cities.City')
     kind = models.ForeignKey(Kind, null=True)
     status = models.ForeignKey(PetStatus, related_name='pets', blank=True, null=True)
-    size = models.CharField(max_length=2,
-                            choices=PET_SIZE,
-                            blank=True)
-    sex = models.CharField(max_length=2,
-                           choices=PET_SEX,
-                           blank=True)
-    profile_picture = models.ImageField(upload_to='pet_profiles',
-                                        help_text=_('Maximum image size is 8MB'))
+    size = models.CharField(max_length=2, choices=PET_SIZE, blank=True)
+    sex = models.CharField(max_length=2, choices=PET_SEX, blank=True)
+    profile_picture = models.ImageField(upload_to='pet_profiles', help_text=_('Maximum image size is 8MB'))
     published = models.BooleanField(default=False)  # published on facebook
     request_sent = models.DateTimeField(null=True, blank=True)
     request_key = models.CharField(blank=True, max_length=40)
@@ -144,14 +140,18 @@ class Pet(TimeStampedModel):
     def is_found_or_adopted(self):
         return self.status.final
 
-    def get_status(self):
-        return self.status.description
-
     def get_sex(self):
         return dict(self.PET_SEX).get(self.sex)
 
     def get_size(self):
         return dict(self.PET_SIZE).get(self.size)
+
+    @property
+    def thumb_picture(self):
+        try:
+            return get_thumbnailer(self.profile_picture)['pet_thumb']
+        except InvalidImageFormatError:
+            return self.profile_picture
 
     def request_action(self):
         hash_input = (crypto.get_random_string(5) + self.name).encode('utf-8')
