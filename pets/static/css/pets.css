@@ -266,6 +266,14 @@ body {
   margin-bottom: 2.5rem;
 }
 
+/** Ads stuff **/
+@media (min-width: 767px) {
+  .ad-pet-list,
+  .ad-pet-list-wrapper {
+    display: none;
+  }
+}
+
 /** Card Pet **/
 .card-pet {
   margin-bottom: 15px;

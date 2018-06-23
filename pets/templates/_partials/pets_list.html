@@ -6,6 +6,23 @@
       <div class="col-xs-12 col-sm-6 col-md-4 card-pet">
         {% include '_partials/pet_card.html' with pet=pet show_badge=True only %}
       </div>
+
+      {% if forloop.counter == 6 %}
+        <div class="ad-pet-list-wrapper">
+          <div class="col-xs-12 col-sm-6 col-md-4 card-pet">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle ad-pet-list"
+                 style="display:block"
+                 data-ad-format="fluid"
+                 data-ad-layout-key="+2l+p4-1j-4h+yc"
+                 data-ad-client="ca-pub-6841471717625916"
+                 data-ad-slot="8099977372"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        </div>
+      {% endif %}
     {% endfor %}
 
     {% if pets.paginator.num_pages > 1 %}
