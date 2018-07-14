@@ -19,8 +19,8 @@ class RegisteredViewTest(MeuPetTestCase):
         """Validate information shown after registering the pet"""
         contents = [
             'Obrigado',
-            'https://www.facebook.com/sharer.php?u=http://cademeubicho.com/pets/{}/'.format(self.pet.slug),
-            'https://twitter.com/share?url=http://cademeubicho.com/pets/{}/'.format(self.pet.slug),
+            'https://www.facebook.com/sharer.php?u=https://cademeubicho.com/pets/{}/'.format(self.pet.slug),
+            'https://twitter.com/share?url=https://cademeubicho.com/pets/{}/'.format(self.pet.slug),
             reverse('meupet:detail', args=[self.pet.slug])
         ]
 

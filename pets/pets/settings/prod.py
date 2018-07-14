@@ -212,8 +212,8 @@ SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET', default='')
 SOCIAL_AUTH_TWITTER_KEY = config('SOCIAL_AUTH_TWITTER_KEY', default='')
 SOCIAL_AUTH_TWITTER_SECRET = config('SOCIAL_AUTH_TWITTER_SECRET', default='')
 
-FACEBOOK_SHARE_URL = 'https://www.facebook.com/sharer.php?u=http://cademeubicho.com/pets/{}/'
-TWITTER_SHARE_URL = 'https://twitter.com/share?url=http://cademeubicho.com/pets/{}/'
+FACEBOOK_SHARE_URL = 'https://www.facebook.com/sharer.php?u=https://cademeubicho.com/pets/{}/'
+TWITTER_SHARE_URL = 'https://twitter.com/share?url=https://cademeubicho.com/pets/{}/'
 
 REPO_ROOT = config('REPO_ROOT', default=os.path.abspath(os.pardir))
 RAVEN_CONFIG = {
