@@ -19,7 +19,7 @@ Images uploaded by users are cropped with [easy-thumbnails](https://pypi.python.
 
 ### Requirements
 
-* [Python](https://python.org) 3.4 or newer
+* [Python](https://python.org) 3.6 or newer
 * [PostgreSQL](https://www.postgresql.org) running with a _database_, _username_ and _password_ to be used with Pets.
 
 
