@@ -1,6 +1,7 @@
 language: python
 dist: trusty
 addons:
+  chrome: stable
   postgresql: "9.5"
 services:
   - postgresql
