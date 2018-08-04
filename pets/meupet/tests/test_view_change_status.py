@@ -17,7 +17,7 @@ class ChangeStatusViewTest(TestCase):
         )
         pet_status_next = mommy.make(PetStatus, final=True)
         pet_status = mommy.make(PetStatus, final=False, next_status=pet_status_next)
-        self.pet = mommy.make(Pet, status=pet_status, owner=self.admin)
+        self.pet = mommy.make(Pet, status=pet_status, owner=self.admin, _create_files=True)
 
     def test_change_status(self):
         """Updates status of the pet from initial to a final status"""

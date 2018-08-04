@@ -31,7 +31,7 @@ class MeuPetTestCase(TestCase):
             group = mommy.make(StatusGroup, )
             status = mommy.make(PetStatus, final=False, group=group)
 
-        pet = mommy.make(Pet, status=status, owner=self.admin, **kwargs)
+        pet = mommy.make(Pet, status=status, owner=self.admin, _create_files=True, **kwargs)
 
         if kind:
             kind, _ = Kind.objects.get_or_create(kind=kind, slug=slugify(kind))

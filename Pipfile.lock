@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3a64b90f83cb3484eb717dfa063a6715439ed00789c91653bea54435cbc5e88b"
+            "sha256": "fc85231eeedc4c2ae78ff32130fc8bb7031254f126db4d0c7406046ce00ccb9a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -35,7 +35,6 @@
                 "sha256:24d7f2f94f7f3cb6061acb215685e5125fbcdc40a857eff9de22518820b0a4f4",
                 "sha256:702a91ade2968a82beb0db1e0766a6a273f33d4616a6ce8cde475d8e09853b20"
             ],
-            "markers": "python_version >= '3.0'",
             "version": "==0.5.0"
         },
         "dj-database-url": {
@@ -382,10 +381,11 @@
         },
         "model-mommy": {
             "hashes": [
-                "sha256:19424618ac65600525fbb549b156a88dd4a1d442931686df690499fee0f328a9"
+                "sha256:0e42c8f4a37c874dd81675ef8a385d3a25877082565e0d213022898c637f6f25",
+                "sha256:8313c253617255060de474cdfcc0f7517e42deafc5619fec832a6c04b292b5d7"
             ],
             "index": "pypi",
-            "version": "==1.3.0"
+            "version": "==1.6.0"
         },
         "pytz": {
             "hashes": [

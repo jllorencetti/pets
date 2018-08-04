@@ -10,7 +10,7 @@ from meupet.models import Pet
 class UpdateRegisterViewTest(TestCase):
     def setUp(self):
         stale_date = timezone.now() - timezone.timedelta(days=90)
-        self.pet = mommy.make(Pet, request_sent=stale_date, active=False, request_key='abc')
+        self.pet = mommy.make(Pet, request_sent=stale_date, active=False, request_key='abc', _create_files=True)
 
     def test_redirect_to_pet(self):
         """Redirect to the detail view after updating the registration"""

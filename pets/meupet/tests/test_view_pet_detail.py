@@ -28,7 +28,7 @@ class PetDetailViewTest(MeuPetTestCase):
 
     def test_show_more_photos_in_pet_detail(self):
         """Show the 'More Photos' section if more photos are added"""
-        photo = mommy.make(Photo)
+        photo = mommy.make(Photo, _create_files=True)
         self.pet.photo_set.add(photo)
         self.pet.save()
 

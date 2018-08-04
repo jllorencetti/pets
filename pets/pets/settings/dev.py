@@ -1,5 +1,3 @@
-from model_mommy import generators
-
 from .prod import *
 
 INSTALLED_APPS += (
@@ -8,9 +6,5 @@ INSTALLED_APPS += (
 )
 
 TEMPLATES[0]['OPTIONS']['loaders'] = PROJECT_TEMPLATE_LOADERS
-
-MOMMY_CUSTOM_FIELDS_GEN = {
-    'autoslug.fields.AutoSlugField': generators.gen_slug,
-}
 
 MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE_CLASSES

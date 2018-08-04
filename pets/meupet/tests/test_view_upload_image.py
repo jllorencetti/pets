@@ -22,7 +22,7 @@ class UploadImageTestCase(MeuPetTestCase):
 
     def setUp(self):
         super().setUp()
-        self.pet = mommy.make(Pet, owner=self.admin)
+        self.pet = mommy.make(Pet, owner=self.admin, _create_files=True)
         self.image = self._create_image()
 
     def tearDown(self):

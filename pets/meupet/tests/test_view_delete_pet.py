@@ -16,7 +16,7 @@ class DeleteViewTest(TestCase):
             password='admin',
         )
         pet_status = mommy.make(PetStatus)
-        self.pet = mommy.make(Pet, status=pet_status, owner=self.admin)
+        self.pet = mommy.make(Pet, status=pet_status, owner=self.admin, _create_files=True)
 
     def test_owner_can_delete_pet(self):
         """Only the owner should be able to delete its own pet"""

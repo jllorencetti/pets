@@ -26,7 +26,7 @@ gunicorn = "*"
 [dev-packages]
 selenium = "*"
 django-test-without-migrations = "*"
-model_mommy = "==1.3.0"
+model_mommy = "*"
 django-debug-toolbar = "*"
 
 [requires]
