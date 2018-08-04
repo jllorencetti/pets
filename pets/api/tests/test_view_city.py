@@ -1,7 +1,6 @@
 import json
 
 from django.core.urlresolvers import reverse
-
 from rest_framework.test import APITestCase
 
 from cities.models import City, State

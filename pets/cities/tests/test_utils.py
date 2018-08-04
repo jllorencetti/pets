@@ -4,7 +4,7 @@ import tempfile
 from django.conf import settings
 from django.test import TestCase
 
-from cities import utils, models
+from cities import models, utils
 
 STATES_FILE = """code,abbr,name
 12,AC,Acre

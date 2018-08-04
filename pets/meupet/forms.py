@@ -2,8 +2,8 @@ from django import forms
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 
-from meupet import models
 from cities.models import City, State
+from meupet import models
 from meupet.models import PetStatus
 
 

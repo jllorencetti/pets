@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from cities.models import State
 from api.serializers import StateSerializer
+from cities.models import State
 
 
 class StateSerializerTestCase(TestCase):

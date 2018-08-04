@@ -1,5 +1,6 @@
-from django.test import TestCase
 from model_mommy import mommy
+
+from django.test import TestCase
 
 from users.context_processors import users_count
 from users.models import OwnerProfile

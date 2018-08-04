@@ -1,7 +1,7 @@
+from model_mommy import mommy
+
 from django.core.urlresolvers import reverse
 from django.test import override_settings
-
-from model_mommy import mommy
 
 from meupet.models import Pet
 from meupet.tests.tests import MEDIA_ROOT, MeuPetTestCase

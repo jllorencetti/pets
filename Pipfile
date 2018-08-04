@@ -28,6 +28,7 @@ selenium = "*"
 django-test-without-migrations = "*"
 model_mommy = "*"
 django-debug-toolbar = "*"
+pre-commit = "*"
 
 [requires]
 python_full_version = "3.6.6"

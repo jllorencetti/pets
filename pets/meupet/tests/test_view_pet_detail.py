@@ -1,6 +1,6 @@
-from django.core.urlresolvers import reverse
-
 from model_mommy import mommy
+
+from django.core.urlresolvers import reverse
 
 from meupet.models import Photo
 from meupet.tests.tests import MeuPetTestCase

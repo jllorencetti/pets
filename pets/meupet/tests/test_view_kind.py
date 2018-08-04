@@ -1,8 +1,9 @@
-from django.shortcuts import resolve_url
-from django.test import TestCase
 from model_mommy import mommy
 
-from meupet.models import Kind, StatusGroup, Pet, PetStatus
+from django.shortcuts import resolve_url
+from django.test import TestCase
+
+from meupet.models import Kind, Pet, PetStatus, StatusGroup
 
 
 class StatusGroupView(TestCase):

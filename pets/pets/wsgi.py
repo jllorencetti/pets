@@ -8,11 +8,13 @@ https://docs.djangoproject.com/en/dev/howto/deployment/wsgi/
 """
 
 from os import environ
+
 from decouple import config
+
+from django.core.wsgi import get_wsgi_application
 
 settings_module = config("DJANGO_SETTINGS_MODULE", default="pets.settings.dev")
 environ['DJANGO_SETTINGS_MODULE'] = settings_module
 
-from django.core.wsgi import get_wsgi_application
 
 application = get_wsgi_application()

@@ -3,8 +3,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from users.forms import RegisterForm, UpdateUserForm
-from users.validators import validate_facebook_url
 from users.models import OwnerProfile
+from users.validators import validate_facebook_url
 
 
 class UserRegistrationTest(TestCase):

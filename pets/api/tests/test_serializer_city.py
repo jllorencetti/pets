@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from cities.models import City
 from api.serializers import CitySerializer
+from cities.models import City
 
 
 class CitySerializerTestCase(TestCase):

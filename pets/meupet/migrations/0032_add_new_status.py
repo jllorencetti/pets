@@ -1,5 +1,6 @@
-import django.db.models.deletion
 from autoslug import AutoSlugField
+
+import django.db.models.deletion
 from django.db import migrations, models
 
 status_group = (

@@ -1,7 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-from users.validators import validate_facebook_url
 from django.core.urlresolvers import reverse
+from django.db import models
+
+from users.validators import validate_facebook_url
 
 
 class OwnerProfile(AbstractUser):

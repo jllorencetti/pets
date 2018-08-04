@@ -1,6 +1,6 @@
-from django.core.management.base import BaseCommand
-
 import facebook
+
+from django.core.management.base import BaseCommand
 
 from common.models import Configuration
 from meupet.models import Pet

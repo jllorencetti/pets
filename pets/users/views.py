@@ -1,3 +1,5 @@
+from password_reset.views import Recover, RecoverDone, Reset, ResetDone
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,8 +8,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import resolve_url
 from django.utils.translation import ugettext as _
-from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
-from password_reset.views import Recover, RecoverDone, Reset, ResetDone
+from django.views.generic import CreateView, DetailView, TemplateView, UpdateView
 
 from users.forms import LoginForm, RegisterForm, UpdateUserForm, UsersPasswordRecoveryForm, UsersPasswordResetForm
 from users.models import OwnerProfile

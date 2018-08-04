@@ -1,4 +1,4 @@
-from .prod import *
+from .prod import *  # noqa: F403
 
 INSTALLED_APPS += (
     'debug_toolbar',

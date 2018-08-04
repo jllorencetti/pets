@@ -1,11 +1,11 @@
 from unittest import mock
 
+from model_mommy import mommy
+
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-
-from model_mommy import mommy
 
 from meupet.models import Pet, PetStatus
 

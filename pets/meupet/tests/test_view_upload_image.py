@@ -1,8 +1,8 @@
 import tempfile
 
-from django.shortcuts import resolve_url
-
 from model_mommy import mommy
+
+from django.shortcuts import resolve_url
 
 from meupet.models import Pet
 from meupet.tests.tests import MeuPetTestCase

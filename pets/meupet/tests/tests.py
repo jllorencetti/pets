@@ -1,10 +1,11 @@
 import shutil
 import tempfile
 
+from model_mommy import mommy
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 from django.utils.text import slugify
-from model_mommy import mommy
 from rest_framework import status
 
 from cities.models import City

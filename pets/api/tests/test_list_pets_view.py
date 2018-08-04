@@ -1,7 +1,7 @@
+from model_mommy import mommy
+
 from django.shortcuts import resolve_url
 from django.test import TestCase
-
-from model_mommy import mommy
 
 from cities.models import City
 from meupet.models import Kind, Pet, PetStatus

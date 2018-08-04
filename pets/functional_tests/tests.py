@@ -1,19 +1,18 @@
 import os
 from datetime import datetime
 
+from model_mommy import mommy
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
+
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-
-from model_mommy import mommy
-
 from cities.models import City, State
-from meupet.models import Kind, Pet, PetStatus, StatusGroup
+from meupet.models import Kind, Pet, PetStatus
 from users.models import OwnerProfile
 
 

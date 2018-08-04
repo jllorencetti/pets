@@ -1,8 +1,9 @@
-from django.test import TestCase
 from model_mommy import mommy
 
+from django.test import TestCase
+
 from meupet.context_processors import pets_count, sidemenu
-from meupet.models import Pet, StatusGroup, PetStatus, Kind
+from meupet.models import Kind, Pet, PetStatus, StatusGroup
 
 
 class ContextProcessorsTestCase(TestCase):

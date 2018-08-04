@@ -1,4 +1,4 @@
-# Pets 
+# Pets
 
 [![Donate](https://img.shields.io/badge/patreon-donate-ff69b4.svg)](https://www.patreon.com/jllorencetti)
 
@@ -76,7 +76,7 @@ If you want to login via social media, you will have to create apps as a develop
 As Pets uses [Pillow](https://pypi.python.org/pypi/Pillow), some extra packages are needed. In a Debian based Linux this should do the job:
 
 ```console
-sudo apt-get install python-dev python3.x-dev libjpeg8-dev 
+sudo apt-get install python-dev python3.x-dev libjpeg8-dev
 ```
 
 #### Download ChromeDriver

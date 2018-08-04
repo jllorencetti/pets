@@ -1,10 +1,10 @@
+from model_mommy import mommy
+
 from django.core.urlresolvers import reverse
 from django.test import override_settings
 
-from model_mommy import mommy
-
 from meupet.models import Pet, PetStatus
-from meupet.tests.tests import MeuPetTestCase, MEDIA_ROOT
+from meupet.tests.tests import MEDIA_ROOT, MeuPetTestCase
 
 
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)

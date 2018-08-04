@@ -1,5 +1,6 @@
-from django.test import RequestFactory, TestCase
 from model_mommy import mommy
+
+from django.test import RequestFactory, TestCase
 
 from api.serializers import PetSerializer
 from meupet.models import Pet, PetStatus

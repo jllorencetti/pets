@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock, patch
 
-from django.test import TestCase
-
 from model_mommy import mommy
+
+from django.test import TestCase
 
 from cities.models import City
 from meupet.management.commands.shareonfacebook import Command

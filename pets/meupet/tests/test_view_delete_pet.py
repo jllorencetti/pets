@@ -1,7 +1,7 @@
+from model_mommy import mommy
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-
-from model_mommy import mommy
 
 from meupet.models import Pet, PetStatus
 from users.models import OwnerProfile
