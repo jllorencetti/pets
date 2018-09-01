@@ -93,11 +93,10 @@
         },
         "django-extensions": {
             "hashes": [
-                "sha256:c3c8524056ab1174c6fc769b0599e60f7e7797ce34f38db2effc48885a0a982c",
-                "sha256:e279344c6d825adb27694755aa924702d3cc401f8fad5ad9ef2d577948778a5f"
+                "sha256:f21b898598a1628cb73017fb9672e2c5e624133be9764f0eb138e0abf8a62b62",
+                "sha256:1f626353a11479014bfe0d77e76d8f866ebca1bb5d595cb57b776230b9e0eb92"
             ],
-            "index": "pypi",
-            "version": "==2.1.0"
+            "version": "==2.1.2"
         },
         "django-password-reset": {
             "hashes": [
