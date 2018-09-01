@@ -100,11 +100,10 @@
         },
         "django-password-reset": {
             "hashes": [
-                "sha256:3c3592970a2f9db9ff1369a2b5b1569a1af75154c8942ec92afe29de80b7149c",
-                "sha256:c2eeb2e8458b8dca8b118d6d7d187998cd510db4547e1e75edf034aff82504df"
+                "sha256:1789b6445d4aec802366625b0facba2ab0b406ac0bfa28d26a5fb29d0f889eee",
+                "sha256:2080621bcd3409bc0d516f0ea147648ccff70cf499e24acde37576842797c4d4"
             ],
-            "index": "pypi",
-            "version": "==1.0"
+            "version": "==2.0"
         },
         "djangorestframework": {
             "hashes": [
