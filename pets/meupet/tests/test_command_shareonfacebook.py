@@ -48,7 +48,12 @@ class ManagementCommandTest(TestCase):
         attach = Command.get_attachment(self.pet, self.url)
         msg = Command.get_message(self.pet)
 
-        mock.assert_called_once_with(msg, attachment=attach)
+        mock.assert_called_once_with(
+            parent_object='me',
+            connection_name='feed',
+            message=msg,
+            attachment=attach,
+        )
 
     def call_mocked_command(self):
         mock = MagicMock()
@@ -58,6 +63,6 @@ class ManagementCommandTest(TestCase):
         cmd = Command()
         cmd.config = mock
 
-        with patch('facebook.GraphAPI.put_wall_post') as mock:
+        with patch('facebook.GraphAPI.put_object') as mock:
             cmd.handle()
             return mock

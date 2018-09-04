@@ -38,9 +38,11 @@ class Command(BaseCommand):
         url = self.config.fb_share_link
 
         for pet in Pet.objects.get_unpublished_pets():
-            api.put_wall_post(
-                self.get_message(pet),
-                attachment=self.get_attachment(pet, url)
+            api.put_object(
+                parent_object='me',
+                connection_name='feed',
+                message=self.get_message(pet),
+                attachment=self.get_attachment(pet, url),
             )
 
             pet.published = True
