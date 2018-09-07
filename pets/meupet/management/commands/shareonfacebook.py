@@ -1,5 +1,6 @@
 import facebook
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from common.models import Configuration
@@ -34,7 +35,10 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        api = facebook.GraphAPI(self.config.fb_share_token)
+        api = facebook.GraphAPI(
+            access_token=self.config.fb_share_token,
+            version=settings.FACEBOOK_SHARE_GRAPH_API_VERSION,
+        )
         url = self.config.fb_share_link
 
         for pet in Pet.objects.get_unpublished_pets():

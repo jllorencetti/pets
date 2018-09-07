@@ -212,6 +212,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET', default='')
 SOCIAL_AUTH_TWITTER_KEY = config('SOCIAL_AUTH_TWITTER_KEY', default='')
 SOCIAL_AUTH_TWITTER_SECRET = config('SOCIAL_AUTH_TWITTER_SECRET', default='')
 
+FACEBOOK_SHARE_GRAPH_API_VERSION = config('FACEBOOK_SHARE_GRAPH_API_VERSION', default='2.7')
 FACEBOOK_SHARE_URL = 'https://www.facebook.com/sharer.php?u=https://cademeubicho.com/pets/{}/'
 TWITTER_SHARE_URL = 'https://twitter.com/share?url=https://cademeubicho.com/pets/{}/'
 
