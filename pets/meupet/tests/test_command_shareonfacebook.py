@@ -18,15 +18,6 @@ class ManagementCommandTest(TestCase):
         self.pet = mommy.make(Pet, city=self.city, status=pet_status)
         self.url = 'http://www.test.com{}'
 
-    def test_get_attachment(self):
-        """The attachment should be a dict with the 'link' key
-        being the absolute url to the pet"""
-        attach = Command.get_attachment(self.pet, self.url)
-
-        expected = self.url.format(self.pet.get_absolute_url())
-
-        self.assertEqual(expected, attach.get('link', ''))
-
     def test_get_message(self):
         """The message in the post should always contains the
         display status, the name of the pet, and the name of the city"""
@@ -45,14 +36,13 @@ class ManagementCommandTest(TestCase):
         message and attachment"""
         mock = self.call_mocked_command()
 
-        attach = Command.get_attachment(self.pet, self.url)
         msg = Command.get_message(self.pet)
 
         mock.assert_called_once_with(
             parent_object='me',
             connection_name='feed',
             message=msg,
-            attachment=attach,
+            link=self.url.format(self.pet.get_absolute_url()),
         )
 
     def call_mocked_command(self):

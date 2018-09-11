@@ -20,13 +20,6 @@ class Command(BaseCommand):
         super(Command, self).__init__()
 
     @staticmethod
-    def get_attachment(pet, url):
-        attachment = {
-            'link': url.format(pet.get_absolute_url()),
-        }
-        return attachment
-
-    @staticmethod
     def get_message(pet):
         return '{0}: {1}, {2}'.format(
             pet.status.description,
@@ -46,7 +39,7 @@ class Command(BaseCommand):
                 parent_object='me',
                 connection_name='feed',
                 message=self.get_message(pet),
-                attachment=self.get_attachment(pet, url),
+                link=url.format(pet.get_absolute_url()),
             )
 
             pet.published = True
