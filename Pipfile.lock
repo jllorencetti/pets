@@ -398,10 +398,10 @@
         },
         "identify": {
             "hashes": [
-                "sha256:6aa415d0ce7cb358dfa38844338057067533ffe4973b1c9bc33c5e8e4e54ec92",
-                "sha256:ac6ae37088cb87da931fc681d1e13da46bf2e06c344dc1d49b18b2f6cd5aa140"
+                "sha256:baa10ef6a82d45a29e4b179866dce7cf41a271d1e6c678c293922b50375d42be",
+                "sha256:a425281e5578eb08651cd205e64b5c3660de5ba33860d16450dd5f6e478f50ff"
             ],
-            "version": "==1.1.5"
+            "version": "==1.1.6"
         },
         "model-mommy": {
             "hashes": [
