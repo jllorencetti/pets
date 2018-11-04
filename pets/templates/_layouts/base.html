@@ -17,7 +17,7 @@
     <script>
       (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:818701,hjsv:6};
+        h._hjSettings={hjid:{{ HOTJAR_TRACKING_KEY }},hjsv:6};
         a=o.getElementsByTagName('head')[0];
         r=o.createElement('script');r.async=1;
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
@@ -26,7 +26,7 @@
     </script>
     <script>
       window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-      ga('create','UA-49489257-3','auto');
+      ga('create','{{ GOOGLE_API_KEY }}','auto');
       {% block ga_log_not_found %}
       ga('send', 'pageview');
       {% endblock %}

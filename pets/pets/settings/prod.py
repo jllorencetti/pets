@@ -91,6 +91,7 @@ TEMPLATES = [
                 'meupet.context_processors.pets_count',
                 'meupet.context_processors.sidemenu',
                 'users.context_processors.users_count',
+                'common.context_processors.analytics',
             ],
             'loaders': [
                 ('django.template.loaders.cached.Loader', PROJECT_TEMPLATE_LOADERS),
@@ -163,9 +164,9 @@ LOCALE_PATHS = [
 ]
 
 STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder"
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
 ]
 
 COMPRESS_OFFLINE = True
@@ -232,3 +233,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 20
 }
+
+GOOGLE_API_KEY = config('GOOGLE_API_KEY', default='')
+HOTJAR_TRACKING_KEY = config('HOTJAR_TRACKING_KEY', default='')
