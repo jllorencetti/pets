@@ -428,9 +428,9 @@
         },
         "nodeenv": {
             "hashes": [
-                "sha256:aa040ab5189bae17d272175609010be6c5b589ec4b8dbd832cc50c9e9cb7496f"
+                "sha256:ad8259494cf1c9034539f6cced78a1da4840a4b157e23640bc4a0c0546b0cb7a"
             ],
-            "version": "==1.3.2"
+            "version": "==1.3.3"
         },
         "pre-commit": {
             "hashes": [
