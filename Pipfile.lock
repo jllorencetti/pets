@@ -367,10 +367,10 @@
         },
         "cfgv": {
             "hashes": [
-                "sha256:73f48a752bd7aab103c4b882d6596c6360b7aa63b34073dd2c35c7b4b8f93010",
-                "sha256:d1791caa9ff5c0c7bce80e7ecc1921752a2eb7c2463a08ed9b6c96b85a2f75aa"
+                "sha256:41d22dd864c474f919ecb88900000d2410d640315f75bdb79b3abf9347089641",
+                "sha256:39d9055c47e3932908fe25abd5807e21dc002630db01c7a5f05738d027e2b706"
             ],
-            "version": "==1.1.0"
+            "version": "==1.4.0"
         },
         "django": {
             "hashes": [
