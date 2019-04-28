@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import resolve_url
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, DetailView, TemplateView, UpdateView
 
@@ -47,7 +47,7 @@ class CreateUserView(CreateView):
             'this page</a> and register the pet :)')
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return HttpResponseRedirect(resolve_url(self.authenticated_redirect_url))
         return super().dispatch(request, *args, **kwargs)
 

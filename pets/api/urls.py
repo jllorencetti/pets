@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from api import views
 
+app_name = 'api'
 urlpatterns = [
     url(r'^pets/$', views.ListPets.as_view(), name='list_pets'),
     url(r'^cities/$', views.CityList.as_view(), name='city-list'),

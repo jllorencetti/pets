@@ -3,8 +3,8 @@ from sendgrid.helpers.mail import Content, Mail
 
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 

@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('image', models.ImageField(upload_to='pet_photos')),
-                ('pet', models.ForeignKey(to='meupet.Pet')),
+                ('pet', models.ForeignKey(to='meupet.Pet', on_delete=models.CASCADE)),
             ],
             options={
             },

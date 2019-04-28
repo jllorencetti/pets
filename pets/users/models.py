@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.urlresolvers import reverse
 from django.db import models
+from django.urls import reverse
 
 from users.validators import validate_facebook_url
 

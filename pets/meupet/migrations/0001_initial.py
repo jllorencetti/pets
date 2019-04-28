@@ -31,8 +31,8 @@ class Migration(migrations.Migration):
                 ('description', models.CharField(max_length=500)),
                 ('status', models.CharField(max_length=1, default='M')),
                 ('profile_picture', models.ImageField(upload_to='pet_profiles')),
-                ('kind', models.ForeignKey(to='meupet.Kind', null=True)),
-                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('kind', models.ForeignKey(to='meupet.Kind', null=True, on_delete=models.CASCADE)),
+                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
             },

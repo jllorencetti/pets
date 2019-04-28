@@ -11,4 +11,4 @@ DEBUG_TOOLBAR_CONFIG = {
 
 TEMPLATES[0]['OPTIONS']['loaders'] = PROJECT_TEMPLATE_LOADERS
 
-MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE_CLASSES
+MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE

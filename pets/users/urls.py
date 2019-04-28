@@ -3,6 +3,7 @@ from django.contrib.auth.views import LogoutView
 
 from . import views
 
+app_name = 'users'
 urlpatterns = [
     url(r'^$', views.CreateUserView.as_view(), name='create'),
     url(r'^profile/(?P<pk>[0-9]+)/$', views.ProfileDetailView.as_view(), name='user_profile'),

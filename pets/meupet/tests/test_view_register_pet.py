@@ -2,8 +2,8 @@ import tempfile
 
 from model_mommy import mommy
 
-from django.core.urlresolvers import reverse
 from django.test import override_settings
+from django.urls import reverse
 
 from meupet.models import Kind, PetStatus
 from meupet.tests.tests import MEDIA_ROOT, MeuPetTestCase

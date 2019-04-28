@@ -3,6 +3,7 @@ from django.views.generic import RedirectView
 
 from . import views
 
+app_name = 'meupet'
 urlpatterns = [
     # I'll keep this here for compatibility with links shared
     # on Facebook.

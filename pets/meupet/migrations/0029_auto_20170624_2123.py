@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='pet',
             name='city',
-            field=models.ForeignKey(null=True, to='cities.City'),
+            field=models.ForeignKey(null=True, to='cities.City', on_delete=models.CASCADE),
         ),
         migrations.DeleteModel(
             name='City',

@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.urls import reverse
 
 from users.forms import RegisterForm, UpdateUserForm
 from users.models import OwnerProfile

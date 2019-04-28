@@ -7,8 +7,8 @@ from easy_thumbnails.files import get_thumbnailer
 from raven.contrib.django.raven_compat.models import client as raven_client
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.db import models
+from django.urls import reverse
 from django.utils import crypto, timezone
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -83,10 +83,10 @@ class StatusGroup(models.Model):
 
 
 class PetStatus(models.Model):
-    group = models.ForeignKey(StatusGroup, related_name='statuses', blank=True, null=True)
+    group = models.ForeignKey(StatusGroup, related_name='statuses', blank=True, null=True, on_delete=models.CASCADE)
     code = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=64)
-    next_status = models.OneToOneField('self', blank=True, null=True)
+    next_status = models.OneToOneField('self', blank=True, null=True, on_delete=models.CASCADE)
     final = models.BooleanField(default=False)
 
     class Meta:
@@ -115,12 +115,12 @@ class Pet(TimeStampedModel):
         (MEDIUM, _('Medium')),
         (LARGE, _('Large')),
     )
-    owner = models.ForeignKey(OwnerProfile)
+    owner = models.ForeignKey(OwnerProfile, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
-    city = models.ForeignKey('cities.City')
-    kind = models.ForeignKey(Kind, null=True)
-    status = models.ForeignKey(PetStatus, related_name='pets', blank=True, null=True)
+    city = models.ForeignKey('cities.City', on_delete=models.CASCADE)
+    kind = models.ForeignKey(Kind, null=True, on_delete=models.CASCADE)
+    status = models.ForeignKey(PetStatus, related_name='pets', blank=True, null=True, on_delete=models.CASCADE)
     size = models.CharField(max_length=2, choices=PET_SIZE, blank=True)
     sex = models.CharField(max_length=2, choices=PET_SEX, blank=True)
     profile_picture = models.ImageField(upload_to='pet_profiles', help_text=_('Maximum image size is 8MB'))
@@ -188,5 +188,5 @@ class Pet(TimeStampedModel):
 
 
 class Photo(models.Model):
-    pet = models.ForeignKey(Pet)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='pet_photos')
