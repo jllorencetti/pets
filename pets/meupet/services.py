@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 
 def send_email(subject, to, template_name, context):
-    sendgrid_client = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
+    sendgrid_client = sendgrid.SendGridAPIClient(settings.SENDGRID_API_KEY)
 
     from_email = sendgrid.Email(settings.DEFAULT_FROM_EMAIL)
     to_email = sendgrid.Email(to)
