@@ -19,7 +19,7 @@ class DeactivateTestCase(TestCase):
         request_sent = timezone.now() - timezone.timedelta(days=settings.DAYS_TO_STALE_REGISTER + 1)
         mommy.make(Pet, request_sent=request_sent)
 
-        with mock.patch('meupet.models.Pet.deactivate') as mock_method:
-            call_command('deactivate')
+        with mock.patch("meupet.models.Pet.deactivate") as mock_method:
+            call_command("deactivate")
 
         mock_method.assert_any_call()

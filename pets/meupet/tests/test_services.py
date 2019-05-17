@@ -15,30 +15,24 @@ class ServicesTest(TestCase):
         """
         Validate the information sent in the email
         """
-        pet = mommy.make(
-            Pet,
-            status=mommy.make(PetStatus)
-        )
+        pet = mommy.make(Pet, status=mommy.make(PetStatus))
 
-        with mock.patch('meupet.services.send_email') as mock_send_email:
+        with mock.patch("meupet.services.send_email") as mock_send_email:
             pet.request_action()
 
         current_site = Site.objects.get_current()
-        pet_update_url = reverse('meupet:update_register', args=[pet.request_key])
+        pet_update_url = reverse("meupet:update_register", args=[pet.request_key])
         context = {
-            'username': pet.owner.first_name,
-            'pet': pet.name,
-            'days': settings.DAYS_TO_STALE_REGISTER,
-            'status': pet.status.description.lower(),
-            'link': 'https://%s%s' % (current_site.domain, pet_update_url),
-            'site_name': current_site.name,
+            "username": pet.owner.first_name,
+            "pet": pet.name,
+            "days": settings.DAYS_TO_STALE_REGISTER,
+            "status": pet.status.description.lower(),
+            "link": "https://%s%s" % (current_site.domain, pet_update_url),
+            "site_name": current_site.name,
         }
 
         mock_send_email.assert_called_once_with(
-            'Update pet registration',
-            pet.owner.email,
-            'meupet/request_action_email.txt',
-            context
+            "Update pet registration", pet.owner.email, "meupet/request_action_email.txt", context
         )
 
     def test_pet_deactivated(self):
@@ -47,17 +41,11 @@ class ServicesTest(TestCase):
         """
         pet = mommy.make(Pet)
 
-        with mock.patch('meupet.services.send_email') as mock_send_email:
+        with mock.patch("meupet.services.send_email") as mock_send_email:
             pet.deactivate()
 
-        context = {
-            'username': pet.owner.first_name,
-            'site_name': Site.objects.get_current().name,
-        }
+        context = {"username": pet.owner.first_name, "site_name": Site.objects.get_current().name}
 
         mock_send_email.assert_called_once_with(
-            'Deactivation of pet registration',
-            pet.owner.email,
-            'meupet/deactivate_email.txt',
-            context
+            "Deactivation of pet registration", pet.owner.email, "meupet/deactivate_email.txt", context
         )

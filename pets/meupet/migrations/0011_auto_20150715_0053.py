@@ -5,8 +5,8 @@ from django.db import migrations, models
 
 
 def set_city(apps, schema_editor):
-    Pet = apps.get_model('meupet', 'Pet')
-    City = apps.get_model('meupet', 'City')
+    Pet = apps.get_model("meupet", "Pet")
+    City = apps.get_model("meupet", "City")
     for pet in Pet.objects.all():
         city, created = City.objects.get_or_create(city=pet.city.title())
         pet.city_fk = city
@@ -15,10 +15,6 @@ def set_city(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0010_auto_20150715_0050'),
-    ]
+    dependencies = [("meupet", "0010_auto_20150715_0050")]
 
-    operations = [
-        migrations.RunPython(set_city)
-    ]
+    operations = [migrations.RunPython(set_city)]

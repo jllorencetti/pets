@@ -11,19 +11,19 @@ from meupet.tests.tests import MEDIA_ROOT, MeuPetTestCase
 class PosterTest(MeuPetTestCase):
     def setUp(self):
         super().setUp()
-        status = mommy.make(PetStatus, description='status')
-        self.admin.phone = '99 99999-9999'
+        status = mommy.make(PetStatus, description="status")
+        self.admin.phone = "99 99999-9999"
         self.admin.save()
         self.pet = mommy.make(Pet, owner=self.admin, status=status)
-        self.resp = self.client.get(reverse('meupet:poster', kwargs={'slug': self.pet.slug}))
+        self.resp = self.client.get(reverse("meupet:poster", kwargs={"slug": self.pet.slug}))
 
     def test_template_used(self):
         """Makes sure the correct template is used"""
-        self.assertTemplateUsed(self.resp, 'meupet/poster.html')
+        self.assertTemplateUsed(self.resp, "meupet/poster.html")
 
     def test_pet_in_context(self):
         """The pet should be present in the context"""
-        pet = self.resp.context['pet']
+        pet = self.resp.context["pet"]
         self.assertIsInstance(pet, Pet)
 
     def test_poster_info(self):

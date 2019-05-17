@@ -6,21 +6,14 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0028_auto_20170421_0942'),
-    ]
+    dependencies = [("meupet", "0028_auto_20170421_0942")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='pet',
-            name='new_city',
-        ),
+        migrations.RemoveField(model_name="pet", name="new_city"),
         migrations.AlterField(
-            model_name='pet',
-            name='city',
-            field=models.ForeignKey(null=True, to='cities.City', on_delete=models.CASCADE),
+            model_name="pet",
+            name="city",
+            field=models.ForeignKey(null=True, to="cities.City", on_delete=models.CASCADE),
         ),
-        migrations.DeleteModel(
-            name='City',
-        ),
+        migrations.DeleteModel(name="City"),
     ]

@@ -5,17 +5,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-    dependencies = [
-        ('meupet', '0003_auto_20150106_0016'),
-    ]
+    dependencies = [("meupet", "0003_auto_20150106_0016")]
 
     operations = [
         migrations.AlterField(
-            model_name='pet',
-            name='status',
+            model_name="pet",
+            name="status",
             field=models.CharField(
-                choices=[('MI', 'Missing'), ('FA', 'For Adoption'), ('AD', 'Adopted'), ('FO', 'Found')], max_length=2,
-                default='MI'),
+                choices=[("MI", "Missing"), ("FA", "For Adoption"), ("AD", "Adopted"), ("FO", "Found")],
+                max_length=2,
+                default="MI",
+            ),
             preserve_default=True,
-        ),
+        )
     ]

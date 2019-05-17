@@ -7,14 +7,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0033_remove_status_field'),
-    ]
+    dependencies = [("meupet", "0033_remove_status_field")]
 
-    operations = [
-        migrations.RenameField(
-            model_name='pet',
-            old_name='new_status',
-            new_name='status',
-        ),
-    ]
+    operations = [migrations.RenameField(model_name="pet", old_name="new_status", new_name="status")]

@@ -6,14 +6,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0012_remove_pet_city'),
-    ]
+    dependencies = [("meupet", "0012_remove_pet_city")]
 
-    operations = [
-        migrations.RenameField(
-            model_name='pet',
-            old_name='city_fk',
-            new_name='city',
-        ),
-    ]
+    operations = [migrations.RenameField(model_name="pet", old_name="city_fk", new_name="city")]

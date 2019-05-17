@@ -10,14 +10,14 @@ import meupet.models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0018_auto_20160129_0001'),
-    ]
+    dependencies = [("meupet", "0018_auto_20160129_0001")]
 
     operations = [
         migrations.AddField(
-            model_name='pet',
-            name='slug',
-            field=autoslug.fields.AutoSlugField(editable=False, blank=True, populate_from=meupet.models.get_slug),
-        ),
+            model_name="pet",
+            name="slug",
+            field=autoslug.fields.AutoSlugField(
+                editable=False, blank=True, populate_from=meupet.models.get_slug
+            ),
+        )
     ]

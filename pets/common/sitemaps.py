@@ -7,7 +7,7 @@ from meupet.models import Pet
 class PetEntrySitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.8
-    protocol = 'https'
+    protocol = "https"
 
     def items(self):
         return Pet.objects.all()
@@ -20,15 +20,10 @@ class PetEntrySitemap(Sitemap):
 class PageSitemap(Sitemap):
     changefreq = "weekly"
     priority = 1.0
-    protocol = 'https'
+    protocol = "https"
 
     def items(self):
-        return [
-            'common:homepage',
-            'common:about',
-            'meupet:index',
-            'meupet:search',
-        ]
+        return ["common:homepage", "common:about", "meupet:index", "meupet:search"]
 
     def location(self, item):
         return reverse(item)

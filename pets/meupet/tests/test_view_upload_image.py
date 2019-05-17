@@ -14,11 +14,11 @@ class UploadImageTestCase(MeuPetTestCase):
     def _create_image():
         from PIL import Image
 
-        with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as f:
-            image = Image.new('RGB', (200, 200), 'white')
-            image.save(f, 'PNG')
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
+            image = Image.new("RGB", (200, 200), "white")
+            image.save(f, "PNG")
 
-        return open(f.name, mode='rb')
+        return open(f.name, mode="rb")
 
     def setUp(self):
         super().setUp()
@@ -30,35 +30,28 @@ class UploadImageTestCase(MeuPetTestCase):
 
     def test_upload_image(self):
         """User should be able to upload more images to their pets"""
-        self.client.login(username='admin', password='admin')
+        self.client.login(username="admin", password="admin")
 
         resp = self.client.post(
-            resolve_url('meupet:upload_image', self.pet.slug),
-            data={
-                'another_picture': self.image
-            },
-            follow=True
+            resolve_url("meupet:upload_image", self.pet.slug),
+            data={"another_picture": self.image},
+            follow=True,
         )
 
-        self.assertTemplateUsed(resp, 'meupet/pet_detail.html')
-        self.assertContains(resp, 'More photos')
+        self.assertTemplateUsed(resp, "meupet/pet_detail.html")
+        self.assertContains(resp, "More photos")
 
     def test_upload_image_other_user(self):
         """Only the owner should be able to upload images to the pet"""
-        OwnerProfile.objects.create_user(
-            username='other',
-            password='other',
-        )
+        OwnerProfile.objects.create_user(username="other", password="other")
 
-        self.client.login(username='other', password='other')
+        self.client.login(username="other", password="other")
 
         resp = self.client.post(
-            resolve_url('meupet:upload_image', self.pet.slug),
-            data={
-                'another_picture': self.image
-            },
-            follow=True
+            resolve_url("meupet:upload_image", self.pet.slug),
+            data={"another_picture": self.image},
+            follow=True,
         )
 
-        self.assertTemplateUsed(resp, 'meupet/pet_detail.html')
-        self.assertNotContains(resp, 'More fotos')
+        self.assertTemplateUsed(resp, "meupet/pet_detail.html")
+        self.assertNotContains(resp, "More fotos")

@@ -13,21 +13,21 @@ from users.models import OwnerProfile
 
 class PetModelTest(TestCase):
     def setUp(self):
-        self.city = mommy.make(City, name='Testing City')
-        self.owner = OwnerProfile.objects.create_user(username='admin', password='admin')
+        self.city = mommy.make(City, name="Testing City")
+        self.owner = OwnerProfile.objects.create_user(username="admin", password="admin")
 
     def test_slug(self):
         """Slug should contains both the pet name and city"""
-        pet = mommy.make(Pet, name='Lost Pet', city=self.city, slug=None)
-        self.assertEqual('lost-pet-testing-city', pet.slug)
+        pet = mommy.make(Pet, name="Lost Pet", city=self.city, slug=None)
+        self.assertEqual("lost-pet-testing-city", pet.slug)
 
     def test_slug_uniqueness(self):
         """Should auto append a number if the slug is not unique"""
-        pet = mommy.make(Pet, name='Lost Pet', city=self.city, slug=None)
-        pet_two = mommy.make(Pet, name='Lost Pet', city=self.city, slug=None)
+        pet = mommy.make(Pet, name="Lost Pet", city=self.city, slug=None)
+        pet_two = mommy.make(Pet, name="Lost Pet", city=self.city, slug=None)
 
-        self.assertEqual('lost-pet-testing-city', pet.slug)
-        self.assertEqual('lost-pet-testing-city-2', pet_two.slug)
+        self.assertEqual("lost-pet-testing-city", pet.slug)
+        self.assertEqual("lost-pet-testing-city-2", pet_two.slug)
 
     def test_staled_pets(self):
         """Should return only pets that are staled and are still in the initial status"""
@@ -63,7 +63,7 @@ class PetModelTest(TestCase):
         self.assertNotIn(staled_pet, pets)
         self.assertNotIn(inactive_expired_pet, pets)
 
-    @patch('meupet.services.send_request_action_email')
+    @patch("meupet.services.send_request_action_email")
     def test_request_action_from_user(self, mock_send_email):
         """Should call send_request_action_email method from request_action"""
         pet = mommy.make(Pet)
@@ -71,7 +71,7 @@ class PetModelTest(TestCase):
 
         mock_send_email.assert_called_once_with(pet)
 
-    @patch('meupet.services.send_deactivate_email')
+    @patch("meupet.services.send_deactivate_email")
     def test_deactivate_send_email(self, mock_send_email):
         """
         Deactivate should call the send_deactivate_email method
@@ -81,7 +81,7 @@ class PetModelTest(TestCase):
 
         mock_send_email.assert_called_once_with(pet)
 
-    @patch('meupet.services.send_request_action_email')
+    @patch("meupet.services.send_request_action_email")
     def test_request_sent_saved(self, mock_send_email):
         """Should set the request_sent date in the pet and keep modified date"""
         mock_send_email.return_value = True
@@ -95,30 +95,30 @@ class PetModelTest(TestCase):
         self.assertEqual(modified, pet.modified)
         self.assertAlmostEqual(pet.request_sent, timezone.now(), delta=timezone.timedelta(seconds=1))
 
-    @patch('meupet.services.send_request_action_email')
+    @patch("meupet.services.send_request_action_email")
     def test_request_action_email_set_activation_success(self, mock_send_email):
         """Should set the request_key if the send_request_action_email succeed"""
         mock_send_email.return_value = True
-        pet = mommy.make(Pet, request_key='')
+        pet = mommy.make(Pet, request_key="")
 
         pet.request_action()
         pet.refresh_from_db()
 
-        self.assertNotEqual('', pet.request_key)
+        self.assertNotEqual("", pet.request_key)
 
     def test_request_action_email_not_set_activation_fail(self):
         """Shouldn't set the request_key if the send_request_action_email fail"""
-        pet = mommy.make(Pet, request_key='')
+        pet = mommy.make(Pet, request_key="")
 
-        with patch('meupet.services.send_request_action_email') as mock_method:
+        with patch("meupet.services.send_request_action_email") as mock_method:
             mock_method.return_value = False
             pet.request_action()
 
         pet.refresh_from_db()
 
-        self.assertEqual('', pet.request_key)
+        self.assertEqual("", pet.request_key)
 
-    @patch('meupet.services.send_deactivate_email')
+    @patch("meupet.services.send_deactivate_email")
     def test_deactivate(self, mock_send_email):
         """Should set the registration as inactive and keep modified date"""
         mock_send_email.return_value = True
@@ -133,13 +133,13 @@ class PetModelTest(TestCase):
 
     def test_activate(self):
         """Should set the registration to active and clear fields"""
-        pet = mommy.make(Pet, active=False, request_key='abc', request_sent=timezone.now())
+        pet = mommy.make(Pet, active=False, request_key="abc", request_sent=timezone.now())
 
         pet.activate()
         pet.refresh_from_db()
 
         self.assertIsNone(pet.request_sent)
-        self.assertEqual('', pet.request_key)
+        self.assertEqual("", pet.request_key)
         self.assertTrue(pet.active)
 
     def test_get_active_pets(self):
@@ -153,10 +153,10 @@ class PetModelTest(TestCase):
         self.assertNotIn(inactive_pet, pets)
 
     def test_owner_cant_create_pets_same_name(self):
-        first = mommy.make(Pet, name='Costelinha')
+        first = mommy.make(Pet, name="Costelinha")
 
         with self.assertRaises(IntegrityError):
-            mommy.make(Pet, name='Costelinha', owner=first.owner)
+            mommy.make(Pet, name="Costelinha", owner=first.owner)
 
     @staticmethod
     def create_pet_custom_date(modified_days, request_sent_days=None, **kwargs):

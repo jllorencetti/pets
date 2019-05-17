@@ -13,4 +13,4 @@ class ContextProcessors(TestCase):
     def test_users_count(self):
         context = users_count({})
 
-        self.assertEqual(1, context['users_count'])
+        self.assertEqual(1, context["users_count"])

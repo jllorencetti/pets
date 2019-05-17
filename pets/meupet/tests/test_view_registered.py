@@ -11,20 +11,20 @@ from users.models import OwnerProfile
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class RegisteredViewTest(MeuPetTestCase):
     def setUp(self):
-        self.admin = OwnerProfile.objects.create_user(username='admin', password='admin')
-        self.client.login(username='admin', password='admin')
+        self.admin = OwnerProfile.objects.create_user(username="admin", password="admin")
+        self.client.login(username="admin", password="admin")
         self.pet = mommy.make(Pet, owner=self.admin)
 
     def test_html_registered_page(self):
         """Validate information shown after registering the pet"""
         contents = [
-            'Obrigado',
-            'https://www.facebook.com/sharer.php?u=https://cademeubicho.com/pets/{}/'.format(self.pet.slug),
-            'https://twitter.com/share?url=https://cademeubicho.com/pets/{}/'.format(self.pet.slug),
-            reverse('meupet:detail', args=[self.pet.slug])
+            "Obrigado",
+            "https://www.facebook.com/sharer.php?u=https://cademeubicho.com/pets/{}/".format(self.pet.slug),
+            "https://twitter.com/share?url=https://cademeubicho.com/pets/{}/".format(self.pet.slug),
+            reverse("meupet:detail", args=[self.pet.slug]),
         ]
 
-        response = self.client.get(reverse('meupet:registered', args=[self.pet.slug]))
+        response = self.client.get(reverse("meupet:registered", args=[self.pet.slug]))
 
         for expected in contents:
             with self.subTest():

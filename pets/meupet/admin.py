@@ -5,24 +5,18 @@ from meupet import models
 
 class PetAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
-        'kind',
-        'city',
-        'description',
-        'status',
-        'created',
-        'modified',
-        'published',
-        'request_sent',
-        'active',
+        "name",
+        "kind",
+        "city",
+        "description",
+        "status",
+        "created",
+        "modified",
+        "published",
+        "request_sent",
+        "active",
     )
-    list_filter = (
-        'status',
-        'kind',
-        'created',
-        'active',
-        'city__state',
-    )
+    list_filter = ("status", "kind", "created", "active", "city__state")
 
 
 admin.site.register(models.Pet, PetAdmin)

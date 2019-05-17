@@ -10,8 +10,8 @@ class CityList(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = City.objects.all()
-        state = self.request.query_params.get('state', None)
-        city = self.request.query_params.get('city', None)
+        state = self.request.query_params.get("state", None)
+        city = self.request.query_params.get("city", None)
         if state:
             queryset = queryset.filter(state__code=state)
         if city:
@@ -23,7 +23,7 @@ class ListPets(generics.ListAPIView):
     serializer_class = serializers.PetSerializer
 
     def get_queryset(self):
-        return Pet.objects.select_related('city', 'owner', 'kind').all()
+        return Pet.objects.select_related("city", "owner", "kind").all()
 
 
 class StateList(generics.ListAPIView):

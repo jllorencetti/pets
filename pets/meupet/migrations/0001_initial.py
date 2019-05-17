@@ -6,36 +6,36 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-    ]
+    dependencies = [migrations.swappable_dependency(settings.AUTH_USER_MODEL)]
 
     operations = [
         migrations.CreateModel(
-            name='Kind',
+            name="Kind",
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True,
-                                        primary_key=True)),
-                ('kind', models.TextField(max_length=100)),
+                (
+                    "id",
+                    models.AutoField(serialize=False, verbose_name="ID", auto_created=True, primary_key=True),
+                ),
+                ("kind", models.TextField(max_length=100)),
             ],
-            options={
-            },
+            options={},
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='Pet',
+            name="Pet",
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True,
-                                        primary_key=True)),
-                ('name', models.CharField(max_length=250)),
-                ('description', models.CharField(max_length=500)),
-                ('status', models.CharField(max_length=1, default='M')),
-                ('profile_picture', models.ImageField(upload_to='pet_profiles')),
-                ('kind', models.ForeignKey(to='meupet.Kind', null=True, on_delete=models.CASCADE)),
-                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
+                (
+                    "id",
+                    models.AutoField(serialize=False, verbose_name="ID", auto_created=True, primary_key=True),
+                ),
+                ("name", models.CharField(max_length=250)),
+                ("description", models.CharField(max_length=500)),
+                ("status", models.CharField(max_length=1, default="M")),
+                ("profile_picture", models.ImageField(upload_to="pet_profiles")),
+                ("kind", models.ForeignKey(to="meupet.Kind", null=True, on_delete=models.CASCADE)),
+                ("owner", models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
-            options={
-            },
+            options={},
             bases=(models.Model,),
         ),
     ]

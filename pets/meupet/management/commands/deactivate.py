@@ -7,6 +7,7 @@ class Command(BaseCommand):
     """
     Deactivates every expired pets
     """
+
     leave_locale_alone = True
 
     def handle(self, *args, **options):

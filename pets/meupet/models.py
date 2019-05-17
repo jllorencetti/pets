@@ -20,9 +20,9 @@ from users.models import OwnerProfile
 class PetQuerySet(models.QuerySet):
     def _filter_by_kind(self, kind):
         try:
-            return self.actives().filter(kind__id=int(kind)).select_related('city')
+            return self.actives().filter(kind__id=int(kind)).select_related("city")
         except ValueError:
-            return self.actives().filter(kind__slug=kind).select_related('city')
+            return self.actives().filter(kind__slug=kind).select_related("city")
 
     def get_unpublished_pets(self):
         return self.filter(published=False)
@@ -36,7 +36,7 @@ class PetQuerySet(models.QuerySet):
         return self.filter(
             modified__lt=stale_date,
             request_sent__isnull=True,
-            status__in=PetStatus.objects.filter(final=False)
+            status__in=PetStatus.objects.filter(final=False),
         )
 
     def actives(self):
@@ -53,13 +53,16 @@ class PetQuerySet(models.QuerySet):
 
 class KindManager(models.Manager):
     def count_pets(self, status):
-        return self.filter(pet__status__in=status, pet__active=True) \
-            .annotate(num_pets=models.Count('pet')).order_by('kind')
+        return (
+            self.filter(pet__status__in=status, pet__active=True)
+            .annotate(num_pets=models.Count("pet"))
+            .order_by("kind")
+        )
 
 
 class Kind(models.Model):
     kind = models.TextField(max_length=100, unique=True)
-    slug = AutoSlugField(max_length=30, populate_from='kind')
+    slug = AutoSlugField(max_length=30, populate_from="kind")
 
     objects = KindManager()
 
@@ -68,14 +71,14 @@ class Kind(models.Model):
 
 
 def get_slug(instance):
-    city = ''
+    city = ""
     if instance.city:
         city = instance.city.name
-    return slugify('{}-{}'.format(instance.name, city))
+    return slugify("{}-{}".format(instance.name, city))
 
 
 class StatusGroup(models.Model):
-    slug = AutoSlugField(max_length=64, unique=True, populate_from='name')
+    slug = AutoSlugField(max_length=64, unique=True, populate_from="name")
     name = models.CharField(max_length=64)
 
     def __str__(self):
@@ -83,14 +86,16 @@ class StatusGroup(models.Model):
 
 
 class PetStatus(models.Model):
-    group = models.ForeignKey(StatusGroup, related_name='statuses', blank=True, null=True, on_delete=models.CASCADE)
+    group = models.ForeignKey(
+        StatusGroup, related_name="statuses", blank=True, null=True, on_delete=models.CASCADE
+    )
     code = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=64)
-    next_status = models.OneToOneField('self', blank=True, null=True, on_delete=models.CASCADE)
+    next_status = models.OneToOneField("self", blank=True, null=True, on_delete=models.CASCADE)
     final = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ('description',)
+        ordering = ("description",)
 
     def __str__(self):
         return self.description
@@ -101,29 +106,24 @@ class PetStatus(models.Model):
 
 
 class Pet(TimeStampedModel):
-    MALE = 'MA'
-    FEMALE = 'FE'
-    PET_SEX = (
-        (FEMALE, _('Female')),
-        (MALE, _('Male')),
-    )
-    SMALL = 'SM'
-    MEDIUM = 'MD'
-    LARGE = 'LG'
-    PET_SIZE = (
-        (SMALL, _('Small')),
-        (MEDIUM, _('Medium')),
-        (LARGE, _('Large')),
-    )
+    MALE = "MA"
+    FEMALE = "FE"
+    PET_SEX = ((FEMALE, _("Female")), (MALE, _("Male")))
+    SMALL = "SM"
+    MEDIUM = "MD"
+    LARGE = "LG"
+    PET_SIZE = ((SMALL, _("Small")), (MEDIUM, _("Medium")), (LARGE, _("Large")))
     owner = models.ForeignKey(OwnerProfile, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
-    city = models.ForeignKey('cities.City', on_delete=models.CASCADE)
+    city = models.ForeignKey("cities.City", on_delete=models.CASCADE)
     kind = models.ForeignKey(Kind, null=True, on_delete=models.CASCADE)
-    status = models.ForeignKey(PetStatus, related_name='pets', blank=True, null=True, on_delete=models.CASCADE)
+    status = models.ForeignKey(
+        PetStatus, related_name="pets", blank=True, null=True, on_delete=models.CASCADE
+    )
     size = models.CharField(max_length=2, choices=PET_SIZE, blank=True)
     sex = models.CharField(max_length=2, choices=PET_SEX, blank=True)
-    profile_picture = models.ImageField(upload_to='pet_profiles', help_text=_('Maximum image size is 8MB'))
+    profile_picture = models.ImageField(upload_to="pet_profiles", help_text=_("Maximum image size is 8MB"))
     published = models.BooleanField(default=False)  # published on facebook
     request_sent = models.DateTimeField(null=True, blank=True)
     request_key = models.CharField(blank=True, max_length=40)
@@ -133,7 +133,7 @@ class Pet(TimeStampedModel):
     objects = PetQuerySet.as_manager()
 
     def get_absolute_url(self):
-        return reverse('meupet:detail', kwargs={'pk_or_slug': self.slug})
+        return reverse("meupet:detail", kwargs={"pk_or_slug": self.slug})
 
     def change_status(self):
         self.status = self.status.next
@@ -151,13 +151,13 @@ class Pet(TimeStampedModel):
     @property
     def thumb_picture(self):
         try:
-            return get_thumbnailer(self.profile_picture)['pet_thumb']
+            return get_thumbnailer(self.profile_picture)["pet_thumb"]
         except InvalidImageFormatError:
             raven_client.captureException()
             return self.profile_picture
 
     def request_action(self):
-        hash_input = (crypto.get_random_string(5) + self.name).encode('utf-8')
+        hash_input = (crypto.get_random_string(5) + self.name).encode("utf-8")
         self.request_key = hashlib.sha1(hash_input).hexdigest()
 
         if not services.send_request_action_email(self):
@@ -168,7 +168,7 @@ class Pet(TimeStampedModel):
 
     def activate(self):
         self.request_sent = None
-        self.request_key = ''
+        self.request_key = ""
         self.active = True
         self.save()
 
@@ -183,10 +183,10 @@ class Pet(TimeStampedModel):
         return self.name
 
     class Meta:
-        ordering = ['-id']
-        unique_together = ('name', 'owner')
+        ordering = ["-id"]
+        unique_together = ("name", "owner")
 
 
 class Photo(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='pet_photos')
+    image = models.ImageField(upload_to="pet_photos")
