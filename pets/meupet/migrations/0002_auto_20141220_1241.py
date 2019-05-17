@@ -13,10 +13,6 @@ def create_kinds(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0001_initial'),
-    ]
+    dependencies = [("meupet", "0001_initial")]
 
-    operations = [
-        migrations.RunPython(create_kinds)
-    ]
+    operations = [migrations.RunPython(create_kinds)]

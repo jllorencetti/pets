@@ -6,20 +6,20 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0004_auto_20150122_0152'),
-    ]
+    dependencies = [("meupet", "0004_auto_20150122_0152")]
 
     operations = [
         migrations.CreateModel(
-            name='Photo',
+            name="Photo",
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('image', models.ImageField(upload_to='pet_photos')),
-                ('pet', models.ForeignKey(to='meupet.Pet', on_delete=models.CASCADE)),
+                (
+                    "id",
+                    models.AutoField(serialize=False, verbose_name="ID", primary_key=True, auto_created=True),
+                ),
+                ("image", models.ImageField(upload_to="pet_photos")),
+                ("pet", models.ForeignKey(to="meupet.Pet", on_delete=models.CASCADE)),
             ],
-            options={
-            },
+            options={},
             bases=(models.Model,),
-        ),
+        )
     ]

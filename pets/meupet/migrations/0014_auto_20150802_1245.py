@@ -6,13 +6,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0013_auto_20150719_1629'),
-    ]
+    dependencies = [("meupet", "0013_auto_20150719_1629")]
 
-    operations = [
-        migrations.AlterModelOptions(
-            name='city',
-            options={'ordering': ['city']},
-        ),
-    ]
+    operations = [migrations.AlterModelOptions(name="city", options={"ordering": ["city"]})]

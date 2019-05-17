@@ -14,8 +14,8 @@ class CitySerializerTestCase(TestCase):
         """
         The serializer should contain pet fields
         """
-        request = self.req_factory.get('/pet/api/')
+        request = self.req_factory.get("/pet/api/")
         pet = mommy.make(Pet, status=mommy.make(PetStatus))
-        serializer = PetSerializer(pet, context={'request': request})
+        serializer = PetSerializer(pet, context={"request": request})
 
         self.assertEqual(11, len(serializer.data))

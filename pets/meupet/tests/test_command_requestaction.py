@@ -19,7 +19,7 @@ class RequestActionTest(TestCase):
         pet.modified = timezone.now() - timezone.timedelta(days=settings.DAYS_TO_STALE_REGISTER)
         pet.save(update_modified=False)
 
-        with mock.patch('meupet.models.Pet.request_action') as mock_method:
-            call_command('requestaction')
+        with mock.patch("meupet.models.Pet.request_action") as mock_method:
+            call_command("requestaction")
 
         mock_method.assert_any_call()

@@ -1,6 +1,6 @@
 repos:
--   repo: git@github.com:pre-commit/pre-commit-hooks
-    rev: v2.2.1
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.3
     hooks:
     - id: debug-statements
     - id: trailing-whitespace
@@ -28,7 +28,12 @@ repos:
     verbose: false
     pass_filenames: false
 
+- repo: https://github.com/python/black
+  rev: 19.3b0
+  hooks:
+    - id: black
+
 - repo: https://github.com/pre-commit/mirrors-isort
-  rev: v4.3.17
+  rev: v4.3.20
   hooks:
   - id: isort

@@ -20,37 +20,33 @@ def send_email(subject, to, template_name, context):
 
 
 def send_request_action_email(pet):
-    subject = _('Update pet registration')
+    subject = _("Update pet registration")
     to = pet.owner.email
-    template_name = 'meupet/request_action_email.txt'
+    template_name = "meupet/request_action_email.txt"
     current_site = Site.objects.get_current()
 
-    full_url = 'https://{domain}{path}'.format(
-        domain=current_site.domain,
-        path=reverse('meupet:update_register', args=[pet.request_key])
+    full_url = "https://{domain}{path}".format(
+        domain=current_site.domain, path=reverse("meupet:update_register", args=[pet.request_key])
     )
 
     context = {
-        'username': pet.owner.first_name,
-        'pet': pet.name,
-        'days': settings.DAYS_TO_STALE_REGISTER,
-        'status': pet.status.description.lower(),
-        'link': full_url,
-        'site_name': current_site.name,
+        "username": pet.owner.first_name,
+        "pet": pet.name,
+        "days": settings.DAYS_TO_STALE_REGISTER,
+        "status": pet.status.description.lower(),
+        "link": full_url,
+        "site_name": current_site.name,
     }
 
     return send_email(subject, to, template_name, context)
 
 
 def send_deactivate_email(pet):
-    subject = _('Deactivation of pet registration')
+    subject = _("Deactivation of pet registration")
     to = pet.owner.email
-    template_name = 'meupet/deactivate_email.txt'
+    template_name = "meupet/deactivate_email.txt"
     current_site = Site.objects.get_current()
 
-    context = {
-        'username': pet.owner.first_name,
-        'site_name': current_site.name,
-    }
+    context = {"username": pet.owner.first_name, "site_name": current_site.name}
 
     return send_email(subject, to, template_name, context)

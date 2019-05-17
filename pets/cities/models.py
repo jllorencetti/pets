@@ -10,14 +10,14 @@ class State(models.Model):
     abbr = models.CharField(max_length=2)
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
 
 
 class City(models.Model):
-    state = models.ForeignKey(State, related_name='cities', on_delete=models.CASCADE)
+    state = models.ForeignKey(State, related_name="cities", on_delete=models.CASCADE)
     code = models.IntegerField()
     name = models.CharField(max_length=80)
     search_name = models.CharField(db_index=True, max_length=80)
@@ -27,7 +27,7 @@ class City(models.Model):
     objects = CityQuerySet.as_manager()
 
     class Meta:
-        ordering = ['search_name']
+        ordering = ["search_name"]
 
     def __str__(self):
         return self.name

@@ -8,8 +8,8 @@ from common import utils
 
 def migrate_cities(apps, scheme_editor):
     """Updates the city based on the new model"""
-    Pet = apps.get_model('meupet', 'Pet')
-    City = apps.get_model('cities', 'City')
+    Pet = apps.get_model("meupet", "Pet")
+    City = apps.get_model("cities", "City")
 
     for pet in Pet.objects.all():
         if pet.city:
@@ -20,10 +20,6 @@ def migrate_cities(apps, scheme_editor):
 
 
 class Migration(migrations.Migration):
-    dependencies = [
-        ('meupet', '0027_pet_new_city'),
-    ]
+    dependencies = [("meupet", "0027_pet_new_city")]
 
-    operations = [
-        migrations.RunPython(migrate_cities),
-    ]
+    operations = [migrations.RunPython(migrate_cities)]

@@ -10,41 +10,49 @@ from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, DetailView, TemplateView, UpdateView
 
-from users.forms import LoginForm, RegisterForm, UpdateUserForm, UsersPasswordRecoveryForm, UsersPasswordResetForm
+from users.forms import (
+    LoginForm,
+    RegisterForm,
+    UpdateUserForm,
+    UsersPasswordRecoveryForm,
+    UsersPasswordResetForm,
+)
 from users.models import OwnerProfile
 
 
 class RecoverView(Recover):
-    template_name = 'users/recover.html'
+    template_name = "users/recover.html"
     form_class = UsersPasswordRecoveryForm
-    success_url_name = 'users:recover_password_sent'
-    email_template_name = 'users/recover_email.txt'
-    search_fields = ['username', 'email']
+    success_url_name = "users:recover_password_sent"
+    email_template_name = "users/recover_email.txt"
+    search_fields = ["username", "email"]
 
 
 class RecoverDoneView(RecoverDone):
-    template_name = 'users/recover.html'
+    template_name = "users/recover.html"
 
 
 class RecoverResetView(Reset):
-    template_name = 'users/reset.html'
-    success_url = 'users:recover_password_done'
+    template_name = "users/reset.html"
+    success_url = "users:recover_password_done"
     form_class = UsersPasswordResetForm
     token_expires = 3600 * 2
 
 
 class RecoverResetDoneView(ResetDone):
-    template_name = 'users/reset_done.html'
+    template_name = "users/reset_done.html"
 
 
 class CreateUserView(CreateView):
     model = OwnerProfile
     form_class = RegisterForm
-    template_name = 'users/create.html'
-    authenticated_redirect_url = reverse_lazy('meupet:index')
+    template_name = "users/create.html"
+    authenticated_redirect_url = reverse_lazy("meupet:index")
 
-    msg = _('Your account has been successfully created, access <a href="{0}">'
-            'this page</a> and register the pet :)')
+    msg = _(
+        'Your account has been successfully created, access <a href="{0}">'
+        "this page</a> and register the pet :)"
+    )
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -56,24 +64,23 @@ class CreateUserView(CreateView):
         return super(CreateUserView, self).form_valid(form)
 
     def get_success_url(self):
-        url = reverse('meupet:register')
+        url = reverse("meupet:register")
         messages.success(self.request, self.msg.format(url))
         user = authenticate(
-            username=self.request.POST.get('username'),
-            password=self.request.POST.get('password1')
+            username=self.request.POST.get("username"), password=self.request.POST.get("password1")
         )
         login(self.request, user)
-        return reverse('meupet:index')
+        return reverse("meupet:index")
 
 
 class EditUserProfileView(LoginRequiredMixin, UpdateView):
-    template_name = 'users/edit_profile.html'
+    template_name = "users/edit_profile.html"
     model = OwnerProfile
     form_class = UpdateUserForm
 
     def get_success_url(self):
-        messages.success(self.request, _('Changes saved successfully.'))
-        return reverse('meupet:index')
+        messages.success(self.request, _("Changes saved successfully."))
+        return reverse("meupet:index")
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -81,26 +88,26 @@ class EditUserProfileView(LoginRequiredMixin, UpdateView):
 
 class UserLogin(LoginView):
     form_class = LoginForm
-    template_name = 'users/login.html'
+    template_name = "users/login.html"
 
 
 class UserProfileView(LoginRequiredMixin, TemplateView):
-    template_name = 'users/profile.html'
+    template_name = "users/profile.html"
 
     def get_context_data(self, **kwargs):
         context = super(UserProfileView, self).get_context_data(**kwargs)
-        context['object'] = self.request.user
-        context['pets'] = self.request.user.pet_set.all()
+        context["object"] = self.request.user
+        context["pets"] = self.request.user.pet_set.all()
         return context
 
 
 class ProfileDetailView(DetailView):
-    template_name = 'users/profile.html'
+    template_name = "users/profile.html"
     model = OwnerProfile
 
     def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
-        context['pets'] = self.object.pet_set.all()
+        context["pets"] = self.object.pet_set.all()
         return context
 
 
@@ -109,6 +116,6 @@ def confirm_information(request):
     redirect to the correct view"""
     if request.user:
         if request.user.is_information_confirmed:
-            return HttpResponseRedirect(reverse('meupet:index'))
+            return HttpResponseRedirect(reverse("meupet:index"))
         else:
-            return HttpResponseRedirect(reverse('users:edit'))
+            return HttpResponseRedirect(reverse("users:edit"))

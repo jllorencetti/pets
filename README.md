@@ -1,7 +1,6 @@
 # Pets
 
-[![Donate](https://img.shields.io/badge/patreon-donate-ff69b4.svg)](https://www.patreon.com/jllorencetti)
-
+[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 [![Code Climate](https://codeclimate.com/github/jllorencetti/pets/badges/gpa.svg)](https://codeclimate.com/github/jllorencetti/pets)
 [![Build Status](https://travis-ci.org/jllorencetti/pets.svg?branch=master)](https://travis-ci.org/jllorencetti/pets)
 [![Coverage Status](https://coveralls.io/repos/github/jllorencetti/pets/badge.svg?branch=master)](https://coveralls.io/github/jllorencetti/pets?branch=master)

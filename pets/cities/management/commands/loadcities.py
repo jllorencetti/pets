@@ -9,6 +9,6 @@ class Command(BaseCommand):
     """
 
     def handle(self, *args, **options):
-        country = 'Brazil'
+        country = "Brazil"
         utils.load_states_from_file(utils.get_states_filename(country))
         utils.load_cities_from_file(utils.get_cities_filename(country))

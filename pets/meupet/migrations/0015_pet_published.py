@@ -6,14 +6,8 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('meupet', '0014_auto_20150802_1245'),
-    ]
+    dependencies = [("meupet", "0014_auto_20150802_1245")]
 
     operations = [
-        migrations.AddField(
-            model_name='pet',
-            name='published',
-            field=models.BooleanField(default=False),
-        ),
+        migrations.AddField(model_name="pet", name="published", field=models.BooleanField(default=False))
     ]

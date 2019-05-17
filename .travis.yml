@@ -6,7 +6,7 @@ addons:
 services:
   - postgresql
 python:
-  - "3.6"
+  - "3.6.6"
 install:
   - pip install pip --upgrade
   - pip install pipenv
@@ -14,10 +14,12 @@ install:
   - pipenv install --dev --deploy
   - sudo curl --output /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
   - sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
+before_script:
+  - psql -U postgres -c 'create database pets;'
+  - pre-commit install
+  - pre-commit run -a -v
 script:
   - cd pets
   - coverage run --rcfile=../.coveragerc manage.py test
-before_script:
-  - psql -U postgres -c 'create database pets;'
 after_success:
   - coveralls
