@@ -1,5 +1,5 @@
 import sendgrid
-from sendgrid.helpers.mail import Content, Mail
+from sendgrid.helpers.mail import Mail
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -11,12 +11,12 @@ from django.utils.translation import ugettext as _
 def send_email(subject, to, template_name, context):
     sendgrid_client = sendgrid.SendGridAPIClient(settings.SENDGRID_API_KEY)
 
-    from_email = sendgrid.Email(settings.DEFAULT_FROM_EMAIL)
-    to_email = sendgrid.Email(to)
-    content = Content("text/plain", render_to_string(template_name, context))
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_emails = to
+    content = render_to_string(template_name, context)
 
-    mail = Mail(from_email, subject, to_email, content)
-    return sendgrid_client.client.mail.send.post(request_body=mail.get())
+    mail = Mail(from_email, to_emails, subject, content)
+    return sendgrid_client.send(mail)
 
 
 def send_request_action_email(pet):
