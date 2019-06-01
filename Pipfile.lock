@@ -71,11 +71,10 @@
         },
         "django-compressor": {
             "hashes": [
-                "sha256:7732676cfb9d58498dfb522b036f75f3f253f72ea1345ac036434fdc418c2e57",
-                "sha256:9616570e5b08e92fa9eadc7a1b1b49639cce07ef392fc27c74230ab08075b30f"
+                "sha256:47c86347f75c64954a06afbbfc820a750619e10c23a49272b865020a407b7edd",
+                "sha256:da9ee5ce4fc8b9211dcecd2229520514a4ba9ac3bcdc59b48092ec4d7f6b96b0"
             ],
-            "index": "pypi",
-            "version": "==2.2"
+            "version": "==2.3"
         },
         "django-cors-middleware": {
             "hashes": [
