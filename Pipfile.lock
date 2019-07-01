@@ -393,10 +393,10 @@
         },
         "importlib-metadata": {
             "hashes": [
-                "sha256:2f2e54cbf6b06b16351e4c40a6adb0860cab6cfb95a0c0fcb58bb789c4b450f5",
-                "sha256:37bbea81dec44d1ff72d58a1b5c1599a9f3436537f33e9e26f276610064c4830"
+                "sha256:6dfd58dfe281e8d240937776065dd3624ad5469c835248219bd16cf2e12dbeb7",
+                "sha256:cb6ee23b46173539939964df59d3d72c3e0c1b5d54b84f1d8a7e912fe43612db"
             ],
-            "version": "==0.12"
+            "version": "==0.18"
         },
         "importlib-resources": {
             "hashes": [
