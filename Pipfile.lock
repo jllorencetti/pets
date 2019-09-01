@@ -62,11 +62,10 @@
         },
         "django-autoslug": {
             "hashes": [
-                "sha256:08ba143ce5914d2689972c0adaea56abc37fb7175e9f6939fe0e3ac26374e7a0",
-                "sha256:aece8613eb173854462c656e91d81aa7ddfacaa49fb500d549f2143d1ce48721"
+                "sha256:3c55c18e2a5aab67c3a8d488056422b93c1984a197387c97952e92836f98c73c",
+                "sha256:f9d2ef0d98dd97ba4d5ea358cc74bfee3e3498e2dee29f396d604173eaf07e47"
             ],
-            "index": "pypi",
-            "version": "==1.9.4"
+            "version": "==1.9.6"
         },
         "django-compressor": {
             "hashes": [
