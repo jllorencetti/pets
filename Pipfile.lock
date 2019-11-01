@@ -409,11 +409,10 @@
         },
         "pre-commit": {
             "hashes": [
-                "sha256:6ca409d1f22d444af427fb023a33ca8b69625d508a50e1b7eaabd59247c93043",
-                "sha256:94dd519597f5bff06a4b0df194a79c524b78f4b1534c1ce63241a9d4fb23b926"
+                "sha256:9f152687127ec90642a2cc3e4d9e1e6240c4eb153615cb02aa1ad41d331cbb6e",
+                "sha256:c2e4810d2d3102d354947907514a78c5d30424d299dc0fe48f5aa049826e9b50"
             ],
-            "index": "pypi",
-            "version": "==1.16.1"
+            "version": "==1.20.0"
         },
         "pytz": {
             "hashes": [
