@@ -301,12 +301,11 @@
         },
         "sendgrid": {
             "hashes": [
-                "sha256:a9999878aad90e32d7b62464454adc70bcef40085c729355ea58717bb0ea0dbd",
-                "sha256:cb0b21a83a54bc99d9befda1ea7b4f15fe8db362a152458e58abc5ce23d6d828",
-                "sha256:f04fee009c750b47ab984f3c4a735facacc7fba902052d597f7e60b601e56bcc"
+                "sha256:3d91d848587a6f2b9f866f88ef65c9278336903524e6eb53bbb40c7ea7c774db",
+                "sha256:7c19e0f3d40093c8ed938fb091f6444783a94eb5e62000b33acc25160afbfc8c",
+                "sha256:80ea3a989bd382f2cb7de1508da17c279d9ef74107f456138daeb6bcbd579566"
             ],
-            "index": "pypi",
-            "version": "==6.1.0"
+            "version": "==6.2.0"
         },
         "six": {
             "hashes": [
