@@ -1,4 +1,4 @@
-{% load i18n thumbnail %}
+{% load static i18n thumbnail %}
 
 <form class="form-horizontal col-md-6" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
@@ -97,7 +97,11 @@
 </form>
 
 <div class="col-md-6">
-  <img src="{{ form.instance.profile_picture|thumbnail_url:'pet_thumb' }}"
-       class="img-thumbnail" alt="{% trans 'Pet Image' %}"
-       id="picture" name="imagem"/>
+  {% if form.instance.profile_picture %}
+    <img id="picture" class="img-thumbnail" alt="{% trans 'Pet Image' %}"
+         src="{{ form.instance.profile_picture|thumbnail_url:'pet_thumb' }}"/>
+  {% else %}
+    <img id="picture" class="img-thumbnail" alt="{% trans 'Pet Image' %}"
+         src="{% static 'img/pet-img-placeholder.png' %}"/>
+  {% endif %}
 </div>
