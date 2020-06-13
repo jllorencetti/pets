@@ -215,3 +215,11 @@ REST_FRAMEWORK = {
 
 GOOGLE_API_KEY = config("GOOGLE_API_KEY", default="")
 HOTJAR_TRACKING_KEY = config("HOTJAR_TRACKING_KEY", default="")
+
+default_email_backend = "django.core.mail.backends.console.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = config("EMAIL_BACKEND", default=default_email_backend)
+EMAIL_HOST = config("EMAIL_HOST", default="example.com")
+EMAIL_PORT = config("EMAIL_PORT", default="0")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="dummy@example.com")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="example")
