@@ -501,11 +501,10 @@
         },
         "pre-commit": {
             "hashes": [
-                "sha256:5559e09afcac7808933951ffaf4ff9aac524f31efbc3f24d021540b6c579813c",
-                "sha256:703e2e34cbe0eedb0d319eff9f7b83e2022bb5a3ab5289a6a8841441076514d0"
+                "sha256:1657663fdd63a321a4a739915d7d03baedd555b25054449090f97bb0cb30a915",
+                "sha256:e8b1315c585052e729ab7e99dcca5698266bedce9067d21dc909c23e3ceed626"
             ],
-            "index": "pypi",
-            "version": "==2.4.0"
+            "version": "==2.6.0"
         },
         "pytz": {
             "hashes": [
