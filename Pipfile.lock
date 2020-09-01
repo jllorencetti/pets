@@ -300,9 +300,9 @@
         },
         "python-http-client": {
             "hashes": [
-                "sha256:93d6a26b426e48b04e589c1f103e7c040193e4ccc379ea50cd6e12f94cca7c69"
+                "sha256:f5cb0d407b30ed699c2f7ac4ba2ba8a1f2352d44bd9db6ea3bab98d081b433ce"
             ],
-            "version": "==3.2.7"
+            "version": "==3.3.1"
         },
         "python3-openid": {
             "hashes": [
