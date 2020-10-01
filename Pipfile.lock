@@ -492,11 +492,10 @@
         },
         "importlib-resources": {
             "hashes": [
-                "sha256:6f87df66833e1942667108628ec48900e02a4ab4ad850e25fbf07cb17cf734ca",
-                "sha256:85dc0b9b325ff78c8bef2e4ff42616094e16b98ebd5e3b50fe7e2f0bbcdcde49"
+                "sha256:19f745a6eca188b490b1428c8d1d4a0d2368759f32370ea8fb89cad2ab1106c3",
+                "sha256:d028f66b66c0d5732dae86ba4276999855e162a749c92620a38c1d779ed138a7"
             ],
-            "markers": "python_version < '3.7'",
-            "version": "==1.5.0"
+            "version": "==3.0.0"
         },
         "model-mommy": {
             "hashes": [
