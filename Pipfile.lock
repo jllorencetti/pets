@@ -436,10 +436,10 @@
         },
         "cfgv": {
             "hashes": [
-                "sha256:1ccf53320421aeeb915275a196e23b3b8ae87dea8ac6698b1638001d4a486d53",
-                "sha256:c8e8f552ffcc6194f4e18dd4f68d9aef0c0d58ae7e7be8c82bee3c5e9edfa513"
+                "sha256:32e43d604bbe7896fe7c248a9c2276447dbef840feb28fe20494f62af110211d",
+                "sha256:cf22deb93d4bcf92f345a5c3cd39d3d41d6340adc60c78bbbd6588c384fda6a1"
             ],
-            "version": "==3.1.0"
+            "version": "==3.2.0"
         },
         "distlib": {
             "hashes": [
