@@ -31,4 +31,4 @@ pre-commit = "*"
 selenium = "*"
 
 [requires]
-python_full_version = "3.6.6"
+python_full_version = "3.8.6"
