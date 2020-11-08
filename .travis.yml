@@ -2,11 +2,11 @@ language: python
 dist: xenial
 addons:
   chrome: stable
-  postgresql: "9.5"
+  postgresql: "10"
 services:
   - postgresql
 python:
-  - "3.6.6"
+  - "3.8.6"
 install:
   - pip install pip --upgrade
   - pip install pipenv
