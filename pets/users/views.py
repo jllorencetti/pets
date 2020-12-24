@@ -112,7 +112,7 @@ class ProfileDetailView(DetailView):
 
 
 def confirm_information(request):
-    """ This check that the user has confirmed the information and
+    """This check that the user has confirmed the information and
     redirect to the correct view"""
     if request.user:
         if request.user.is_information_confirmed:

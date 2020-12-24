@@ -17,8 +17,9 @@ from users.models import OwnerProfile
 
 
 def get_test_image_file(filename="test.png"):
-    from six import BytesIO
     from PIL import Image
+    from six import BytesIO
+
     from django.core.files.images import ImageFile
 
     f = BytesIO()
