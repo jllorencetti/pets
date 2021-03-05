@@ -16,6 +16,8 @@ install:
   - export CHROME_DRIVER_LATEST_RELEASE=`curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${GOOGLE_CHROME_MAJOR_VERSION}`
   - sudo curl --output /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_LATEST_RELEASE}/chromedriver_linux64.zip
   - sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
+  # overrides unsecure default version installed by Travis CI
+  - pip install "py>=1.10.0"
 before_script:
   - psql -U postgres -c 'create database pets;'
   - pre-commit install
