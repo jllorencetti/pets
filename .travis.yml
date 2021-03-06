@@ -12,8 +12,12 @@ install:
   - pip install pipenv
   - pip install coveralls
   - pipenv install --dev --deploy
-  - sudo curl --output /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip
+  - export GOOGLE_CHROME_MAJOR_VERSION=`google-chrome --version | sed -nre 's/^[^0-9]*([0-9]+)\..*/\1/p'`
+  - export CHROME_DRIVER_LATEST_RELEASE=`curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${GOOGLE_CHROME_MAJOR_VERSION}`
+  - sudo curl --output /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_LATEST_RELEASE}/chromedriver_linux64.zip
   - sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
+  # overrides unsecure default version installed by Travis CI
+  - pip install "py>=1.10.0"
 before_script:
   - psql -U postgres -c 'create database pets;'
   - pre-commit install
