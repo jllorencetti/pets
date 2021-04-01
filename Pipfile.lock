@@ -145,11 +145,10 @@
         },
         "django-crispy-forms": {
             "hashes": [
-                "sha256:2ea206f35a9554597b89315ea52737d32d2fd9f5304e79a469a08887aa0824b0",
-                "sha256:5c600dea66e2f435f774fe2c4cacfb5b5eb9914dd6da0728edd174b95f6956fd"
+                "sha256:3db71ab06d17ec9d0195c086d3ad454da300ac268752ac3a4f63d72f7a490254",
+                "sha256:88efa857ce6111bd696cc4f74057539a3456102fe9c3a3ece8868e1e4579e70a"
             ],
-            "index": "pypi",
-            "version": "==1.11.1"
+            "version": "==1.11.2"
         },
         "django-extensions": {
             "hashes": [
