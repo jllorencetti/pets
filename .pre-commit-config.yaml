@@ -17,7 +17,7 @@ repos:
       - id: forbid-new-submodules
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+    rev: 3.9.1
     hooks:
       - id: flake8
         args: ['--exclude=*migrations*', '--ignore=E501,F405']
@@ -33,11 +33,11 @@ repos:
         pass_filenames: false
 
   - repo: https://github.com/python/black
-    rev: 20.8b1
+    rev: 21.4b2
     hooks:
       - id: black
 
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.7.0
+    rev: v5.8.0
     hooks:
       - id: isort
