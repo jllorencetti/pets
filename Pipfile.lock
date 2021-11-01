@@ -201,10 +201,10 @@
         },
         "easy-thumbnails": {
             "hashes": [
-                "sha256:f862949208d9066cd3d84ffcf9c2dbe9c7344ea6152b741e440f861eca46855c"
+                "sha256:9d7ed56a9b57aba7a8d0e03dc3b8507ca51aab5e0ed0bc705c3261ff1f659192",
+                "sha256:a7dd9cf97efaf70ba5d76484a962f08ba65b31f1681bc417257743650e9e8a8a"
             ],
-            "index": "pypi",
-            "version": "==2.7.1"
+            "version": "==2.7.2"
         },
         "facebook-sdk": {
             "hashes": [
