@@ -6,4 +6,4 @@
 
 http{% if secure %}s{% endif %}://{{ site.domain }}{% url "users:recover_password_reset" token %}
 
-{% trans "If you don't want to reset your password simply ignore this email and it will stay unchanged." %}
+{% trans "If you don't want to reset your password simply ignore this email, and it will stay unchanged." %}

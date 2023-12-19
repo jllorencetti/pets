@@ -89,7 +89,7 @@ class UpdateUserForm(UserForm):
         super(UpdateUserForm, self).__init__(*args, **kwargs)
         self.helper.add_input(Submit("submit", _("Save Changes")))
 
-    def save(self, commit=True):
+    def save(self):
         self.instance.is_information_confirmed = True
         super(UpdateUserForm, self).save()
 

@@ -82,7 +82,7 @@ class EditUserProfileView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, _("Changes saved successfully."))
         return reverse("meupet:index")
 
-    def get_object(self, queryset=None):
+    def get_object(self):
         return self.request.user
 
 
