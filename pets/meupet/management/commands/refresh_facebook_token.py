@@ -25,7 +25,7 @@ class Command(BaseCommand):
             "fb_exchange_token": configuration.fb_share_token,
         }
 
-        resp = requests.get(self.base_url, params=params)
+        resp = requests.get(self.base_url, params=params, timeout=30)
         resp.raise_for_status()
 
         return resp.json()["access_token"]
